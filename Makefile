@@ -6,7 +6,7 @@
 #    By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/01 11:29:43 by malaamir          #+#    #+#              #
-#    Updated: 2025/07/01 11:32:55 by malaamir         ###   ########.fr        #
+#    Updated: 2025/07/01 11:38:15 by malaamir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,13 @@ CUB3D_BONUS_OBJ = $(CUB3D_BONUS_SRC:.c=.o)
 #-------------------------------Compiler and flags-----------------------------#
 CC = cc
 RM = rm -f
-FLAGS = -Wall -Wextra -Werror -Imlx
+FLAGS = -Wall -Wextra -Werror
+
+MLX_P = MLX42/build
+
+MLX_LIB = -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+
+FRAMEWORKS = -framework Cocoa -framework OpenGL -framework IOKit
 
 #---------------------------Includes and Excutables----------------------------#
 INCLUDES =
@@ -36,11 +42,11 @@ all: $(MANDATORY_NAME)
 bonus : $(BONUS_NAME)
 
 $(MANDATORY_NAME): $(CUB3D_OBJ)
-	$(CC) $(FLAGS) $(CUB3D_OBJ) -lmlx -framework OpenGL -framework AppKit -o $(MANDATORY_NAME)
+	$(CC) $(FLAGS) $(CUB3D_OBJ) $(MLX_P)/libmlx42.a $(MLX_LIB) $(FRAMEWORKS) -o $(MANDATORY_NAME)
 
 
 $(BONUS_NAME): $(CUB3D_BONUS_OBJ)
-	$(CC) $(FLAGS) $(CUB3D_BONUS_OBJ) -lmlx -framework OpenGL -framework AppKit -o $(BONUS_NAME)
+	$(CC) $(FLAGS) $(CUB3D_BONUS_OBJ) $(MLX_P)/libmlx42.a $(MLX_LIB) $(FRAMEWORKS) -o  $(BONUS_NAME)
 
 mand/%.o: mand/%.c $(INCLUDES)
 	$(CC) $(FLAGS) -c $< -o $@
