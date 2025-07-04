@@ -6,16 +6,16 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 09:44:49 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 09:40:03 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/04 19:09:30 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
-char	*ft_substr(const char *s, unsigned int start, size_t len)
+char	*ft_substr(const char *s, int start, int len)
 {
 	char	*tmp;
-	size_t	i;
+	int	i;
 
 	i = 0;
 	if (s == NULL)

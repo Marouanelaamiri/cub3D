@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:24:36 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 11:11:14 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/04 19:28:50 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
-# include <string.h>
-# include <errno.h>
 # include <limits.h>
-# include <sys/stat.h>
-# include <sys/types.h>
-# include <ctype.h>
-# include <stdbool.h>
-# include <stdint.h>
-# include <stddef.h>
-
-
-
 #include "parser.h"
 
 #endif

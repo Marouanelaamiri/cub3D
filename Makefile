@@ -6,7 +6,7 @@
 #    By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/01 11:29:43 by malaamir          #+#    #+#              #
-#    Updated: 2025/07/04 13:41:03 by malaamir         ###   ########.fr        #
+#    Updated: 2025/07/04 18:53:19 by malaamir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,6 @@ SRC            = main.c
 
 SRC_PARS    = parsing/parsing.c \
 			parsing/parsing_utils.c \
-			parsing/wall_checker.c \
 
 SRC_EXEC    =
 
@@ -49,6 +48,7 @@ SRC_HLP        = helpers/ft_atoi.c \
 				helpers/ft_substr.c \
 				helpers/get_next_line.c \
 				helpers/ft_realloc.c \
+				helpers/ft_strcmp.c \
 				
 				
 

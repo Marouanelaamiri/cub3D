@@ -6,30 +6,41 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 10:53:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 09:39:59 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/04 17:52:20 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char *str)
 {
-	unsigned int	maxlen;
-	size_t			start;
-	size_t			end;
+	char	*start;
+	char	*end;
+	char	*trimmed;
+	int		len;
+	int		i;
 
-	if (s1 == NULL || set == NULL)
+	if (!str)
 		return (NULL);
-	if (*s1 == '\0')
-		return (ft_strdup(""));
-	start = 0;
-	end = ft_strlen(s1) - 1;
-	while (ft_strchr(set, s1[start]) && start <= end)
+	start = str;
+	while (*start == ' ' || *start == '\t' || *start == '\n')
 		start++;
-	while (end > 0 && ft_strchr(set, s1[end]) && end >= 0)
-		end--;
-	maxlen = (end - start + 1);
-	if (maxlen <= 0)
+	if (*start == '\0')
 		return (ft_strdup(""));
-	return (ft_substr(s1, start, maxlen));
+	end = str + ft_strlen(str) - 1;
+	while (end > start && (*end == ' ' || *end == '\t' || *end == '\n'))
+		end--;
+	len = end - start + 1;
+	trimmed = malloc(len + 1);
+	if (!trimmed)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		trimmed[i] = start[i];
+		i++;
+	}
+	trimmed[i] = '\0';
+	return (trimmed);
 }
+

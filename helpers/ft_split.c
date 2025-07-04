@@ -6,13 +6,27 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 16:33:09 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 10:41:49 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/04 18:51:51 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
-static void	*ft_free(char **arr, int count)
+void free_split(char **arr)
+{
+	int	i;
+
+	if (!arr)
+		return ;
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
+void	*ft_free(char **arr, int count)
 {
 	int	i;
 
