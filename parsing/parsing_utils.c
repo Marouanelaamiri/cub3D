@@ -6,8 +6,13 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:03:36 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 19:27:36 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/04 21:46:15 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
+
+int check_texture_path(char *path)
+{
+	
+}

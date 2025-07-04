@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 19:31:40 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/04 21:35:03 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,19 @@
 # define PARSER_H
 
 # define BUFFER_SIZE 1024
+# define MAX_LINE_LENGTH 1024
+# define MAX_MAP_SIZE 100
 
+# define TILE_SIZE			40 // should be able to be split by 2
+# define MINMP_SIZE			2
+# define WIDTH				1920 // 2600
+# define HEIGHT				1080 // 1400
+# define SCR_WIDTH			5120
+# define SCR_HEIGHT			2880
+# define HTBOX				0
+# define FOV				60
+# define WALL_STRIP_WIDTH 	1
+# define NUM_RAYS  5120
 typedef struct s_map
 {
 	char *no_texture;
@@ -31,6 +43,7 @@ typedef struct s_map
 	int map_parsed;
 	float player_x;
 	float player_y;
+	char	player_direction;
 	int has_error;
 	char *error_message;
 }	t_map;
@@ -59,7 +72,11 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strtrim(char *str);
 char	*ft_substr(const char *s, int start, int len);
-int 	get_next_line(int fd, char **line);
+int 	get_next_line(int fd);
+char	*ft_joinfree(char *buffer, char *new_buffer);
+char	*get_remaning(char *buffer);
+char	*ft_getline(char *buffer);
+char	*read_from_file(int fd, char *buffer);
 char	**ft_realloc(char **lines, int line_count, char *new_line);
 void	*ft_free(char **arr, int count);
 void 	free_split(char **arr);
