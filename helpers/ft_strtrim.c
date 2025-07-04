@@ -6,41 +6,27 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 10:53:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 17:52:20 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/04 21:49:13 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
-char	*ft_strtrim(char *str)
+char	*ft_strtrim(char *str, char *set)
 {
 	char	*start;
 	char	*end;
-	char	*trimmed;
-	int		len;
-	int		i;
+	size_t	len;
 
-	if (!str)
+	if (!str || !set)
 		return (NULL);
 	start = str;
-	while (*start == ' ' || *start == '\t' || *start == '\n')
+	while (*start && ft_strchr(set, *start))
 		start++;
-	if (*start == '\0')
-		return (ft_strdup(""));
 	end = str + ft_strlen(str) - 1;
-	while (end > start && (*end == ' ' || *end == '\t' || *end == '\n'))
+	while (end > start && ft_strchr(set, *end))
 		end--;
 	len = end - start + 1;
-	trimmed = malloc(len + 1);
-	if (!trimmed)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		trimmed[i] = start[i];
-		i++;
-	}
-	trimmed[i] = '\0';
-	return (trimmed);
+	return (ft_substr(start, 0, len));
 }
 

@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 21:35:03 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/04 21:49:33 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int		ft_strlen(const char *s);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strrchr(const char *s, int c);
-char	*ft_strtrim(char *str);
+char	*ft_strtrim(char *str, char *set);
 char	*ft_substr(const char *s, int start, int len);
 int 	get_next_line(int fd);
 char	*ft_joinfree(char *buffer, char *new_buffer);
