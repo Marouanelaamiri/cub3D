@@ -6,59 +6,68 @@
 #    By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/01 11:29:43 by malaamir          #+#    #+#              #
-#    Updated: 2025/07/01 11:38:15 by malaamir         ###   ########.fr        #
+#    Updated: 2025/07/04 13:41:03 by malaamir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-#-------------------------------Source Files-----------------------------------#
-CUB3D_SRC =
+NAME        = cub3D
 
-CUB3D_BONUS_SRC =
-#-------------------------------Object Files-----------------------------------#
-CUB3D_OBJ = $(CUB3D_SRC:.c=.o)
+CC            = cc
 
-CUB3D_BONUS_OBJ = $(CUB3D_BONUS_SRC:.c=.o)
+CFLAGS        = -Wall -Wextra -Werror -Iincludes -IMLX42/include #-g -fsanitize=address
 
-#-------------------------------Compiler and flags-----------------------------#
-CC = cc
-RM = rm -f
-FLAGS = -Wall -Wextra -Werror
+LDFLAGS        = -ldl -lm -pthread
 
-MLX_P = MLX42/build
+SRC            = main.c
 
-MLX_LIB = -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+SRC_PARS    = parsing/parsing.c \
+			parsing/parsing_utils.c \
+			parsing/wall_checker.c \
 
-FRAMEWORKS = -framework Cocoa -framework OpenGL -framework IOKit
+SRC_EXEC    =
 
-#---------------------------Includes and Excutables----------------------------#
-INCLUDES =
-BONUS_INCLUDES =
-MANDATORY_NAME =
-BONUS_NAME =
+SRC_HLP        = helpers/ft_atoi.c \
+				helpers/ft_bzero.c \
+				helpers/ft_calloc.c \
+				helpers/ft_isalnum.c \
+				helpers/ft_isalpha.c \
+				helpers/ft_isdigit.c \
+				helpers/ft_itoa.c \
+				helpers/ft_memcpy.c \
+				helpers/ft_memset.c \
+				helpers/ft_split.c \
+				helpers/ft_strchr.c \
+				helpers/ft_strdup.c \
+				helpers/ft_strjoin.c \
+				helpers/ft_strlcat.c \
+				helpers/ft_strlcpy.c \
+				helpers/ft_strlen.c \
+				helpers/ft_strncmp.c \
+				helpers/ft_strnstr.c \
+				helpers/ft_strrchr.c \
+				helpers/ft_strtrim.c \
+				helpers/ft_substr.c \
+				helpers/get_next_line.c \
+				helpers/ft_realloc.c \
+				
+				
 
-#---------------------------------Rules----------------------------------------#
-all: $(MANDATORY_NAME)
+ALL_SRC        = $(SRC) $(SRC_PARS) $(SRC_EXEC) $(SRC_HLP)
 
-bonus : $(BONUS_NAME)
+OBJ            = $(ALL_SRC:.c=.o)
 
-$(MANDATORY_NAME): $(CUB3D_OBJ)
-	$(CC) $(FLAGS) $(CUB3D_OBJ) $(MLX_P)/libmlx42.a $(MLX_LIB) $(FRAMEWORKS) -o $(MANDATORY_NAME)
+all: $(NAME)
 
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LDFLAGS)
 
-$(BONUS_NAME): $(CUB3D_BONUS_OBJ)
-	$(CC) $(FLAGS) $(CUB3D_BONUS_OBJ) $(MLX_P)/libmlx42.a $(MLX_LIB) $(FRAMEWORKS) -o  $(BONUS_NAME)
+%.o: %.c includes/cub3d.h includes/parser.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
-mand/%.o: mand/%.c $(INCLUDES)
-	$(CC) $(FLAGS) -c $< -o $@
-
-bonus/%.o: bonus/%.c $(BONUS_INCLUDES)
-	$(CC) $(FLAGS) -c $< -o $@
-	
-#---------------------------------Cleaning-------------------------------------#
 clean:
-	$(RM) $(CUB3D_OBJ) $(CUB3D_BONUS_OBJ)
+	rm -f $(OBJ)
 
 fclean: clean
-	$(RM) $(MANDATORY_NAME) $(BONUS_NAME)
-#---------------------------------Rebuilding------------------------------------#
+	rm -f $(NAME)
+
 re: fclean all

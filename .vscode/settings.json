@@ -1,0 +1,28 @@
+{
+	"cmake.sourceDirectory": "/mnt/homes/malaamir/Desktop/cub3D/MLX42",
+	"files.associations": {
+		"cstdio": "c",
+		"locale": "c",
+		"__hash_table": "c",
+		"__mutex_base": "c",
+		"__split_buffer": "c",
+		"__threading_support": "c",
+		"__undef_macros": "c",
+		"algorithm": "c",
+		"bit": "c",
+		"chrono": "c",
+		"cmath": "c",
+		"functional": "c",
+		"memory_resource": "c",
+		"istream": "c",
+		"limits": "c",
+		"memory": "c",
+		"mutex": "c",
+		"ratio": "c",
+		"sstream": "c",
+		"string": "c",
+		"string_view": "c",
+		"vector": "c",
+		"complex": "c"
+	}
+}
