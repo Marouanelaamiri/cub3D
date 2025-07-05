@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 21:49:33 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/05 16:06:57 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 # define PARSER_H
 
 # define BUFFER_SIZE 1024
-# define MAX_LINE_LENGTH 1024
-# define MAX_MAP_SIZE 100
+// # define MAX_LINE_LENGTH 1024
+// # define MAX_MAP_SIZE 100
 
-# define TILE_SIZE			40 // should be able to be split by 2
-# define MINMP_SIZE			2
-# define WIDTH				1920 // 2600
-# define HEIGHT				1080 // 1400
-# define SCR_WIDTH			5120
-# define SCR_HEIGHT			2880
-# define HTBOX				0
-# define FOV				60
-# define WALL_STRIP_WIDTH 	1
-# define NUM_RAYS  5120
+# define TILE_SIZE			40 
+// # define MINMP_SIZE			2
+// # define WIDTH				1920 // 2600
+// # define HEIGHT				1080 // 1400
+// # define SCR_WIDTH			5120
+// # define SCR_HEIGHT			2880
+// # define HTBOX				0
+// # define FOV				60
+// # define WALL_STRIP_WIDTH 	1
+// # define NUM_RAYS  5120
 typedef struct s_map
 {
 	char *no_texture;
@@ -48,8 +48,51 @@ typedef struct s_map
 	char *error_message;
 }	t_map;
 
+void malloc_error(t_map *info, char *line, char **valid_map , int height);
+char **malloc_new_map(t_map *info, char *checked);
+size_t get_max_line_length(t_map *info);
+void clean_texture(t_map *info);
+void clean_color(t_map *info);
+void clean_map_arr(t_map *info);
+void clean_map(t_map *info);
+char *trimming_line(char *line, t_map *info);
+void init_map(t_map *info);
+void update_map(t_map *info, char **valid_map, char *checked);
+void copy_existing_map(t_map *info, char **valid_map);
+int check_texture_path(char *path);
+int check_so_no(char *trimmed, t_map *info);
+int check_we_ea(char *trimmed, t_map *info);
+int check_floor_ceiling(char *trimmed, t_map *info);
+int check_id(char *line, t_map *info);
+void print_error(char *msg, t_map *info);
+void check_surround(t_map *info, int i, int j, int len);
+int check_comma(char *line);
+int check_color_format(char *color);
+int check_range_color(char **colors);
+int check_color(char *color);
+void check_config(t_map *info);
+int check_empty_line(char *line, t_map *info, int *start);
+void map_parsing(t_map *info, int *started, char *line);
+int check_line(char *line, t_map *info, int *started);
+int final_check(t_map *info);
+void check_arguments(int ac, char **av);
+t_map	*malloc_map(void);
+t_map *parser_map(int ac, char **av);
+void check_map_char(t_map *info, int i, int len);
+void check_player_pos(char c, int x, t_map *info, int height);
+void check_lines_char(char *checked, t_map *info, int height);
+void check_map_line(t_map *info, char *line);
+int check_file_lines(int fd, t_map *info, int *start);
+int check_if_file_open(char *file, t_map *info, int *fd);
+int is_valid_map_line(char *line, t_map *info);
+void	horizontal_check(t_map*info, int len_max);
+void vertical_check(t_map *info, int i, int len);
+void check_borders(t_map *info);
+void	ft_free_array(char **arr);
+
 
 //============================================================//
+int	ft_getmax(int a, int b);
 int		ft_whitespaces(int c);
 int		ft_atoi(const char *str);
 void 	ft_bzero(void *s, size_t n);
@@ -72,7 +115,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strtrim(char *str, char *set);
 char	*ft_substr(const char *s, int start, int len);
-int 	get_next_line(int fd);
+char	*get_next_line(int fd);
 char	*ft_joinfree(char *buffer, char *new_buffer);
 char	*get_remaning(char *buffer);
 char	*ft_getline(char *buffer);

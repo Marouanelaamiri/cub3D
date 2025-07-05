@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 14:08:01 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/05 14:32:56 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/05 16:13:49 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,23 @@ int	ft_getmax(int a, int b)
 
 void init_map(t_map *info)
 {
-	info->no_texture = NULL;
-	info->so_texture = NULL;
-	info->we_texture = NULL;
-	info->ea_texture = NULL;
-	info->f_color = NULL;
-	info->c_color = NULL;
-	info->map = NULL;
-	info->map_height = 0;
-	info->map_width = 0;
-	info->player_count = 0;
-	info->config_count = 0;
-	info->map_parsed = 0;
-	info->error_message = NULL;
+	info->no_texture       = NULL;
+    info->so_texture       = NULL;
+    info->we_texture       = NULL;
+    info->ea_texture       = NULL;
+    info->f_color          = NULL;
+    info->c_color          = NULL;
+    info->map              = NULL;
+    info->map_height       = 0;
+    info->map_width        = 0;
+    info->player_count     = 0;
+    info->config_count     = 0;
+    info->map_parsed       = 0;
+    info->has_error        = 0;          // <— initialize here
+    info->player_x         = 0.0f;       // <— initialize here
+    info->player_y         = 0.0f;       // <— initialize here
+    info->player_direction = '\0';       // <— initialize here
+    info->error_message    = NULL;
 }
 void update_map(t_map *info, char **valid_map, char *checked)
 {

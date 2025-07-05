@@ -6,7 +6,7 @@
 #    By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/01 11:29:43 by malaamir          #+#    #+#              #
-#    Updated: 2025/07/04 18:53:19 by malaamir         ###   ########.fr        #
+#    Updated: 2025/07/05 15:25:53 by malaamir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,11 @@ SRC            = main.c
 
 SRC_PARS    = parsing/parsing.c \
 			parsing/parsing_utils.c \
+			parsing/parsing_utils2.c \
+			parsing/parsing_utils3.c \
+			parsing/detol.c\
+			parsing/allocation.c \
+			parsing/init.c \
 
 SRC_EXEC    =
 

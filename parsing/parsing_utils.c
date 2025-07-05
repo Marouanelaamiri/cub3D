@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:03:36 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/05 13:03:36 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/05 16:23:50 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int check_texture_path(char *path)
 		free(trim_path);
 		return 0; // Invalid trimmed path
 	}
+	    // DEBUG: print exactly what we're opening
+    fprintf(stderr, "DEBUG: NO path -> \"%s\"\n", trim_path);
 	fd = open(trim_path, O_RDONLY);
 	free(trim_path);
 	if (fd < 0)
@@ -32,67 +34,79 @@ int check_texture_path(char *path)
 	close(fd);
 	return 1; // Valid texture path	
 }
-static int check_so_no(char *trimmed, t_map *info)
+int check_so_no(char *trimmed, t_map *info)
 {
-	if (ft_strncmp(trimmed, "NO ", 3) == 0 && !info->no_texture)
-	{
-		info->no_texture = ft_strtrim(trimmed + 3, " \n" );
-		if(!check_texture_path(info->no_texture))
-			print_error("Invalid NO texture path", info);
-		return 1;
-	}
-	if (ft_strncmp(trimmed, "SO ", 3) == 0 && !info->so_texture)
-	{
-		info->so_texture = ft_strtrim(trimmed + 3, " \n" );
-		if(!check_texture_path(info->so_texture))
-			print_error("Invalid SO texture path", info);
-		return 1;
-	}
-	return 0;
+    if (ft_strncmp(trimmed, "NO ", 3) == 0)
+    {
+        if (info->no_texture)
+            print_error("Duplicate NO texture identifier.\n", info);
+
+        info->no_texture = ft_strtrim(trimmed + 3, " \n\r\t");
+        if (!info->no_texture || !check_texture_path(info->no_texture))
+            print_error("Invalid NO texture path.\n", info);
+        return 1;
+    }
+    if (ft_strncmp(trimmed, "SO ", 3) == 0)
+    {
+        if (info->so_texture)
+            print_error("Duplicate SO texture identifier.\n", info);
+
+        info->so_texture = ft_strtrim(trimmed + 3, " \n\r\t");
+        if (!info->so_texture || !check_texture_path(info->so_texture))
+            print_error("Invalid SO texture path.\n", info);
+        return 1;
+    }
+    return 0;
 }
-static int check_we_ea(char *trimmed, t_map *info)
+
+int check_we_ea(char *trimmed, t_map *info)
 {
-	if (ft_strncmp(trimmed, "WE ", 3) == 0 && !info->we_texture)
-	{
-		info->we_texture = ft_strtrim(trimmed + 3, " \n" );
-		if(!check_texture_path(info->we_texture))
-			print_error("Invalid WE texture path", info);
-		return 1;
-	}
-	if (ft_strncmp(trimmed, "EA ", 3) == 0 && !info->ea_texture)
-	{
-		info->ea_texture = ft_strtrim(trimmed + 3, " \n" );
-		if(!check_texture_path(info->ea_texture))
-			print_error("Invalid EA texture path", info);
-		return 1;
-	}
-	return 0;
+    if (ft_strncmp(trimmed, "WE ", 3) == 0)
+    {
+        if (info->we_texture)
+            print_error("Duplicate WE texture identifier.\n", info);
+
+        info->we_texture = ft_strtrim(trimmed + 3, " \n\r\t");
+        if (!info->we_texture || !check_texture_path(info->we_texture))
+            print_error("Invalid WE texture path.\n", info);
+        return 1;
+    }
+    if (ft_strncmp(trimmed, "EA ", 3) == 0)
+    {
+        if (info->ea_texture)
+            print_error("Duplicate EA texture identifier.\n", info);
+
+        info->ea_texture = ft_strtrim(trimmed + 3, " \n\r\t");
+        if (!info->ea_texture || !check_texture_path(info->ea_texture))
+            print_error("Invalid EA texture path.\n", info);
+        return 1;
+    }
+    return 0;
 }
+
 int check_floor_ceiling(char *trimmed, t_map *info)
 {
-	if (ft_strncmp(trimmed, "F ", 2) == 0 && !info->f_color)
-	{
-		info->f_color = ft_strtrim(trimmed + 2, " \n" );
-		if(!check_color(info->f_color))
-		{
-			info->has_error = 1;
-			write(2, "Invalid floor color\n", 20);
-			return 0;
-		}
-		return 1;
-	}
-	if (ft_strncmp(trimmed, "C ", 2) == 0 && !info->c_color)
-	{
-		info->c_color = ft_strtrim(trimmed + 2, " \n" );
-		if(!check_color(info->c_color))
-		{
-			info->has_error = 1;
-			write(2, "Invalid ceiling color\n", 22);
-			return 0;
-		}
-		return 1;
-	}
-	return 0;// No match found
+    if (ft_strncmp(trimmed, "F ", 2) == 0)
+    {
+        if (info->f_color)
+            print_error("Duplicate floor color identifier.\n", info);
+
+        info->f_color = ft_strtrim(trimmed + 2, " \n\r\t");
+        if (!info->f_color || !check_color(info->f_color))
+            print_error("Invalid floor color.\n", info);
+        return 1;
+    }
+    if (ft_strncmp(trimmed, "C ", 2) == 0)
+    {
+        if (info->c_color)
+            print_error("Duplicate ceiling color identifier.\n", info);
+
+        info->c_color = ft_strtrim(trimmed + 2, " \n\r\t");
+        if (!info->c_color || !check_color(info->c_color))
+            print_error("Invalid ceiling color.\n", info);
+        return 1;
+    }
+    return 0;
 }
 int check_id(char *line, t_map *info)
 {

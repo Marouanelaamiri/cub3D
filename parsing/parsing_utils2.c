@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 13:34:16 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/05 14:34:27 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/05 16:05:25 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void print_error(char *msg, t_map *info)
 	write(2, msg, ft_strlen(msg));
 	if (info)
 	{
-		clean_map_info(info);
+		clean_map(info);
 		free(info);
 	}
 	exit(1);
@@ -53,7 +53,7 @@ int check_comma(char *line)
 	}
 	return (comma_cnt == 2);
 }
-static int check_color_format(char *color)
+int check_color_format(char *color)
 {
 	int i;
 	int num_count;
@@ -106,3 +106,17 @@ int check_color(char *color)
 }
 
 
+void	ft_free_array(char **arr)
+{
+	int	n;
+
+	n = 0;
+	if (!arr)
+		return ;
+	while (arr[n])
+	{
+		free(arr[n]);
+		n++;
+	}
+	free(arr);
+}

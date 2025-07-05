@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 14:35:44 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/05 15:04:56 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/05 16:45:21 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,19 @@ void check_config(t_map *info)
 
 int check_empty_line(char *line, t_map *info, int *start)
 {
-	if (*start && ft_strlen(line) <= 1)
-	{
-		info->has_error = 1;
-		write(2, "Error: Empty line found in map.\n", 32);
-		return 0; // Empty line found
-	}
-	return 1; // No empty line found
+    char *trimmed = ft_strtrim(line, " \t\n\r");
+    if (!trimmed)
+        print_error("Memory allocation failed during empty‑line check.\n", info);
+
+    // Once map parsing has started, an empty (whitespace‑only) line is fatal
+    if (*start && trimmed[0] == '\0')
+    {
+        free(trimmed);
+        print_error("Empty line found in map.\n", info);
+    }
+
+    free(trimmed);
+    return 1;
 }
 void map_parsing(t_map *info, int *started, char *line)
 {
@@ -38,32 +44,53 @@ void map_parsing(t_map *info, int *started, char *line)
 }
 int check_line(char *line, t_map *info, int *started)
 {
-	if (!*started && ft_strlen(line) <= 1)
-		return 1;
-	if (!info->map_parsed && info->config_count < 6)
-	{
-		if (!check_id(line, info) && ft_strlen(line) > 1)
-			map_parsing(info, started, line);
-		return(!info->has_error);
-	}
-	if (ft_strlen(line) <= 1 || info->map_parsed)
-	{
-		if (!check_empty_line(line, info, started))
-			return 0; // Empty line found
-		map_parsing(info, started, line);
-		return (!info->has_error);
-	}
-	return 1; // Valid line
+    char *trimmed = ft_strtrim(line, " \t\n\r");
+    if (!trimmed)
+        print_error("Memory allocation failed during line check.\n", info);
+
+    // 1) Skip leading whitespace‑only lines until we hit the first config or map line
+    if (!*started && trimmed[0] == '\0')
+    {
+        free(trimmed);
+        return 1;
+    }
+
+    // 2) Config section: expect exactly 6 ID lines
+    if (!info->map_parsed && info->config_count < 6)
+    {
+        if (!check_id(line, info) && trimmed[0] != '\0')
+            map_parsing(info, started, line);
+        free(trimmed);
+        return 1;
+    }
+
+    // 3) Map section: whitespace‑only lines are now errors; non‑empty lines go into the map
+    if (info->map_parsed)
+    {
+        if (trimmed[0] == '\0')
+        {
+            free(trimmed);
+            print_error("Empty line found in map.\n", info);
+        }
+        free(trimmed);
+        map_parsing(info, started, line);
+        return 1;
+    }
+
+    // 4) Fallback (shouldn’t really happen): just continue
+    free(trimmed);
+    return 1;
 }
 int final_check(t_map *info)
 {
+	printf("DEBUG: final_check → player_count = %d\n", info->player_count);
 	check_config(info);
+	check_borders(info);
 	if (info->player_count != 1)
 	{
 		print_error("Error: Invalid player count.\n", info);
 		return 0; // Invalid player count
 	}
-	check_borders(info);
 	if (info->has_error)
 		return 0; // Error occurred during checks
 	return 1; // All checks passed

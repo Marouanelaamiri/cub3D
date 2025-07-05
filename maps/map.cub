@@ -1,13 +1,16 @@
 
-NO texture.xpm
-SO texture.xpm
-WE texture.xpm
-EA texture.xpm
-F 220,100,0
-C 225,30,0
+NO               textures/easiit.png
+SO textures/easiit.png
+WE textures/easiit.png
+EA textures/easiit.png
+
+F 32,0,1
+
+
+C 0,25,110 
 
 111111
-100001
+101001
+11N101
 101101
-10N001
 111111
