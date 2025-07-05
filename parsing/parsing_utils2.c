@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 13:34:16 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/05 13:52:58 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:34:27 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void check_surround(t_map *info, int i, int j, int len)
 	if (j < len - 1 && info->map[i][j + 1] == ' ')
 		print_error("Error: Map is not surrounded by walls.\n", info);
 }
-int check_comma(char *line, t_map *info)
+int check_comma(char *line)
 {
 	int i;
 	int comma_cnt;
@@ -89,6 +89,20 @@ int check_range_color(char **colors)
 	}
 	colors[i] = NULL; // Ensure the array is null-terminated
 	return (i == 3); // Must have exactly 3 color components
+}
+int check_color(char *color)
+{
+	char **colors;
+	int valid;
+
+	if (!check_comma(color))
+		return 0; // Invalid format
+	colors = ft_split(color, ',');
+	if (!colors)
+		return 0; // Memory allocation failed
+	valid = check_range_color(colors);
+	ft_free_array(colors);
+	return valid;
 }
 
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 14:08:01 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/05 14:18:31 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:32:56 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,7 @@ void update_map(t_map *info, char **valid_map, char *checked)
 void copy_existing_map(t_map *info, char **valid_map)
 {
 	int i;
+	i = -1;
+	while (++i < info->map_height)
+		valid_map[i] = info->map[i];
 }
