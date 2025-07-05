@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:03:23 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 21:45:41 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:07:36 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,30 @@ void	horizontal_check(t_map*info, int len_max)
 			print_error("Error: Map is not surrounded by walls.\n", info);
 		if ( i < ft_strlen(info->map[info->map_height - 1]) && info->map[info->map_height - 1][i] != '1' && info->map[info->map_height - 1][i] != ' ')
 			print_error("Error: Map is not surrounded by walls.\n", info);
+		i++;
+	}
+}
+void vertical_check(t_map *info, int i, int len)
+{
+	if (info->map[i][0] != '1' && info->map[i][0] != ' ')
+		print_error("Error: Map is not surrounded by walls.\n", info);
+	if (len > 0 && info->map[i][len - 1] != '1' && info->map[i][len - 1] != ' ')
+		print_error("Error: Map is not surrounded by walls.\n", info);
+}
+void chech_borders(t_map *info)
+{
+	int i;
+	int len_max;
+	int len;
+	
+	i = 0;
+	len_max = get_max_line_length(info);
+	len = ft_strlen(info->map[i]);
+	horizontal_check(info, len_max);
+	while (i < info->map_height)
+	{
+		vertical_check(info, i, len);
+		check_map_char(info, i, len);
 		i++;
 	}
 }
