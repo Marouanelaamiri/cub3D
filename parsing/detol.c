@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 13:53:16 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/05 14:15:49 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/05 18:24:00 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,19 @@ void clean_map(t_map *info)
 char *trimming_line(char *line, t_map *info)
 {
 	char *trimmed;
+	int i;
 
 	trimmed = ft_strdup(line);
 	if (!trimmed)
 		print_error("Error: Memory allocation failed.\n", info);
 	if (trimmed[ft_strlen(trimmed) - 1] == '\n')
 		trimmed[ft_strlen(trimmed) - 1] = '\0';
+	i = 0;
+	while (trimmed[i])
+	{
+		if (trimmed[i] == '\t')
+			trimmed[i] = ' '; // Replace tabs with spaces
+		i++;
+	}
 	return trimmed;
 }

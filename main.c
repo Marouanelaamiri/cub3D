@@ -6,14 +6,21 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:13:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/05 16:21:02 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/05 18:05:33 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
+t_map *g_map = NULL;
+
+void f()
+{
+	system("leaks cub3D");
+}
 
 int main(int argc, char **argv)
 {
+	atexit(f);
     t_map *info;
 
     // 1) Check args
@@ -31,10 +38,6 @@ int main(int argc, char **argv)
     printf(" Map: %d columns × %d rows\n", info->map_width, info->map_height);
     printf(" Player at (%.1f, %.1f) facing '%c'\n",
            info->player_x, info->player_y, info->player_direction);
-
-    // 4) (optional) dump raw map
-    for (int y = 0; y < info->map_height; y++)
-        printf("  %s\n", info->map[y]);
 
     clean_map(info);
     free(info);

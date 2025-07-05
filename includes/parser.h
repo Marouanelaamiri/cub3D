@@ -6,28 +6,17 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/05 16:06:57 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/05 18:27:07 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# define BUFFER_SIZE 1024
-// # define MAX_LINE_LENGTH 1024
-// # define MAX_MAP_SIZE 100
+# define BUFFER_SIZE	1024
+# define TILE_SIZE		40 
 
-# define TILE_SIZE			40 
-// # define MINMP_SIZE			2
-// # define WIDTH				1920 // 2600
-// # define HEIGHT				1080 // 1400
-// # define SCR_WIDTH			5120
-// # define SCR_HEIGHT			2880
-// # define HTBOX				0
-// # define FOV				60
-// # define WALL_STRIP_WIDTH 	1
-// # define NUM_RAYS  5120
-typedef struct s_map
+typedef struct s_data
 {
 	char *no_texture;
 	char *so_texture;
@@ -46,16 +35,16 @@ typedef struct s_map
 	char	player_direction;
 	int has_error;
 	char *error_message;
-}	t_map;
+}	t_data;
 
-void malloc_error(t_map *info, char *line, char **valid_map , int height);
-char **malloc_new_map(t_map *info, char *checked);
-size_t get_max_line_length(t_map *info);
-void clean_texture(t_map *info);
-void clean_color(t_map *info);
-void clean_map_arr(t_map *info);
-void clean_map(t_map *info);
-char *trimming_line(char *line, t_map *info);
+void malloc_error(t_data *info, char *line, char **valid_map , int height);
+char **malloc_new_map(t_data *info, char *checked);
+size_t get_max_line_length(t_data *info);
+void clean_texture(t_data *info);
+void clean_color(t_data *info);
+void clean_map_arr(t_data *info);
+void clean_map(t_data *info);
+char *trimming_line(char *line, t_data *info);
 void init_map(t_map *info);
 void update_map(t_map *info, char **valid_map, char *checked);
 void copy_existing_map(t_map *info, char **valid_map);
