@@ -6,11 +6,11 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 18:21:33 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 09:39:47 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:18:22 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {

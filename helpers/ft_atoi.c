@@ -6,11 +6,11 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 19:40:03 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 10:39:13 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:17:37 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 int	ft_whitespaces(int c)
 {

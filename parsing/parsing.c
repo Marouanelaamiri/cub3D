@@ -6,11 +6,11 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:03:23 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/05 18:21:56 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:52:23 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 void check_arguments(int ac, char **av)
 {
@@ -27,11 +27,11 @@ void check_arguments(int ac, char **av)
 		exit(EXIT_FAILURE);
 	}
 }
-t_map	*malloc_map(void)
+t_data	*malloc_map(void)
 {
-	t_map	*map;
+	t_data	*map;
 
-	map = (t_map *)malloc(sizeof(t_map));
+	map = (t_data *)malloc(sizeof(t_data));
 	if (!map)
 	{
 		write(2, "Error: Memory allocation failed for map.\n", 41);
@@ -57,9 +57,9 @@ t_map	*malloc_map(void)
     map->error_message    = NULL;
 	return (map);
 }
-t_map *parser_map(int ac, char **av)
+t_data *parser_map(int ac, char **av)
 {
-	t_map *map;
+	t_data *map;
 
 	check_arguments(ac, av);
 	map = malloc_map();
@@ -69,7 +69,7 @@ t_map *parser_map(int ac, char **av)
 		return (NULL);
 	return (map);
 }
-void check_map_char(t_map *info, int i, int len)
+void check_map_char(t_data *info, int i, int len)
 {
 	int j;
 	j = 0;
@@ -90,7 +90,7 @@ void check_map_char(t_map *info, int i, int len)
 		j++;
 	}
 }
-void check_player_pos(char c, int x, t_map *info, int height)
+void check_player_pos(char c, int x, t_data *info, int height)
 {
 	printf("DEBUG: Found player '%c' at (%d, %d)\n", c, x, height);
 	info->player_count++;
@@ -104,7 +104,7 @@ void check_player_pos(char c, int x, t_map *info, int height)
 	info->player_y = height * TILE_SIZE + TILE_SIZE / 2;
 	info->player_direction = c;
 }
-void check_lines_char(char *checked, t_map *info, int height)
+void check_lines_char(char *checked, t_data *info, int height)
 {
 	int i;
 	i = -1;
@@ -116,7 +116,7 @@ void check_lines_char(char *checked, t_map *info, int height)
 	}
 			
 }
-void check_map_line(t_map *info, char *line)
+void check_map_line(t_data *info, char *line)
 {
 	char *checked;
 	char **valid_map;
@@ -124,18 +124,19 @@ void check_map_line(t_map *info, char *line)
 	if(info->has_error)
 		return;
 	checked = trimming_line(line, info);//clean line
-	valid_map = malloc_new_map(info, checked);//allocate new map
-	if (!valid_map)
-	{
-		free(checked);
-		info->has_error = 1;
-		return;
+	 valid_map = malloc(sizeof(char *) * (info->map_height + 2));
+    if (!valid_map)
+    {
+        free(checked);
+        print_error("Error: Memory allocation failed for map.\n", info);
+        info->has_error = 1;
+        return;
 	}
 	copy_existing_map(info, valid_map);//copy existing map
 	valid_map[info->map_height] = ft_strdup(checked);//add new line to map
 	if(!valid_map[info->map_height])
 	{
-		malloc_error(info, checked, valid_map, info->map_height);
+		free_malloc(info, checked, valid_map, info->map_height);
 		return;
 	}
 	valid_map[info->map_height + 1] = NULL;//add null terminator
@@ -143,7 +144,7 @@ void check_map_line(t_map *info, char *line)
 	// check_lines_char(checked, info, info->map_height - 1);//check player position and characters
 	free(checked);//free checked line
 }
-size_t get_max_line_length(t_map *info)
+size_t get_max_line_length(t_data *info)
 {
 	int i;
 	size_t max_length;
@@ -157,7 +158,7 @@ size_t get_max_line_length(t_map *info)
 	}
 	return max_length;
 }
-int check_file_lines(int fd, t_map *info, int *start)
+int check_file_lines(int fd, t_data *info, int *start)
 {
 	char *line;
 	
@@ -174,7 +175,7 @@ int check_file_lines(int fd, t_map *info, int *start)
 	}
 	return 1; // All lines are valid
 }
-int check_if_file_open(char *file, t_map *info, int *fd)
+int check_if_file_open(char *file, t_data *info, int *fd)
 {
 	*fd = open(file, O_RDONLY);
 	if (*fd < 0)
@@ -185,13 +186,13 @@ int check_if_file_open(char *file, t_map *info, int *fd)
 	}
 	return 1; // File opened successfully
 }
-int is_valid_map_line(char *line, t_map *info)
+int is_valid_map_line(char *line, t_data *info)
 {
 	int fd;
 	int start = 0;
 	int res;
 	
-	init_map(info);
+	init_data(info);
 	if(!check_if_file_open(line, info, &fd))
 		return 0; // File could not be opened
 	start = 0;
@@ -211,7 +212,7 @@ int is_valid_map_line(char *line, t_map *info)
 	}
 	return 1; // Map is valid
 }
-void	horizontal_check(t_map *info, int len_max)
+void	horizontal_check(t_data *info, int len_max)
 {
 	int i;
 	i = 0;
@@ -224,14 +225,14 @@ void	horizontal_check(t_map *info, int len_max)
 		i++;
 	}
 }
-void vertical_check(t_map *info, int i, int len)
+void vertical_check(t_data *info, int i, int len)
 {
 	if (info->map[i][0] != '1' && info->map[i][0] != ' ')
 		print_error("Error: Map is not surrounded by walls.\n", info);
 	if (len > 0 && info->map[i][len - 1] != '1' && info->map[i][len - 1] != ' ')
 		print_error("Error: Map is not surrounded by walls.\n", info);
 }
-void check_borders(t_map *info)
+void check_borders(t_data *info)
 {
 	int i;
 	int len_max;

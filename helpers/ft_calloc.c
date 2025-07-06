@@ -6,11 +6,11 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 09:52:40 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 10:40:19 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:17:46 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 void	*ft_calloc(size_t count, size_t size)
 {

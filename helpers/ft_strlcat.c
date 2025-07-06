@@ -6,11 +6,11 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:30:27 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 09:39:24 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:18:14 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {

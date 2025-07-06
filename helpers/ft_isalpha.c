@@ -6,11 +6,11 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 08:55:49 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 09:38:01 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:17:49 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 int	ft_isalpha(int c)
 {

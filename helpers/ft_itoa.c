@@ -6,11 +6,11 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:15:48 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 09:38:17 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:17:53 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 static size_t	int_len(int nb)
 {

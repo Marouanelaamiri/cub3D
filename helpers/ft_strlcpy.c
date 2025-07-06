@@ -6,11 +6,11 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 09:32:10 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 19:07:36 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:18:16 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 int	ft_strlcpy(char *dst, const char *src, int dstsize)
 {

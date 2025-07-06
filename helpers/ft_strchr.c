@@ -6,11 +6,11 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:19:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 09:39:06 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:18:06 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 char	*ft_strchr(const char *s, int c)
 {

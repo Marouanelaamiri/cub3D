@@ -6,20 +6,13 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 14:08:01 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/05 16:13:49 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:55:44 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
-int	ft_getmax(int a, int b)
-{
-	if (a > b)
-		return (a);
-	return (b);
-}
-
-void init_map(t_map *info)
+void init_data(t_data *info)
 {
 	info->no_texture       = NULL;
     info->so_texture       = NULL;
@@ -39,14 +32,14 @@ void init_map(t_map *info)
     info->player_direction = '\0';       // <— initialize here
     info->error_message    = NULL;
 }
-void update_map(t_map *info, char **valid_map, char *checked)
+void update_map(t_data *info, char **valid_map, char *checked)
 {
 	free(info->map);
 	info->map = valid_map;
 	info->map_height++;
 	info->map_width = ft_getmax(info->map_width, ft_strlen(checked));
 }
-void copy_existing_map(t_map *info, char **valid_map)
+void copy_existing_map(t_data *info, char **valid_map)
 {
 	int i;
 	i = -1;

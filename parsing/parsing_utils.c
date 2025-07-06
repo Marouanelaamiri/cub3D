@@ -6,11 +6,11 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:03:36 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/05 16:23:50 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:17:18 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 int check_texture_path(char *path)
 {
@@ -34,7 +34,7 @@ int check_texture_path(char *path)
 	close(fd);
 	return 1; // Valid texture path	
 }
-int check_so_no(char *trimmed, t_map *info)
+int check_so_no(char *trimmed,t_data *info)
 {
     if (ft_strncmp(trimmed, "NO ", 3) == 0)
     {
@@ -59,7 +59,7 @@ int check_so_no(char *trimmed, t_map *info)
     return 0;
 }
 
-int check_we_ea(char *trimmed, t_map *info)
+int check_we_ea(char *trimmed,t_data *info)
 {
     if (ft_strncmp(trimmed, "WE ", 3) == 0)
     {
@@ -84,7 +84,7 @@ int check_we_ea(char *trimmed, t_map *info)
     return 0;
 }
 
-int check_floor_ceiling(char *trimmed, t_map *info)
+int check_floor_ceiling(char *trimmed,t_data *info)
 {
     if (ft_strncmp(trimmed, "F ", 2) == 0)
     {
@@ -108,7 +108,7 @@ int check_floor_ceiling(char *trimmed, t_map *info)
     }
     return 0;
 }
-int check_id(char *line, t_map *info)
+int check_id(char *line,t_data *info)
 {
 	char *trim;
 	int res;

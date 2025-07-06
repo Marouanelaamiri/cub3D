@@ -6,12 +6,12 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:13:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/05 18:05:33 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:17:30 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
-t_map *g_map = NULL;
+#include "cub3d.h"
+t_data *g_map = NULL;
 
 void f()
 {
@@ -21,7 +21,7 @@ void f()
 int main(int argc, char **argv)
 {
 	atexit(f);
-    t_map *info;
+    t_data *info;
 
     // 1) Check args
     if (argc != 2)

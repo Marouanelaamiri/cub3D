@@ -6,7 +6,7 @@
 #    By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/01 11:29:43 by malaamir          #+#    #+#              #
-#    Updated: 2025/07/05 15:25:53 by malaamir         ###   ########.fr        #
+#    Updated: 2025/07/06 21:56:46 by malaamir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ SRC_HLP        = helpers/ft_atoi.c \
 				helpers/get_next_line.c \
 				helpers/ft_realloc.c \
 				helpers/ft_strcmp.c \
-				
+				helpers/ft_getmax.c \
 				
 
 ALL_SRC        = $(SRC) $(SRC_PARS) $(SRC_EXEC) $(SRC_HLP)
@@ -64,15 +64,32 @@ OBJ            = $(ALL_SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
+	@echo "\033[1;32m✅ Compiling complete source code into executable...\033[0m"
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LDFLAGS)
+	@echo "\033[1;32m🎉 Build successful! You can now run ./cub3d\033[0m"
+	@echo "\033[1;31m"
+	@echo "  _____ _   _______  ___________  "
+	@echo " /  __ \ | | | ___ \|____ |  _  \ "
+	@echo " | /  \/ | | | |_/ /    / / | | | "
+	@echo " | |   | | | | ___ \    \ \ | | | "
+	@echo " | \__/\ |_| | |_/ /.___/ / |/ /  "
+	@echo "  \____/\___/\____/ \____/|___/   "
+
+                                  
+	@echo "\033[0m"
 
 %.o: %.c includes/cub3d.h includes/parser.h
 	$(CC) $(CFLAGS) -c $< -o $@
+	@echo "\033[1;34m🔹 Compiling: $< -> $@\033[0m"
 
 clean:
-	rm -f $(OBJ)
+	@echo "\033[0;33m🧼 Removing compiled object files to clean up...\033[0m"
+	@rm -f $(OBJ)
+	@echo "\033[0;32m✔️  Clean complete.\033[0m"
 
 fclean: clean
-	rm -f $(NAME)
+	@echo "\033[0;31m🗑️ Removing final executable (cub3d)...\033[0m"
+	@rm -f $(NAME)
+	@echo "\033[0;32m✔️  Full clean complete.\033[0m"
 
 re: fclean all

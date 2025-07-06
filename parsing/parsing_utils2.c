@@ -6,13 +6,13 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 13:34:16 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/05 18:17:13 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:17:20 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
-void print_error(char *msg, t_map *info)
+void print_error(char *msg,t_data *info)
 {
 	write(2, "Error: ", 7);
 	write(2, msg, ft_strlen(msg));
@@ -23,7 +23,7 @@ void print_error(char *msg, t_map *info)
 	}
 	exit(1);
 }
-void check_surround(t_map *info, int i, int j, int len)
+void check_surround(t_data *info, int i, int j, int len)
 {
 	if (i > 0 && ( j >= ft_strlen(info->map[i - 1]) || info->map[i - 1][j] == ' '))
 		print_error("Error: Map is not surrounded by walls.\n", info);

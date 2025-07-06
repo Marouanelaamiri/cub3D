@@ -6,11 +6,11 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:07:02 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 09:38:10 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:17:51 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 int	ft_isdigit(int c)
 {

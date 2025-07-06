@@ -6,11 +6,11 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 18:52:47 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 18:52:51 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:18:08 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 int	ft_strcmp(const char *s1, const char *s2)
 {

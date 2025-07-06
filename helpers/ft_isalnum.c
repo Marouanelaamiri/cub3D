@@ -6,11 +6,11 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 08:51:44 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 09:37:54 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:17:48 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 int	ft_isalnum(int c)
 {

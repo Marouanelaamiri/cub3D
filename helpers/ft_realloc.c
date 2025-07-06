@@ -6,11 +6,11 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 11:05:18 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 17:44:57 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:18:02 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 char	**ft_realloc(char **lines, int line_count, char *new_line)
 {

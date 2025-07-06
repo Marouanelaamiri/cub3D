@@ -6,11 +6,11 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 10:32:30 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 09:37:45 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:17:44 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 void	ft_bzero(void *s, size_t n)
 {

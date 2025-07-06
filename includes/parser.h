@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/05 18:27:07 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:55:02 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,49 +37,46 @@ typedef struct s_data
 	char *error_message;
 }	t_data;
 
-void malloc_error(t_data *info, char *line, char **valid_map , int height);
-char **malloc_new_map(t_data *info, char *checked);
+void	clean_map(t_data *info);
+t_data	*parser_map(int ac, char **av);
+void free_malloc(t_data *info, char *line, char **valid_map , int height);
 size_t get_max_line_length(t_data *info);
-void clean_texture(t_data *info);
-void clean_color(t_data *info);
 void clean_map_arr(t_data *info);
 void clean_map(t_data *info);
 char *trimming_line(char *line, t_data *info);
-void init_map(t_map *info);
-void update_map(t_map *info, char **valid_map, char *checked);
-void copy_existing_map(t_map *info, char **valid_map);
+void init_data(t_data *info);
+void update_map(t_data *info, char **valid_map, char *checked);
+void copy_existing_map(t_data *info, char **valid_map);
 int check_texture_path(char *path);
-int check_so_no(char *trimmed, t_map *info);
-int check_we_ea(char *trimmed, t_map *info);
-int check_floor_ceiling(char *trimmed, t_map *info);
-int check_id(char *line, t_map *info);
-void print_error(char *msg, t_map *info);
-void check_surround(t_map *info, int i, int j, int len);
+int check_so_no(char *trimmed, t_data *info);
+int check_we_ea(char *trimmed, t_data *info);
+int check_floor_ceiling(char *trimmed, t_data *info);
+int check_id(char *line, t_data *info);
+void print_error(char *msg, t_data *info);
+void check_surround(t_data *info, int i, int j, int len);
 int check_comma(char *line);
 int check_color_format(char *color);
 int check_range_color(char **colors);
 int check_color(char *color);
-void check_config(t_map *info);
-int check_empty_line(char *line, t_map *info, int *start);
-void map_parsing(t_map *info, int *started, char *line);
-int check_line(char *line, t_map *info, int *started);
-int final_check(t_map *info);
+void check_config(t_data *info);
+int check_empty_line(char *line, t_data *info, int *start);
+void map_parsing(t_data *info, int *started, char *line);
+int check_line(char *line, t_data *info, int *started);
+int final_check(t_data *info);
 void check_arguments(int ac, char **av);
-t_map	*malloc_map(void);
-t_map *parser_map(int ac, char **av);
-void check_map_char(t_map *info, int i, int len);
-void check_player_pos(char c, int x, t_map *info, int height);
-void check_lines_char(char *checked, t_map *info, int height);
-void check_map_line(t_map *info, char *line);
-int check_file_lines(int fd, t_map *info, int *start);
-int check_if_file_open(char *file, t_map *info, int *fd);
-int is_valid_map_line(char *line, t_map *info);
-void	horizontal_check(t_map*info, int len_max);
-void vertical_check(t_map *info, int i, int len);
-void check_borders(t_map *info);
+t_data	*malloc_map(void);
+t_data *parser_map(int ac, char **av);
+void check_map_char(t_data *info, int i, int len);
+void check_player_pos(char c, int x, t_data *info, int height);
+void check_lines_char(char *checked, t_data *info, int height);
+void check_map_line(t_data *info, char *line);
+int check_file_lines(int fd, t_data *info, int *start);
+int check_if_file_open(char *file, t_data *info, int *fd);
+int is_valid_map_line(char *line, t_data *info);
+void	horizontal_check(t_data*info, int len_max);
+void vertical_check(t_data *info, int i, int len);
+void check_borders(t_data *info);
 void	ft_free_array(char **arr);
-
-
 //============================================================//
 int	ft_getmax(int a, int b);
 int		ft_whitespaces(int c);

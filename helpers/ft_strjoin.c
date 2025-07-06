@@ -6,11 +6,11 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 09:59:30 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 09:39:18 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:18:12 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 char	*ft_strjoin(const char *s1, const char *s2)
 {

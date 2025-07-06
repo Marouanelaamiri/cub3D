@@ -6,11 +6,11 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 10:53:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 21:49:13 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:18:27 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 char	*ft_strtrim(char *str, char *set)
 {

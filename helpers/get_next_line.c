@@ -6,11 +6,11 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 13:28:24 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/04 21:33:52 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:18:33 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 char	*ft_joinfree(char *buffer, char *new_buffer)
 {

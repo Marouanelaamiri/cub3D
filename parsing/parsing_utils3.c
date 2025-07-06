@@ -6,13 +6,13 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 14:35:44 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/05 16:45:21 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/06 21:17:23 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
-void check_config(t_map *info)
+void check_config(t_data *info)
 {
 	if (!info->no_texture || !info->so_texture || !info->we_texture || !info->ea_texture)
 		print_error("Error: Missing texture configuration.\n", info);
@@ -20,7 +20,7 @@ void check_config(t_map *info)
 		print_error("Error: Missing floor or ceiling color configuration.\n", info);
 }
 
-int check_empty_line(char *line, t_map *info, int *start)
+int check_empty_line(char *line,t_data *info, int *start)
 {
     char *trimmed = ft_strtrim(line, " \t\n\r");
     if (!trimmed)
@@ -36,13 +36,13 @@ int check_empty_line(char *line, t_map *info, int *start)
     free(trimmed);
     return 1;
 }
-void map_parsing(t_map *info, int *started, char *line)
+void map_parsing(t_data *info, int *started, char *line)
 {
 	info->map_parsed = 1;
 	*started = 1;
 	check_map_line(info, line);
 }
-int check_line(char *line, t_map *info, int *started)
+int check_line(char *line,t_data *info, int *started)
 {
     char *trimmed = ft_strtrim(line, " \t\n\r");
     if (!trimmed)
@@ -81,7 +81,7 @@ int check_line(char *line, t_map *info, int *started)
     free(trimmed);
     return 1;
 }
-int final_check(t_map *info)
+int final_check(t_data *info)
 {
 	printf("DEBUG: final_check → player_count = %d\n", info->player_count);
 	check_config(info);
