@@ -6,14 +6,9 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/07 23:18:52 by aromani          ###   ########.fr       */
+/*   Updated: 2025/07/08 00:27:12 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*   Updated: 2025/07/07 23:08:49 by malaamir         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 
 #ifndef PARSER_H
 # define PARSER_H
@@ -22,6 +17,7 @@
 # define TILE_SIZE		60
 # define RED 0xFF0000
 # define BLACK 0x000000
+# define GREEN 0x00FF00
 
 typedef struct s_data
 {
