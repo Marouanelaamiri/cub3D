@@ -6,15 +6,16 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/07 16:42:51 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/07 16:44:32 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef PARSER_H
 # define PARSER_H
 
 # define BUFFER_SIZE	1024
-# define TILE_SIZE		40 
+# define TILE_SIZE		60 
 
 typedef struct s_data
 {
