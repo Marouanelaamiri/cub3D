@@ -1,20 +1,8 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/07/01 11:29:43 by malaamir          #+#    #+#              #
-#    Updated: 2025/07/06 21:56:46 by malaamir         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME        = cub3D
 
 CC            = cc
 
-CFLAGS        = -Wall -Wextra -Werror -Iincludes -IMLX42/include #-g -fsanitize=address
+CFLAGS        = -Wall -Wextra -Werror -Iincludes  #-g -fsanitize=address
 
 LDFLAGS        = -ldl -lm -pthread
 
@@ -28,7 +16,7 @@ SRC_PARS    = parsing/parsing.c \
 			parsing/allocation.c \
 			parsing/init.c \
 
-SRC_EXEC    =
+SRC_EXEC    = raycasting/rayasting.c \
 
 SRC_HLP        = helpers/ft_atoi.c \
 				helpers/ft_bzero.c \
@@ -65,7 +53,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@echo "\033[1;32m✅ Compiling complete source code into executable...\033[0m"
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LDFLAGS)
+	$(CC) $(CFLAGS) $(OBJ) -lmlx -framework OpenGL -framework AppKit -o $(NAME) $(LDFLAGS)
 	@echo "\033[1;32m🎉 Build successful! You can now run ./cub3d\033[0m"
 	@echo "\033[1;31m"
 	@echo "  _____ _   _______  ___________  "

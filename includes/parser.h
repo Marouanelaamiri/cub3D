@@ -3,9 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
+/*   Updated: 2025/07/07 23:18:52 by aromani          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /*   Updated: 2025/07/07 23:08:49 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -15,7 +19,9 @@
 # define PARSER_H
 
 # define BUFFER_SIZE	1024
-# define TILE_SIZE		60 
+# define TILE_SIZE		60
+# define RED 0xFF0000
+# define BLACK 0x000000
 
 typedef struct s_data
 {
@@ -25,9 +31,18 @@ typedef struct s_data
 	char *ea_texture;
 	char *f_color;
 	char *c_color;
+	void *mlx;
+	void *win;
+	void    *img;
+	char    *addr; 
+	int     bpp;
+    int     line_len;
+    int     endian;
 	char **map;
 	int map_width;
+	int recmap_with;
 	int map_height;
+	int recmap_height;
 	int player_count;
 	int config_count;
 	int map_parsed;
@@ -38,6 +53,7 @@ typedef struct s_data
 	char *error_message;
 }	t_data;
 
+int put_map_2dv(t_data *data);
 void	clean_map(t_data *info);
 t_data	*parser_map(int ac, char **av);
 void free_malloc(t_data *info, char *line, char **valid_map , int height);
