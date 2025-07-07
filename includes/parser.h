@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/06 21:55:02 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/07 16:42:51 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ void init_data(t_data *info);
 void update_map(t_data *info, char **valid_map, char *checked);
 void copy_existing_map(t_data *info, char **valid_map);
 int check_texture_path(char *path);
-int check_so_no(char *trimmed, t_data *info);
-int check_we_ea(char *trimmed, t_data *info);
-int check_floor_ceiling(char *trimmed, t_data *info);
+// int check_so_no(char *trimmed, t_data *info);
+// int check_we_ea(char *trimmed, t_data *info);
+// int check_floor_ceiling(char *trimmed, t_data *info);
 int check_id(char *line, t_data *info);
 void print_error(char *msg, t_data *info);
 void check_surround(t_data *info, int i, int j, int len);
