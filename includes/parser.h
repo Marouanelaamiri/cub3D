@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/07 16:44:32 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/07 23:08:49 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ int check_id(char *line, t_data *info);
 void print_error(char *msg, t_data *info);
 void check_surround(t_data *info, int i, int j, int len);
 int check_comma(char *line);
-int check_color_format(char *color);
-int check_range_color(char **colors);
+int check_c_format(char *color);
+int check_c_range(char **colors);
 int check_color(char *color);
 void check_config(t_data *info);
 int check_empty_line(char *line, t_data *info, int *start);
@@ -68,8 +68,9 @@ void check_arguments(int ac, char **av);
 t_data	*malloc_map(void);
 t_data *parser_map(int ac, char **av);
 void check_map_char(t_data *info, int i, int len);
-void check_player_pos(char c, int x, t_data *info, int height);
-void check_lines_char(char *checked, t_data *info, int height);
+void	check_line_for_player(t_data *info, int i, int len);
+// void check_player_pos(char c, int x, t_data *info, int height);
+// void check_lines_char(char *checked, t_data *info, int height);
 void check_map_line(t_data *info, char *line);
 int check_file_lines(int fd, t_data *info, int *start);
 int check_if_file_open(char *file, t_data *info, int *fd);

@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 13:53:16 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/06 21:54:51 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/07 22:12:46 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,18 @@ char *trimming_line(char *line, t_data *info)
 		i++;
 	}
 	return trimmed;
+}
+void	ft_free_array(char **arr)
+{
+	int	n;
+
+	n = 0;
+	if (!arr)
+		return ;
+	while (arr[n])
+	{
+		free(arr[n]);
+		n++;
+	}
+	free(arr);
 }

@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:03:23 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/06 21:52:23 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/07 23:14:39 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,47 +14,39 @@
 
 void check_arguments(int ac, char **av)
 {
-	int len;
-	if (ac != 2)
-	{
-		write(2, "Error: Invalid number of arguments.\n", 35);
-		exit(EXIT_FAILURE);
-	}
-	len = ft_strlen(av[1]);
-	if (len < 4 || ft_strcmp(av[1] + len - 4, ".cub") != 0)
-	{
-		write(2, "Error: Invalid file extension. Expected .cub\n", 45);
-		exit(EXIT_FAILURE);
-	}
+    int         len;
+    const char *arg_err;
+    const char *ext_err;
+
+    arg_err = "Error: Invalid number of arguments.\n";
+    ext_err = "Error: Invalid file extension. Expected .cub\n";
+
+    if (ac != 2)
+    {
+        write(2, arg_err, ft_strlen(arg_err));
+        exit(EXIT_FAILURE);
+    }
+
+    len = ft_strlen(av[1]);
+    if (len < 4 || ft_strcmp(av[1] + len - 4, ".cub") != 0)
+    {
+        write(2, ext_err, ft_strlen(ext_err));
+        exit(EXIT_FAILURE);
+    }
 }
 t_data	*malloc_map(void)
 {
-	t_data	*map;
+	t_data			*map;
+	const char		*err_msg;
 
-	map = (t_data *)malloc(sizeof(t_data));
+	err_msg = "Error: Memory allocation failed for map.\n";
+	map = malloc(sizeof *map);
 	if (!map)
 	{
-		write(2, "Error: Memory allocation failed for map.\n", 41);
+		write(2, err_msg, ft_strlen(err_msg));
 		exit(EXIT_FAILURE);
 	}
-	map->no_texture       = NULL;
-    map->so_texture       = NULL;
-    map->we_texture       = NULL;
-    map->ea_texture       = NULL;
-    map->f_color          = NULL;
-    map->c_color          = NULL;
-    map->map              = NULL;
-    map->map_height       = 0;
-    map->map_width        = 0;
-    map->player_count     = 0;
-    map->config_count     = 0;
-
-    map->has_error        = 0;          // <— initialize here
-    map->player_x         = 0.0f;       // <— initialize here
-    map->player_y         = 0.0f;       // <— initialize here
-    map->player_direction = '\0';       // <— initialize here
-
-    map->error_message    = NULL;
+	ft_bzero(map, sizeof *map);
 	return (map);
 }
 t_data *parser_map(int ac, char **av)
@@ -69,52 +61,58 @@ t_data *parser_map(int ac, char **av)
 		return (NULL);
 	return (map);
 }
-void check_map_char(t_data *info, int i, int len)
+void	check_map_char(t_data *info, int i, int len)
 {
-	int j;
-	j = 0;
+	int		j;
+	char	c;
+	int		is_player;
 
-	while(j < len)
+	j = 0;
+	while (j < len)
 	{
-		if (info->map[i][j] != ' ')
+		c = info->map[i][j];
+		if (c == ' ')
 		{
-			printf("DEBUG: map[%d][%d] = '%c'\n", i, j, info->map[i][j]);
-			if (!ft_strchr("01NSEW", info->map[i][j]))
-				print_error("Error: Invalid character in map.\n", info);
-			if (ft_strchr("NSEW", info->map[i][j]))
-			{
-				check_player_pos(info->map[i][j], j, info, i);
-				check_surround(info, i, j,len);
-			}
+			j++;
+			continue;
+		}
+		printf("DEBUG: map[%d][%d] = '%c'\n", i, j, c);
+		if (!ft_strchr("01NSEW", c))
+			print_error("Error: Invalid character in map.\n", info);
+		is_player = ft_strchr("NSEW", c) != NULL;
+		if (is_player)
+		{
+			check_line_for_player(info, i, len);
 		}
 		j++;
 	}
 }
-void check_player_pos(char c, int x, t_data *info, int height)
+void	check_line_for_player(t_data *info, int i, int len)
 {
-	printf("DEBUG: Found player '%c' at (%d, %d)\n", c, x, height);
-	info->player_count++;
-	if( info->player_count > 1 && !info->has_error)
-	{
-		info->has_error = 1;
-		write(2, "Error: Multiple player positions found.\n", 41);
-		return;
-	}
-	info->player_x = x * TILE_SIZE + TILE_SIZE / 2;
-	info->player_y = height * TILE_SIZE + TILE_SIZE / 2;
-	info->player_direction = c;
-}
-void check_lines_char(char *checked, t_data *info, int height)
-{
-	int i;
-	i = -1;
+	int	j;
+	char	c;
 
-	while(checked[++i] && !info->has_error)
+	j = 0;
+	while (j < len)
 	{
-		if (ft_strchr("NSEW", checked[i]))
-				check_player_pos(checked[i], i, info, height);
+		c = info->map[i][j];
+		if (c != ' ')
+		{
+			if (!ft_strchr("01NSEW", c))
+				print_error("Error: Invalid character in map.\n", info);
+			if (ft_strchr("NSEW", c))
+			{
+				info->player_count++;
+				if (info->player_count > 1 && !info->has_error)
+					print_error("Error: Multiple player positions found.\n", info);
+				info->player_x = j * TILE_SIZE + TILE_SIZE / 2;
+				info->player_y = i * TILE_SIZE + TILE_SIZE / 2;
+				info->player_direction = c;
+				check_surround(info, i, j, len);
+			}
+		}
+		j++;
 	}
-			
 }
 void check_map_line(t_data *info, char *line)
 {
@@ -143,6 +141,12 @@ void check_map_line(t_data *info, char *line)
 	update_map(info, valid_map, checked);//update map info
 	// check_lines_char(checked, info, info->map_height - 1);//check player position and characters
 	free(checked);//free checked line
+}
+void map_parsing(t_data *info, int *started, char *line)
+{
+	info->map_parsed = 1;
+	*started = 1;
+	check_map_line(info, line);
 }
 size_t get_max_line_length(t_data *info)
 {
