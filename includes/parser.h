@@ -6,10 +6,9 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/07 23:27:34 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:51:42 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef PARSER_H
 # define PARSER_H
@@ -18,6 +17,7 @@
 # define TILE_SIZE		60
 # define RED 0xFF0000
 # define BLACK 0x000000
+# define GREEN 0x00FF00
 
 typedef struct s_data
 {

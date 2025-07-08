@@ -6,7 +6,7 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 15:21:26 by aromani           #+#    #+#             */
-/*   Updated: 2025/07/07 23:25:08 by aromani          ###   ########.fr       */
+/*   Updated: 2025/07/07 23:31:43 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int put_map_2dv(t_data *data)
         while (x < data->recmap_with)
         {
             if (data->map[y][x] == 'N' || data->map[y][x] == 'S' || data->map[y][x] == 'W' || data->map[y][x] == 'E')
-                draw_player(data, x, y, RED);
+                draw_player(data, x, y, GREEN);
             else if (data->map[y][x] == '1')
                 draw_tile(data, x, y, RED);
             else
