@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/08 15:51:42 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:05:34 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,10 @@ void	check_line_for_player(t_data *info, int i, int len);
 // void check_player_pos(char c, int x, t_data *info, int height);
 // void check_lines_char(char *checked, t_data *info, int height);
 void check_map_line(t_data *info, char *line);
-int check_file_lines(int fd, t_data *info, int *start);
-int check_if_file_open(char *file, t_data *info, int *fd);
-int is_valid_map_line(char *line, t_data *info);
+// int check_file_lines(int fd, t_data *info, int *start);
+// int check_if_file_open(char *file, t_data *info, int *fd);
+// int is_valid_map_line(char *line, t_data *info);
+int	validate_map_file(char *path, t_data *info);
 void	horizontal_check(t_data*info, int len_max);
 void vertical_check(t_data *info, int i, int len);
 void check_borders(t_data *info);

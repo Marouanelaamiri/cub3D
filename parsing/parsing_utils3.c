@@ -6,12 +6,26 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 14:35:44 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/07 22:43:27 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:10:36 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+size_t get_max_line_length(t_data *info)
+{
+	int i;
+	size_t max_length;
+
+	i = 0;
+	max_length = 0;
+	while ( i < info->map_height)
+	{
+		max_length = ft_getmax(max_length, ft_strlen(info->map[i]));
+		i++;
+	}
+	return max_length;
+}
 void check_config(t_data *info)
 {
     char    *tex_msg;

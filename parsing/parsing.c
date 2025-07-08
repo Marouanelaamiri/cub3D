@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:03:23 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/08 15:10:32 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:09:33 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_data *parser_map(int ac, char **av)
 	map = malloc_map();
 	if (!map)
 		return (NULL);
-	if (!is_valid_map_line(av[1], map))
+	if (!validate_map_file(av[1], map))
 		return (NULL);
 	return (map);
 }
@@ -143,111 +143,95 @@ void map_parsing(t_data *info, int *started, char *line)
 	*started = 1;
 	check_map_line(info, line);
 }
-size_t get_max_line_length(t_data *info)
-{
-	int i;
-	size_t max_length;
 
-	i = 0;
-	max_length = 0;
-	while ( i < info->map_height)
-	{
-		max_length = ft_getmax(max_length, ft_strlen(info->map[i]));
-		i++;
-	}
-	return max_length;
-}
-int check_file_lines(int fd, t_data *info, int *start)
+int	validate_map_file(char *path, t_data *info)
 {
-	char *line;
-	
-	line = get_next_line(fd);
-	while (line != NULL && !info->has_error)
-	{
-		if (!check_line(line, info, start))
-		{
-			free(line);
-			return 0; // Invalid line
-		}
-		free(line);
-		line = get_next_line(fd);
-	}
-	return 1; // All lines are valid
-}
-int check_if_file_open(char *file, t_data *info, int *fd)
-{
-	*fd = open(file, O_RDONLY);
-	if (*fd < 0)
+	int		fd;
+	int		start;
+	char	*line;
+	int		res;
+	const char	*open_err = "Error: Could not open file.\n";
+	const char	*validate_err = "Error: Map validation failed.\n";
+
+	init_data(info);
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
 	{
 		info->has_error = 1;
-		write(2, "Error: Could not open file.\n", 29);
-		return 0; // File could not be opened
+		write(2, open_err, ft_strlen(open_err));
+		return (0);
 	}
-	return 1; // File opened successfully
-}
-int is_valid_map_line(char *line, t_data *info)
-{
-	int fd;
-	int start = 0;
-	int res;
-	
-	init_data(info);
-	if(!check_if_file_open(line, info, &fd))
-		return 0; // File could not be opened
 	start = 0;
-	if(!check_file_lines(fd, info, &start))
+	while ((line = get_next_line(fd)) && !info->has_error)
 	{
-		close(fd);
-		clean_map(info);
-		return 0; // Invalid line found
+		if (!check_line(line, info, &start))
+		{
+			free(line);
+			close(fd);
+			clean_map(info);
+			return (0);
+		}
+		free(line);
 	}
 	close(fd);
 	res = final_check(info);
 	if (!res)
 	{
-		write(2, "Error: Map validation failed.\n", 30);
-		return 0; // Map validation failed
-
+		write(2, validate_err, ft_strlen(validate_err));
+		return (0);
 	}
-	return 1; // Map is valid
+	return (1);
 }
-void	horizontal_check(t_data *info, int len_max)
+
+void	check_borders(t_data *info)
 {
-	int i;
+	char	*wall_err;
+	int			rows;
+	int			max_len;
+	int			i;
+	int			row_len;
+
+	if (!info || info->has_error)
+		return;
+		
+	rows    = info->map_height;
+	max_len = get_max_line_length(info);
+	wall_err = "Error: Map is not surrounded by walls.\n";
 	i = 0;
-	while (i < len_max)
+	while (i < max_len)
 	{
-		if (i < ft_strlen(info->map[0]) && info->map[0][i] != '1' && info->map[0][i] != ' ')
-			print_error("Error: Map is not surrounded by walls.\n", info);
-		if ( i < ft_strlen(info->map[info->map_height - 1]) && info->map[info->map_height - 1][i] != '1' && info->map[info->map_height - 1][i] != ' ')
-			print_error("Error: Map is not surrounded by walls.\n", info);
+		if (i < ft_strlen(info->map[0]) &&
+		    info->map[0][i] != '1' && info->map[0][i] != ' ')
+			print_error(wall_err, info);
 		i++;
 	}
-}
-void vertical_check(t_data *info, int i, int len)
-{
-	if (info->map[i][0] != '1' && info->map[i][0] != ' ')
-		print_error("Error: Map is not surrounded by walls.\n", info);
-	if (len > 0 && info->map[i][len - 1] != '1' && info->map[i][len - 1] != ' ')
-		print_error("Error: Map is not surrounded by walls.\n", info);
-}
-void check_borders(t_data *info)
-{
-	int i;
-	int len_max;
-	int len;
-	
-	len_max = get_max_line_length(info);
-	horizontal_check(info, len_max);
 	i = 0;
-	printf("DEBUG: Map dimensions: %d x %d\n", info->map_width, info->map_height);
-	for (int k = 0; k < info->map_height; k++)
-    	printf("  [%s]\n", info->map[k]);
-	while (i < info->map_height)
+	while (i < max_len)
 	{
-		len = ft_strlen(info->map[i]);
-		vertical_check(info, i, len);
-		check_map_char(info, i, len);
+		if (i < ft_strlen(info->map[rows - 1]) &&
+		    info->map[rows - 1][i] != '1' &&
+		    info->map[rows - 1][i] != ' ')
+			print_error(wall_err, info);
+		i++;
+	}
+	printf("DEBUG: Map dimensions: %d x %d\n",
+	       info->map_width, info->map_height);
+	i = 0;
+	while (i < rows)
+		printf("  [%s]\n", info->map[i++]);
+	i = 0;
+	while (i < rows)
+	{
+		row_len = ft_strlen(info->map[i]);
+		/* Left edge */
+		if (info->map[i][0] != '1' && info->map[i][0] != ' ')
+			print_error(wall_err, info);
+		/* Right edge */
+		if (row_len > 0 &&
+		    info->map[i][row_len - 1] != '1' &&
+		    info->map[i][row_len - 1] != ' ')
+			print_error(wall_err, info);
+		check_map_char(info, i, row_len);
 		i++;
 	}
 }
