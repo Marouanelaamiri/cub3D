@@ -3,46 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 14:08:01 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/14 14:57:09 by aromani          ###   ########.fr       */
+/*   Updated: 2025/07/14 19:58:49 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void init_data(t_data *info)
+void	init_data(t_data *info)
 {
-	info->no_texture       = NULL;
-    info->so_texture       = NULL;
-    info->we_texture       = NULL;
-    info->ea_texture       = NULL;
-    info->f_color          = NULL;
-    info->c_color          = NULL;
-    info->map              = NULL;
-    info->map_height       = 0;
-    info->map_width        = 0;
-    info->player_count     = 0;
-    info->config_count     = 0;
-    info->map_parsed       = 0;
-    info->has_error        = 0;          // <— initialize here
-    info->player_x         = 0.0f;       // <— initialize here
-    info->player_y         = 0.0f;       // <— initialize here
-    info->player_direction = '\0';       // <— initialize here
-    info->player_char      = 0;
-    info->error_message    = NULL;
+    info->no_texture = NULL;
+    info->so_texture = NULL;
+    info->we_texture = NULL;
+    info->ea_texture = NULL;
+    info->f_color = NULL;
+    info->c_color = NULL;
+    info->map = NULL;
+    info->map_height = 0;
+    info->map_width = 0;
+    info->player_count = 0;
+    info->config_count = 0;
+    info->map_parsed = 0;
+    info->has_error = 0;
+    info->player_x = 0.0f;
+    info->player_y = 0.0f;
+    info->player_direction = '\0';
+    info->player_char = 0;
+    info->error_message = NULL;
 }
-void update_map(t_data *info, char **valid_map, char *checked)
+
+void	update_map(t_data *info, char **valid_map, char *checked)
 {
 	free(info->map);
-	info->map = valid_map;
+    info->map = valid_map;
 	info->map_height++;
 	info->map_width = ft_getmax(info->map_width, ft_strlen(checked));
 }
-void copy_existing_map(t_data *info, char **valid_map)
+
+void	copy_existing_map(t_data *info, char **valid_map)
 {
-	int i;
+	int	i;
+
 	i = -1;
 	while (++i < info->map_height)
 		valid_map[i] = info->map[i];
