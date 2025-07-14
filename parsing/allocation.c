@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   allocation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 14:07:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/06 21:53:23 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/14 18:14:51 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void free_malloc(t_data *info, char *line, char **valid_map, int height)
+void	free_malloc(t_data *info, char *line, char **valid_map, int height)
 {
-	int i;
+	int	i;
+
 	i = 0;
-	
 	free(line);
 	while (i < height)
 	{
@@ -28,4 +28,3 @@ void free_malloc(t_data *info, char *line, char **valid_map, int height)
 	info->has_error = 1;
 	write(2, "Error: Memory allocation failed.\n", 34);
 }
-
