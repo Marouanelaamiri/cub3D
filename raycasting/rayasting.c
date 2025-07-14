@@ -6,7 +6,7 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 15:21:26 by aromani           #+#    #+#             */
-/*   Updated: 2025/07/14 15:01:02 by aromani          ###   ########.fr       */
+/*   Updated: 2025/07/14 15:04:04 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,8 @@ float get_angle_from_dir(char dir)
 
 void set_char(t_data *data, char c)
 {
-	return (data->player_char = c);
+	data->player_char = c;
+	return ;
 }
 
 int put_map_2dv(t_data *data)
