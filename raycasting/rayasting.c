@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   rayasting.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 15:21:26 by aromani           #+#    #+#             */
-/*   Updated: 2025/07/14 15:04:04 by aromani          ###   ########.fr       */
+/*   Updated: 2025/07/14 17:48:36 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
 
 static void	set_wh_map(t_data *data)
 {

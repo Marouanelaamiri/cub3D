@@ -12,8 +12,9 @@ GLFW_DIR    = /mnt/homes/aromani/.brew/opt/glfw
 GLFW_INC    = -I$(GLFW_DIR)/include
 GLFW_LIB    = -L$(GLFW_DIR)/lib
 
-CFLAGS      = -Wall -Wextra -Werror -Iincludes $(MLX_INC) $(GLFW_INC) -fsanitize=address -g
-LDFLAGS 	= -LNEWMLX42/build -lmlx42 -L/mnt/homes/aromani/.brew/opt/glfw/lib -lglfw -ldl -lm -framework OpenGL -pthread
+CFLAGS      = -Wall -Wextra -Werror -Iincludes $(MLX_INC) $(GLFW_INC) #-fsanitize=address -g
+LDFLAGS 	= -LNEWMLX42/build -lmlx42 -L/mnt/homes/aromani/.brew/opt/glfw/lib -lglfw -ldl -lm -lGL -lX11 -pthread
+#-framework OpenGL -pthread
 
 
 SRC         = main.c

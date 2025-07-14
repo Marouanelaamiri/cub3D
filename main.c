@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:13:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/08 14:57:57 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/14 17:58:18 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ int main(int argc, char **argv)
 
     // 2) Invoke parser_map (will exit(1) on any fatal parse error)
     info = parser_map(argc, argv);
+    if (!info)
+    {
+        fprintf(stderr, "Error: Failed to parse map file.\n");
+        return EXIT_FAILURE;
+    }
 
     // // 3) If we get here, parsing succeeded
     printf("✅ Parsing succeeded!\n");

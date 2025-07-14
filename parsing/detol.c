@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   detol.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 13:53:16 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/07 22:12:46 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/14 17:37:22 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,3 +81,4 @@ void	ft_free_array(char **arr)
 	}
 	free(arr);
 }
+

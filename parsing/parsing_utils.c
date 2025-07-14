@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:03:36 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/08 16:10:17 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/14 18:00:46 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int check_texture_path(char *path)
 {
     int fd;
     char *trim_path;
-
+    char *ext;
     // 1) NULL or empty input?
     if (!path || !*path)
         return 0;
@@ -31,6 +31,13 @@ int check_texture_path(char *path)
     {
         free(trim_path);
         return 0;
+    }
+    
+    ext = ft_strrchr(trim_path, '.');
+    if (!ext || ft_strcmp(ext, ".png") != 0)
+    {
+        free(trim_path);
+        return 0;  // wrong extension
     }
 
     // DEBUG

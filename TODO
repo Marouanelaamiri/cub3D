@@ -1,0 +1,2 @@
+✅ Parsing succeeded!
+[1]    19523 segmentation fault (core dumped)  ./cub3D maps/map.cub

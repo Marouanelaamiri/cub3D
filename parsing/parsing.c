@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:03:23 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/08 16:09:33 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/14 17:56:01 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,24 @@
 
 void check_arguments(int ac, char **av)
 {
-    int         len;
-    const char *arg_err;
-    const char *ext_err;
-
-    arg_err = "Error: Invalid number of arguments.\n";
-    ext_err = "Error: Invalid file extension. Expected .cub\n";
+    char *ext;
 
     if (ac != 2)
     {
-        write(2, arg_err, ft_strlen(arg_err));
+        write(2, "Error: Invalid number of arguments.\n", 35);
         exit(EXIT_FAILURE);
     }
 
-    len = ft_strlen(av[1]);
-    if (len < 4 || ft_strcmp(av[1] + len - 4, ".cub") != 0)
+    ext = ft_strrchr(av[1], '.');
+    if (!ext || ft_strcmp(ext, ".cub") != 0)
     {
-        write(2, ext_err, ft_strlen(ext_err));
+        write(2,
+            "Error: Invalid file extension. Expected a filename ending in .cub\n",
+            67);
         exit(EXIT_FAILURE);
     }
 }
+
 t_data	*malloc_map(void)
 {
 	t_data			*map;
@@ -57,8 +55,14 @@ t_data *parser_map(int ac, char **av)
 	map = malloc_map();
 	if (!map)
 		return (NULL);
-	if (!validate_map_file(av[1], map))
-		return (NULL);
+	 if (!validate_map_file(av[1], map))
+    {
+        // on failure, is_valid_map_line either exited already
+        // or cleaned up and returned 0.
+        clean_map(map);
+        free(map);
+        return NULL;
+    }
 	return (map);
 }
 void	check_map_char(t_data *info, int i, int len)
