@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 14:08:01 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/06 21:55:44 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:57:09 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void init_data(t_data *info)
     info->player_x         = 0.0f;       // <— initialize here
     info->player_y         = 0.0f;       // <— initialize here
     info->player_direction = '\0';       // <— initialize here
+    info->player_char      = 0;
     info->error_message    = NULL;
 }
 void update_map(t_data *info, char **valid_map, char *checked)

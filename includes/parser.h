@@ -6,18 +6,20 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/08 00:27:12 by aromani          ###   ########.fr       */
+/*   Updated: 2025/07/14 14:56:26 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# define BUFFER_SIZE	1024
-# define TILE_SIZE		60
-# define RED 0xFF0000
-# define BLACK 0x000000
-# define GREEN 0x00FF00
+#define TILE_SIZE 60
+#define COLOR_RED    0xFF0000FF  // Red with full opacity
+#define COLOR_GREEN  0x00FF00FF  // Green with full opacity
+#define COLOR_BLUE   0x0000FFFF  // Blue with full opacity
+#define COLOR_BLACK  0x000000FF  // Black with full opacity
+#define COLOR_WHITE  0xFFFFFFFF  // White with full opacity
+#define BUFFER_SIZE   600
 
 typedef struct s_data
 {
@@ -29,12 +31,13 @@ typedef struct s_data
 	char *c_color;
 	void *mlx;
 	void *win;
-	void    *img;
+	mlx_image_t *img;
 	char    *addr; 
 	int     bpp;
     int     line_len;
     int     endian;
 	char **map;
+	char player_char;
 	int map_width;
 	int recmap_with;
 	int map_height;
@@ -44,6 +47,7 @@ typedef struct s_data
 	int map_parsed;
 	float player_x;
 	float player_y;
+	char player_direction;
 	char	player_direction;
 	int has_error;
 	char *error_message;

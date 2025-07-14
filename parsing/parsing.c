@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:03:23 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/07 23:14:39 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:10:32 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,8 @@ t_data *parser_map(int ac, char **av)
 }
 void	check_map_char(t_data *info, int i, int len)
 {
-	int		j;
+	int	j;
 	char	c;
-	int		is_player;
 
 	j = 0;
 	while (j < len)
@@ -79,13 +78,9 @@ void	check_map_char(t_data *info, int i, int len)
 		printf("DEBUG: map[%d][%d] = '%c'\n", i, j, c);
 		if (!ft_strchr("01NSEW", c))
 			print_error("Error: Invalid character in map.\n", info);
-		is_player = ft_strchr("NSEW", c) != NULL;
-		if (is_player)
-		{
-			check_line_for_player(info, i, len);
-		}
 		j++;
 	}
+	check_line_for_player(info, i, len);
 }
 void	check_line_for_player(t_data *info, int i, int len)
 {
@@ -118,28 +113,28 @@ void check_map_line(t_data *info, char *line)
 {
 	char *checked;
 	char **valid_map;
+	char *alloc_error;
+	int height;
 
+	alloc_error = "Error: Memory allocation failed for map.\n";
+	height = info->map_height;	
 	if(info->has_error)
 		return;
 	checked = trimming_line(line, info);//clean line
-	 valid_map = malloc(sizeof(char *) * (info->map_height + 2));
+	valid_map = malloc(sizeof(char *) * (height + 2));
     if (!valid_map)
     {
         free(checked);
-        print_error("Error: Memory allocation failed for map.\n", info);
+        print_error(alloc_error, info);
         info->has_error = 1;
         return;
 	}
 	copy_existing_map(info, valid_map);//copy existing map
-	valid_map[info->map_height] = ft_strdup(checked);//add new line to map
-	if(!valid_map[info->map_height])
-	{
-		free_malloc(info, checked, valid_map, info->map_height);
-		return;
-	}
-	valid_map[info->map_height + 1] = NULL;//add null terminator
+	valid_map[height] = ft_strdup(checked);//add new line to map
+	if(!valid_map[height])
+		return (free_malloc(info, checked, valid_map, height));
+	valid_map[height + 1] = NULL;//add null terminator
 	update_map(info, valid_map, checked);//update map info
-	// check_lines_char(checked, info, info->map_height - 1);//check player position and characters
 	free(checked);//free checked line
 }
 void map_parsing(t_data *info, int *started, char *line)

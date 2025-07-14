@@ -15,13 +15,13 @@
 
 //# include "../MLX42/include/MLX42/MLX42.h"
 
+# include "../NEWMLX42/include/MLX42/MLX42.h"
+# include "parser.h"
 # include <fcntl.h>
 # include <math.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <limits.h>
-#include "parser.h"
-#include <mlx.h>
 
 #endif

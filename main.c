@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:13:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/07 23:24:24 by aromani          ###   ########.fr       */
+/*   Updated: 2025/07/08 14:57:57 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ int main(int argc, char **argv)
     info = parser_map(argc, argv);
 
     // // 3) If we get here, parsing succeeded
-    // printf("✅ Parsing succeeded!\n");
-    // printf(" Map: %d columns × %d rows\n", info->map_width, info->map_height);
-    // printf(" Player at (%.1f, %.1f) facing '%c'\n",
-    //        info->player_x, info->player_y, info->player_direction);
+    printf("✅ Parsing succeeded!\n");
+    printf(" Map: %d columns × %d rows\n", info->map_width, info->map_height);
+    printf(" Player at (%.1f, %.1f) facing '%c'\n",
+           info->player_x, info->player_y, info->player_direction);
     put_map_2dv(info);
     clean_map(info);
     free(info);
