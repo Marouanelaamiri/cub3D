@@ -6,139 +6,134 @@
 /*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:03:36 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/14 18:00:46 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/15 15:25:52 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int check_texture_path(char *path)
+int	check_texture_path(char *path)
 {
-    int fd;
-    char *trim_path;
-    char *ext;
-    // 1) NULL or empty input?
-    if (!path || !*path)
-        return 0;
+	int		fd;
+	char	*trim_path;
+	char	*ext;
 
-    // 2) Trim whitespace
-    trim_path = ft_strtrim(path, " \t\n\r");
-    if (!trim_path)           // malloc failed
-        return 0;
-
-    // 3) Empty after trim?
-    if (!*trim_path)          // same as strlen == 0
-    {
-        free(trim_path);
-        return 0;
-    }
-    
-    ext = ft_strrchr(trim_path, '.');
-    if (!ext || ft_strcmp(ext, ".png") != 0)
-    {
-        free(trim_path);
-        return 0;  // wrong extension
-    }
-
-    // DEBUG
-    fprintf(stderr, "DEBUG: Opening \"%s\"\n", trim_path);
-
-    // 4) Try opening
-    fd = open(trim_path, O_RDONLY);
-    free(trim_path);
-
-    if (fd < 0)               // couldn’t open
-        return 0;
-    close(fd);
-
-    // 5) All good
-    return 1;
+	if (!path || !*path)
+		return (0);
+	trim_path = ft_strtrim(path, " \t\n\r");
+	if (!trim_path)
+		return (0);
+	if (!*trim_path)
+	{
+		free(trim_path);
+		return (0);
+	}
+	ext = ft_strrchr(trim_path, '.');
+	if (!ext || ft_strcmp(ext, ".png") != 0)
+		return (free(trim_path), 0);
+	fd = open(trim_path, O_RDONLY);
+	free(trim_path);
+	if (fd < 0)
+		return (0);
+	close(fd);
+	return (1);
 }
 
-int check_id(char *line, t_data *info)
+static int	handle_no_so(char *trim, t_data *info)
 {
-    char    *trim;
-    char    *value;
-    char   **field;
-    char    *dup_msg;
-    char    *inv_msg;
-    int      prefix_len;
-    int      is_texture;
+	char	*value;
 
-    if (info->has_error)
-        return 0;
+	if (ft_strncmp(trim, "NO ", 3) == 0)
+	{
+		if (info->no_texture)
+			print_error("Duplicate NO texture identifier.\n", info);
+		value = ft_strtrim(trim + 3, " \n\r\t");
+		if (!value || !check_texture_path(value))
+			print_error("Invalid NO texture path.\n", info);
+		info->no_texture = value;
+		return (1);
+	}
+	if (ft_strncmp(trim, "SO ", 3) == 0)
+	{
+		if (info->so_texture)
+			print_error("Duplicate SO texture identifier.\n", info);
+		value = ft_strtrim(trim + 3, " \n\r\t");
+		if (!value || !check_texture_path(value))
+			print_error("Invalid SO texture path.\n", info);
+		info->so_texture = value;
+		return (1);
+	}
+	return (0);
+}
 
-    trim = ft_strtrim(line, " \t\n\r");
-    if (!trim)
-        return 0;
+static int	handle_we_ea(char *trim, t_data *info)
+{
+	char	*value;
 
-    if (ft_strncmp(trim, "NO ", 3) == 0)
-    {
-        prefix_len  = 3;
-        field       = &info->no_texture;
-        dup_msg     = "Duplicate NO texture identifier.\n";
-        inv_msg     = "Invalid NO texture path.\n";
-        is_texture  = 1;
-    }
-    else if (ft_strncmp(trim, "SO ", 3) == 0)
-    {
-        prefix_len  = 3;
-        field       = &info->so_texture;
-        dup_msg     = "Duplicate SO texture identifier.\n";
-        inv_msg     = "Invalid SO texture path.\n";
-        is_texture  = 1;
-    }
-    else if (ft_strncmp(trim, "WE ", 3) == 0)
-    {
-        prefix_len  = 3;
-        field       = &info->we_texture;
-        dup_msg     = "Duplicate WE texture identifier.\n";
-        inv_msg     = "Invalid WE texture path.\n";
-        is_texture  = 1;
-    }
-    else if (ft_strncmp(trim, "EA ", 3) == 0)
-    {
-        prefix_len  = 3;
-        field       = &info->ea_texture;
-        dup_msg     = "Duplicate EA texture identifier.\n";
-        inv_msg     = "Invalid EA texture path.\n";
-        is_texture  = 1;
-    }
-    else if (ft_strncmp(trim, "F ", 2) == 0)
-    {
-        prefix_len  = 2;
-        field       = &info->f_color;
-        dup_msg     = "Duplicate floor color identifier.\n";
-        inv_msg     = "Invalid floor color.\n";
-        is_texture  = 0;
-    }
-    else if (ft_strncmp(trim, "C ", 2) == 0)
-    {
-        prefix_len  = 2;
-        field       = &info->c_color;
-        dup_msg     = "Duplicate ceiling color identifier.\n";
-        inv_msg     = "Invalid ceiling color.\n";
-        is_texture  = 0;
-    }
-    else
-    {
-        free(trim);
-        return 0;
-    }
+	if (ft_strncmp(trim, "WE ", 3) == 0)
+	{
+		if (info->we_texture)
+			print_error("Duplicate WE texture identifier.\n", info);
+		value = ft_strtrim(trim + 3, " \n\r\t");
+		if (!value || !check_texture_path(value))
+			print_error("Invalid WE texture path.\n", info);
+		info->we_texture = value;
+		return (1);
+	}
+	if (ft_strncmp(trim, "EA ", 3) == 0)
+	{
+		if (info->ea_texture)
+			print_error("Duplicate EA texture identifier.\n", info);
+		value = ft_strtrim(trim + 3, " \n\r\t");
+		if (!value || !check_texture_path(value))
+			print_error("Invalid EA texture path.\n", info);
+		info->ea_texture = value;
+		return (1);
+	}
+	return (0);
+}
 
-    if (*field)
-        print_error(dup_msg, info);
+static int	handle_fc(char *trim, t_data *info)
+{
+	char	*value;
 
-    value = ft_strtrim(trim + prefix_len, " \n\r\t");
-    if (!value)
-        print_error(inv_msg, info);
-    else if (is_texture && !check_texture_path(value))
-        print_error(inv_msg, info);
-    else if (!is_texture && !check_color(value))
-        print_error(inv_msg, info);
+	if (ft_strncmp(trim, "F ", 2) == 0)
+	{
+		if (info->f_color)
+			print_error("Duplicate floor color identifier.\n", info);
+		value = ft_strtrim(trim + 2, " \n\r\t");
+		if (!value || !check_color(value))
+			print_error("Invalid floor color.\n", info);
+		info->f_color = value;
+		return (1);
+	}
+	if (ft_strncmp(trim, "C ", 2) == 0)
+	{
+		if (info->c_color)
+			print_error("Duplicate ceiling color identifier.\n", info);
+		value = ft_strtrim(trim + 2, " \n\r\t");
+		if (!value || !check_color(value))
+			print_error("Invalid ceiling color.\n", info);
+		info->c_color = value;
+		return (1);
+	}
+	return (0);
+}
 
-    *field = value;
-    free(trim);
-    return 1;
+int	check_id(char *line, t_data *info)
+{
+	char	*trim;
+	int		result;
+
+	if (info->has_error)
+		return (0);
+	trim = ft_strtrim(line, " \t\n\r");
+	if (!trim)
+		return (0);
+	result = handle_no_so(trim, info)
+		|| handle_we_ea(trim, info)
+		|| handle_fc(trim, info);
+	free(trim);
+	return (result);
 }
 
