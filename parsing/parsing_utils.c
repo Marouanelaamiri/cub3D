@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:03:36 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/15 15:25:52 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/16 15:07:19 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,4 +136,3 @@ int	check_id(char *line, t_data *info)
 	free(trim);
 	return (result);
 }
-

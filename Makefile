@@ -24,6 +24,7 @@ SRC_PARS    = parsing/parsing.c \
               parsing/parsing_utils2.c \
               parsing/parsing_utils3.c \
               parsing/parsing_utils4.c \
+              parsing/parsing_utils5.c \
               parsing/detol.c \
               parsing/allocation.c \
               parsing/init.c \

@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:03:23 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/15 16:34:00 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/16 15:03:06 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	check_arguments(int ac, char **av)
 
 	if (ac != 2)
 	{
-		write(2, "Error: Invalid number of arguments.\n", 35);
+		write(2, "Error: Invalid number of arguments.\n", 37);
 		exit(EXIT_FAILURE);
 	}
 	ext = ft_strrchr(av[1], '.');
 	if (!ext || ft_strcmp(ext, ".cub") != 0)
 	{
-		write(2, "Error: Invalid file extension. Expcting .cub\n", 67);
+		write(2, "Error: Invalid file extension. Expcting .cub\n", 46);
 		exit(EXIT_FAILURE);
 	}
 }
