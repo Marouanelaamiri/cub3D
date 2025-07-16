@@ -6,9 +6,10 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/16 22:21:44 by aromani          ###   ########.fr       */
+/*   Updated: 2025/07/16 22:27:57 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 
 #ifndef PARSER_H
@@ -82,7 +83,6 @@ int check_c_range(char **colors);
 int check_color(char *color);
 void check_config(t_data *info);
 int check_empty_line(char *line, t_data *info, int *start);
-void map_parsing(t_data *info, int *started, char *line);
 int check_line(char *line, t_data *info, int *started);
 int final_check(t_data *info);
 void check_arguments(int ac, char **av);
@@ -90,6 +90,7 @@ t_data	*malloc_map(void);
 t_data *parser_map(int ac, char **av);
 void check_map_char(t_data *info, int i, int len);
 void	check_line_for_player(t_data *info, int i, int len);
+void	map_parsing(t_data *info, int *started, char *line);
 // void check_player_pos(char c, int x, t_data *info, int height);
 // void check_lines_char(char *checked, t_data *info, int height);
 void check_map_line(t_data *info, char *line);
@@ -97,8 +98,6 @@ void check_map_line(t_data *info, char *line);
 // int check_if_file_open(char *file, t_data *info, int *fd);
 // int is_valid_map_line(char *line, t_data *info);
 int	validate_map_file(char *path, t_data *info);
-void	horizontal_check(t_data*info, int len_max);
-void vertical_check(t_data *info, int i, int len);
 void check_borders(t_data *info);
 void	ft_free_array(char **arr);
 //============================================================//

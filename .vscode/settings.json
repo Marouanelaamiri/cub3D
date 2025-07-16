@@ -1,5 +1,5 @@
 {
-	"cmake.sourceDirectory": "/mnt/homes/malaamir/Desktop/cub3D/MLX42",
+	"cmake.sourceDirectory": "/home/malaamir/Desktop/cub3D/NEWMLX42",
 	"files.associations": {
 		"cstdio": "c",
 		"locale": "c",
@@ -27,5 +27,6 @@
 		"__locale": "c",
 		"stdio.h": "c",
 		"fcntl.h": "c"
-	}
+	},
+	"C_Cpp.errorSquiggles": "disabled"
 }

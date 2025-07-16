@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 09:44:49 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/06 21:18:30 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/14 18:13:09 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*ft_substr(const char *s, int start, int len)
 {
 	char	*tmp;
-	int	i;
+	int		i;
 
 	i = 0;
 	if (s == NULL)

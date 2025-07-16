@@ -6,7 +6,7 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/07/16 22:26:52 by aromani          ###   ########.fr       */
+/*   Updated: 2025/07/16 22:28:53 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,3 +321,4 @@ int put_map_2dv(t_data *data)
 	mlx_loop(data->mlx);
 	return (0);
 }
+

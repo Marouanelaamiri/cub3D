@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 16:33:09 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/06 21:18:04 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/14 18:13:45 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void free_split(char **arr)
+void	free_split(char **arr)
 {
 	int	i;
 
@@ -26,6 +26,7 @@ void free_split(char **arr)
 	}
 	free(arr);
 }
+
 void	*ft_free(char **arr, int count)
 {
 	int	i;

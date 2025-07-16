@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 11:05:18 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/06 21:18:02 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/14 18:13:23 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	**ft_realloc(char **lines, int line_count, char *new_line)
 		i++;
 	}
 	new_lines[i] = new_line;
-	new_lines[i + 1] = NULL; 
-	free(lines); 
+	new_lines[i + 1] = NULL;
+	free(lines);
 	return (new_lines);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 13:28:24 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/06 21:18:33 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/14 18:12:51 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*get_remaning(char *buffer)
 		free(buffer);
 		return (NULL);
 	}
-	line = malloc(ft_strlen(buffer) - i + 1);// lseek
+	line = malloc(ft_strlen(buffer) - i + 1);
 	if (!line)
 		return (free (buffer), NULL);
 	i++;

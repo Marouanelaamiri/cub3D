@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 10:53:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/06 21:18:27 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/14 18:13:32 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,3 @@ char	*ft_strtrim(char *str, char *set)
 	len = end - start + 1;
 	return (ft_substr(start, 0, len));
 }
-

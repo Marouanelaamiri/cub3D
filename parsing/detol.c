@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   detol.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 13:53:16 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/07 22:12:46 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/14 18:17:59 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void clean_map_arr(t_data *info)
+void	clean_map_arr(t_data *info)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (info->map)
@@ -28,10 +28,11 @@ void clean_map_arr(t_data *info)
 		free(info->map);
 	}
 }
-void clean_map(t_data *info)
+
+void	clean_map(t_data *info)
 {
 	if (!info)
-		return;
+		return ;
 	if (info->no_texture)
 		free(info->no_texture);
 	if (info->so_texture)
@@ -48,10 +49,11 @@ void clean_map(t_data *info)
 	if (info->error_message)
 		free(info->error_message);
 }
-char *trimming_line(char *line, t_data *info)
+
+char	*trimming_line(char *line, t_data *info)
 {
-	char *trimmed;
-	int i;
+	char	*trimmed;
+	int		i;
 
 	trimmed = ft_strdup(line);
 	if (!trimmed)
@@ -62,11 +64,12 @@ char *trimming_line(char *line, t_data *info)
 	while (trimmed[i])
 	{
 		if (trimmed[i] == '\t')
-			trimmed[i] = ' '; // Replace tabs with spaces
+			trimmed[i] = ' ';
 		i++;
 	}
-	return trimmed;
+	return (trimmed);
 }
+
 void	ft_free_array(char **arr)
 {
 	int	n;
