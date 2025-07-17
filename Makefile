@@ -1,4 +1,5 @@
 NAME        = cub3D
+
 CC          = cc
 
 # MLX42 config
@@ -6,15 +7,15 @@ MLX_DIR     = NEWMLX42
 MLX_INC     = -I$(MLX_DIR)/include
 MLX_LIB     = -L$(MLX_DIR)/build -lmlx42
 
-# GLFW config from homebrew
+# GLFW config from home
 GLFW_DIR    = /mnt/homes/aromani/.brew/opt/glfw
 GLFW_INC    = -I$(GLFW_DIR)/include
 GLFW_LIB    = -L$(GLFW_DIR)/lib
 
-CFLAGS      = -Wall -Wextra -Werror -Iincludes $(MLX_INC) $(GLFW_INC)
+CFLAGS      = -Wall -Wextra -Werror -Iincludes $(MLX_INC) $(GLFW_INC) #-fsanitize=address -g
+LDFLAGS 	= -LNEWMLX42/build -lmlx42 -L/mnt/homes/aromani/.brew/opt/glfw/lib -lglfw -ldl -lm -lGL -lX11 -pthread
+#-framework OpenGL -pthread
 
-# macOS-compatible linker flags (no -lGL or -lX11!)
-LDFLAGS     = $(MLX_LIB) $(GLFW_LIB) -lglfw -ldl -lm -framework OpenGL -framework Cocoa -pthread
 
 SRC         = main.c
 
@@ -26,9 +27,10 @@ SRC_PARS    = parsing/parsing.c \
               parsing/parsing_utils5.c \
               parsing/detol.c \
               parsing/allocation.c \
-              parsing/init.c
+              parsing/init.c \
+              parsing/textures.c \
 
-SRC_EXEC    = raycasting/rayasting.c
+SRC_EXEC    = raycasting/rayasting.c \
 
 SRC_HLP     = helpers/ft_atoi.c \
               helpers/ft_bzero.c \
@@ -54,7 +56,7 @@ SRC_HLP     = helpers/ft_atoi.c \
               helpers/get_next_line.c \
               helpers/ft_realloc.c \
               helpers/ft_strcmp.c \
-              helpers/ft_getmax.c
+              helpers/ft_getmax.c \
 
 ALL_SRC     = $(SRC) $(SRC_PARS) $(SRC_EXEC) $(SRC_HLP)
 OBJ         = $(ALL_SRC:.c=.o)

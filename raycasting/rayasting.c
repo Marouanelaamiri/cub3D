@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rayasting.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/07/16 22:28:53 by aromani          ###   ########.fr       */
+/*   Updated: 2025/07/17 18:38:04 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ static void draw_column(t_data *data, int col, float dist, int screen_width,
 	while (y < screen_height)
 	{
 		if (y < wall_top)
-			color = COLOR_BLACK;
+			color = COLOR_WHITE;
 		else if (y >= wall_top && y <= wall_bottom)
 			color = COLOR_RED;
 		else

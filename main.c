@@ -6,11 +6,12 @@
 /*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:13:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/14 17:58:18 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/17 18:48:37 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
 t_data *g_map = NULL;
 
 void f()
@@ -18,33 +19,35 @@ void f()
 	system("leaks cub3D");
 }
 
+#include "parser.h"   // now includes load_textures()
+
 int main(int argc, char **argv)
 {
-	//atexit(f);
     t_data *info;
+    int     ret;
 
-    // 1) Check args
     if (argc != 2)
     {
         fprintf(stderr, "Usage: %s <map_file.cub>\n", argv[0]);
         return EXIT_FAILURE;
     }
 
-    // 2) Invoke parser_map (will exit(1) on any fatal parse error)
     info = parser_map(argc, argv);
     if (!info)
-    {
-        fprintf(stderr, "Error: Failed to parse map file.\n");
         return EXIT_FAILURE;
-    }
 
-    // // 3) If we get here, parsing succeeded
     printf("✅ Parsing succeeded!\n");
-    printf(" Map: %d columns × %d rows\n", info->map_width, info->map_height);
-    printf(" Player at (%.1f, %.1f) facing '%c'\n",
-           info->player_x, info->player_y, info->player_direction);
-    put_map_2dv(info);
+
+    // ────────────────────────────────
+    // New: load all four textures into info->no/so/we/ea
+    load_textures(info);
+    // ────────────────────────────────
+
+    // Now launch your put_map_2dv (which initializes MLX, does raycasting, enters the loop)
+    ret = put_map_2dv(info);
+
+    // Cleanup after window closes
     clean_map(info);
     free(info);
-    return EXIT_SUCCESS;
+    return (ret == 0 ? EXIT_SUCCESS : EXIT_FAILURE);
 }
