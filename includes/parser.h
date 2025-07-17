@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/16 15:06:47 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/16 22:27:57 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 
 #ifndef PARSER_H
@@ -20,6 +21,8 @@
 #define COLOR_BLUE   0x0000FFFF  // Blue with full opacity
 #define COLOR_BLACK  0x000000FF  // Black with full opacity
 #define COLOR_WHITE  0xFFFFFFFF  // White with full opacity
+#define SPEED 0.1
+#define FOV 1.0
 #define BUFFER_SIZE   600
 
 typedef struct s_data
@@ -32,6 +35,8 @@ typedef struct s_data
 	char *c_color;
 	void *mlx;
 	void *win;
+	float fov;
+	float ray_angle;
 	mlx_image_t *img;
 	char    *addr; 
 	int     bpp;
@@ -39,6 +44,7 @@ typedef struct s_data
     int     endian;
 	char **map;
 	char player_char;
+	float player_angle;
 	int map_width;
 	int recmap_with;
 	int map_height;
