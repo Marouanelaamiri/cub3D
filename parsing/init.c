@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 14:08:01 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/15 15:25:59 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/20 17:51:26 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	init_data(t_data *info)
 	info->so_texture = NULL;
 	info->we_texture = NULL;
 	info->ea_texture = NULL;
-	info->f_color = NULL;
-	info->c_color = NULL;
+	info->f_color = UINT32_MAX;
+	info->c_color = UINT32_MAX;
 	info->map = NULL;
 	info->map_height = 0;
 	info->map_width = 0;

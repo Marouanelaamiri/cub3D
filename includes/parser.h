@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/17 18:48:47 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/20 18:24:27 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,15 @@ typedef struct s_data
 	char *so_texture;
 	char *we_texture;
 	char *ea_texture;
+	char  hit_side;//
+    float hit_wall_x;//
 	mlx_texture_t *no;
 	mlx_texture_t *so;
 	mlx_texture_t *we;
 	mlx_texture_t *ea;
 	mlx_image_t *img;
-	char *f_color;
-	char *c_color;
+	uint32_t f_color;
+	uint32_t c_color;
 	void *mlx;
 	void *win;
 	float fov;
@@ -96,7 +98,7 @@ void check_map_line(t_data *info, char *line);
 int	validate_map_file(char *path, t_data *info);
 void check_borders(t_data *info);
 void	ft_free_array(char **arr);
-void load_textures(t_data *info);
+int load_textures(t_data *data);
 //============================================================//
 int	ft_getmax(int a, int b);
 int		ft_whitespaces(int c);

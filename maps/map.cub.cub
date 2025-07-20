@@ -1,8 +1,8 @@
 
-NO               textures/eclipse.png
-SO  textures/eclipse.png
-WE  textures/eclipse.png
-EA  textures/eclipse.png
+NO               textures/noimg.png
+SO  textures/soimg.png
+WE  textures/weimg.png
+EA  textures/eaimg.png
 
 F 117,0,0
 C 79,56,22    

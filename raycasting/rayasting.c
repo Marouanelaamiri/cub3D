@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rayasting.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/07/17 18:38:04 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/20 18:46:47 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,60 +79,115 @@ static void put_pixel(char *data, int x, int y, int color, int line_len,
 
 static float cast_ray(t_data *data, float angle)
 {
-	float	px;
-	float	py;
-	float	x;
-	float	y;
+    float  px = data->player_x * TILE_SIZE + TILE_SIZE/2;
+    float  py = data->player_y * TILE_SIZE + TILE_SIZE/2;
+    float  x = px, y = py;
 
-	px = data->player_x * TILE_SIZE + TILE_SIZE / 2;
-	py = data->player_y * TILE_SIZE + TILE_SIZE / 2;
-	x = px;
-	y = py;
-	while (1)
-	{
-		int	tile_x = (int)(x / TILE_SIZE);
-		int	tile_y = (int)(y / TILE_SIZE);
+    // step in tiny increments until you hit a wall
+    while (1)
+    {
+        int mx = (int)(x / TILE_SIZE);
+        int my = (int)(y / TILE_SIZE);
+        if (mx < 0 || my < 0 || my >= data->recmap_height
+         || mx >= (int)ft_strlen(data->map[my])
+         || data->map[my][mx] == '1')
+            break;
+        x += cosf(angle);
+        y += sinf(angle);
+    }
 
-		if (tile_x < 0 || tile_y < 0 || tile_y >= data->recmap_height ||
-			tile_x >= (int)ft_strlen(data->map[tile_y]) ||
-			data->map[tile_y][tile_x] == '1')
-			break ;
-		x += cosf(angle);
-		y += sinf(angle);
-	}
-	float dx = x - px;
-	float dy = y - py;
-	return (sqrtf(dx * dx + dy * dy));
+    // figure out which side & offset
+    float dx = x - px, dy = y - py;
+    bool  vertical = fabsf(cosf(angle)) > fabsf(sinf(angle));
+    if (vertical)
+    {
+        // E/W wall
+        if (cosf(angle) > 0)
+            data->hit_side = 'E';
+        else
+            data->hit_side = 'W';
+        // y mod TILE determines where along the wall
+        data->hit_wall_x = fmodf(y, TILE_SIZE) / TILE_SIZE;
+    }
+    else
+    {
+        // N/S wall
+        if (sinf(angle) > 0)
+            data->hit_side = 'S';
+        else
+            data->hit_side = 'N';
+        data->hit_wall_x = fmodf(x, TILE_SIZE) / TILE_SIZE;
+    }
+
+    // fish‑eye fix
+    float dist = sqrtf(dx*dx + dy*dy)
+               * cosf(angle - data->ray_angle);
+    return (dist);
 }
 
-static void draw_column(t_data *data, int col, float dist, int screen_width,
-						int screen_height)
+
+static void draw_column(t_data *data,
+                        int col, float dist,
+                        int screen_w, int screen_h)
 {
-	int	wall_height;
-	int	wall_top;
-	int	wall_bottom;
-	int	y;
-	int	color;
+    int wall_h = (int)((TILE_SIZE * screen_h) / (dist + 0.0001f));
+    if (wall_h > screen_h)
+        wall_h = screen_h;
+    int top    = (screen_h - wall_h) / 2;
+    int bottom = top + wall_h;
 
-	wall_height = (int)((TILE_SIZE * screen_height) / (dist + 0.0001));
-	if (wall_height > screen_height)
-		wall_height = screen_height;
-	wall_top = (screen_height / 2) - (wall_height / 2);
-	wall_bottom = wall_top + wall_height;
-	y = 0;
-	while (y < screen_height)
-	{
-		if (y < wall_top)
-			color = COLOR_WHITE;
-		else if (y >= wall_top && y <= wall_bottom)
-			color = COLOR_RED;
-		else
-			color = COLOR_BLACK;
-		put_pixel(data->addr, col, y, color, data->line_len, data->bpp,
-				  screen_width, screen_height);
-		y++;
-	}
+    // Pick the correct texture based on hit side
+    mlx_texture_t *tex = NULL;
+    if (data->hit_side == 'N') tex = data->no;
+    else if (data->hit_side == 'S') tex = data->so;
+    else if (data->hit_side == 'W') tex = data->we;
+    else if (data->hit_side == 'E') tex = data->ea;
+
+    if (!tex) return; // Defensive check
+
+    uint32_t *pixels = (uint32_t *)tex->pixels;
+    int tw = tex->width;
+    int th = tex->height;
+
+    // Compute horizontal offset into texture
+    int tex_x = (int)(data->hit_wall_x * tw);
+    if (data->hit_side == 'S' || data->hit_side == 'E')
+        tex_x = tw - tex_x - 1;
+    tex_x = tex_x < 0 ? 0 : (tex_x >= tw ? tw - 1 : tex_x);
+
+    for (int y = 0; y < screen_h; ++y)
+    {
+        uint32_t color;
+        if (y < top)
+        {
+            color = data->c_color;
+        }
+        else if (y >= top && y < bottom)
+        {
+            float rel = (float)(y - top) / (float)wall_h;
+
+            // You can toggle this depending on your need:
+            // Option 1 (Stretch): more realistic but stretched
+            int tex_y = (int)(rel * th);
+
+            // Option 2 (Tiled / repeated): use this if you want the texture to repeat
+            // int tex_y = ((int)(rel * wall_h)) % th;
+
+            tex_y = tex_y < 0 ? 0 : (tex_y >= th ? th - 1 : tex_y);
+
+            color = pixels[tex_y * tw + tex_x];
+        }
+        else
+        {
+            color = data->f_color;
+        }
+
+        put_pixel(data->addr, col, y, color,
+                  data->line_len, data->bpp, screen_w, screen_h);
+    }
 }
+
+
 
 static void render_3d(t_data *data)
 {
@@ -289,6 +344,8 @@ int put_map_2dv(t_data *data)
 	data->mlx = mlx_init(width, height, "Cub3D Fake 3D", false);
 	if (!data->mlx)
 		return (1);
+	if (load_textures(data))
+        return (1);
 	data->img = mlx_new_image(data->mlx, width, height);
 	if (!data->img)
 		return (1);
