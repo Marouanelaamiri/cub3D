@@ -6,9 +6,10 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/31 21:09:01 by aromani          ###   ########.fr       */
+/*   Updated: 2025/07/31 21:19:24 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 
 
@@ -33,13 +34,19 @@ typedef struct s_data
 	char *so_texture;
 	char *we_texture;
 	char *ea_texture;
-	char *f_color;
-	char *c_color;
+	char  hit_side;//
+    float hit_wall_x;//
+	mlx_texture_t *no;
+	mlx_texture_t *so;
+	mlx_texture_t *we;
+	mlx_texture_t *ea;
+	mlx_image_t *img;
+	uint32_t f_color;
+	uint32_t c_color;
 	void *mlx;
 	void *win;
 	float fov;
 	float ray_angle;
-	mlx_image_t *img;
 	char    *addr; 
 	int     bpp;
     int     line_len;
@@ -73,9 +80,6 @@ void init_data(t_data *info);
 void update_map(t_data *info, char **valid_map, char *checked);
 void copy_existing_map(t_data *info, char **valid_map);
 int check_texture_path(char *path);
-// int check_so_no(char *trimmed, t_data *info);
-// int check_we_ea(char *trimmed, t_data *info);
-// int check_floor_ceiling(char *trimmed, t_data *info);
 int check_id(char *line, t_data *info);
 void print_error(char *msg, t_data *info);
 void check_surround(t_data *info, int i, int j, int len);
@@ -93,15 +97,11 @@ t_data *parser_map(int ac, char **av);
 void check_map_char(t_data *info, int i, int len);
 void	check_line_for_player(t_data *info, int i, int len);
 void	map_parsing(t_data *info, int *started, char *line);
-// void check_player_pos(char c, int x, t_data *info, int height);
-// void check_lines_char(char *checked, t_data *info, int height);
 void check_map_line(t_data *info, char *line);
-// int check_file_lines(int fd, t_data *info, int *start);
-// int check_if_file_open(char *file, t_data *info, int *fd);
-// int is_valid_map_line(char *line, t_data *info);
 int	validate_map_file(char *path, t_data *info);
 void check_borders(t_data *info);
 void	ft_free_array(char **arr);
+int load_textures(t_data *data);
 //============================================================//
 int	ft_getmax(int a, int b);
 int		ft_whitespaces(int c);
