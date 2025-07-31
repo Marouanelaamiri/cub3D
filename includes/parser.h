@@ -6,7 +6,7 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/16 22:27:57 by aromani          ###   ########.fr       */
+/*   Updated: 2025/07/31 21:09:01 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 #define SPEED 0.1
 #define FOV 1.0
 #define BUFFER_SIZE   600
+#define MAP_WIDTH 720
+#define MAP_HEIGHT 600
 
 typedef struct s_data
 {
@@ -133,5 +135,6 @@ char	**ft_realloc(char **lines, int line_count, char *new_line);
 void	*ft_free(char **arr, int count);
 void 	free_split(char **arr);
 int		ft_strcmp(const char *s1, const char *s2);
+int main_raycasting(t_data *t);
 
 #endif

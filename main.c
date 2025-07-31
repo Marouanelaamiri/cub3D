@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:13:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/14 17:58:18 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/31 21:15:35 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int main(int argc, char **argv)
     printf(" Player at (%.1f, %.1f) facing '%c'\n",
            info->player_x, info->player_y, info->player_direction);
     put_map_2dv(info);
+    //main_raycasting(info);
     clean_map(info);
     free(info);
     return EXIT_SUCCESS;

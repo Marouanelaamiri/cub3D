@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 14:08:01 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/15 15:25:59 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/07/31 21:07:00 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ void	init_data(t_data *info)
 	info->player_y = 0.0f;
 	info->player_direction = '\0';
 	info->player_char = 0;
+	info->player_x = 3;
+	info->player_y = 3;
+	info->player_angle = M_PI / 2; // facing North
 	info->error_message = NULL;
 }
 
