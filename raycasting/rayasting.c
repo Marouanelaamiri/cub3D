@@ -77,6 +77,8 @@
 		data[offset + 3] = (color >> 24) & 0xFF;
 	}
 
+
+
 	static float cast_ray(t_data *data, float angle)
 	{
 		float	px;
@@ -123,11 +125,11 @@
 		while (y < screen_height)
 		{
 			if (y < wall_top)
-				color = COLOR_BLACK;
+				color = data->c_color;
 			else if (y >= wall_top && y <= wall_bottom)
 				color = COLOR_RED;
 			else
-				color = COLOR_BLACK;
+				color = data->f_color;
 			put_pixel(data->addr, col, y, color, data->line_len, data->bpp,
 					screen_width, screen_height);
 			y++;
@@ -288,6 +290,8 @@
 		int height = data->recmap_height * TILE_SIZE;
 		data->mlx = mlx_init(width, height, "Cub3D Fake 3D", false);
 		if (!data->mlx)
+			return (1);
+		if (load_textures(data))
 			return (1);
 		data->img = mlx_new_image(data->mlx, width, height);
 		if (!data->img)

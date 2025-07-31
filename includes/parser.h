@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/31 21:19:24 by aromani          ###   ########.fr       */
+/*   Updated: 2025/07/31 21:39:18 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ typedef struct s_data
 	char *ea_texture;
 	char  hit_side;//
     float hit_wall_x;//
+	mlx_texture_t *tex;
+	float tex_x;
+	float tex_y;
 	mlx_texture_t *no;
 	mlx_texture_t *so;
 	mlx_texture_t *we;
