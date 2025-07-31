@@ -180,12 +180,25 @@ static void	draw_column(t_data *data,
 		}
 		else if (y < bottom)
 		{
-			/* >>> new: no scaling, repeat texture at native res */
-			int rel_y = y - top;                     /* >>> */
-			data->tex_y = rel_y % th;                /* >>> */
-			if (data->tex_y < 0)                     /* just in case */
-				data->tex_y = 0;                     /* >>> */
-			color = pxs[(int) (data->tex_y * tw + data->tex_x)]; /* >>> */
+			if (wall_h >= th)
+{
+    // slice taller than texture: center it
+    int   pad = (wall_h - th) / 2;
+    // y - top is distance down from slice start
+    data->tex_y = y - top - pad;
+}
+else
+{
+    // slice shorter than texture: crop the center of the PNG
+    int   pad = (th - wall_h) / 2;
+    data->tex_y = pad + (y - top);
+}
+if (data->tex_y < 0)
+    data->tex_y = 0;
+if (data->tex_y >= th)
+    data->tex_y = th - 1;
+
+color = pxs[(int) (data->tex_y * tw + data->tex_x)];
 		}
 		else
 		{
