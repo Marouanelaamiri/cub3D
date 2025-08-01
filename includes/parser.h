@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/01 20:55:13 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/01 21:08:53 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ t_data *parser_map(int ac, char **av);
 void check_map_char(t_data *info, int i, int len);
 void	check_line_for_player(t_data *info, int i, int len);
 void	map_parsing(t_data *info, int *started, char *line);
+int		handle_fc(char *trim, t_data *info);
 void check_map_line(t_data *info, char *line);
 int	validate_map_file(char *path, t_data *info);
 void check_borders(t_data *info);
