@@ -1,4 +1,4 @@
-1 , player should be stoped in the wall
-2 , move speed of angels
-3 "image stretch problem"
-4 exit
+1 wall_collagion
+2 exit "echap"
+3 leaks && open fds
+ parsing;
