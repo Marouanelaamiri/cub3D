@@ -49,8 +49,10 @@ SRC_PARS    := parsing/parsing.c \
                parsing/parsing_utils3.c \
                parsing/parsing_utils4.c \
                parsing/parsing_utils5.c \
+			   parsing/parsing_colors.c \
                parsing/detol.c \
                parsing/allocation.c \
+			   parsing/color_utils.c \
                parsing/init.c \
                parsing/textures.c
 SRC_EXEC    := raycasting/rayasting.c

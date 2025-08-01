@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:03:36 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/01 20:16:24 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/01 21:28:31 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,42 +93,6 @@ static int	handle_we_ea(char *trim, t_data *info)
 	return (0);
 }
 
-static int	handle_fc(char *trim, t_data *info)
-{
-    char *value;
-    int  r, g, b;
-
-    if (ft_strncmp(trim, "F ", 2) == 0)
-    {
-        value = ft_strtrim(trim + 2, " \n\r\t");
-        if (!value || !check_color(value))
-            print_error("Invalid floor color.\n", info);
-        if (sscanf(value, "%d,%d,%d", &r, &g, &b) != 3
-         || r < 0 || r > 255
-         || g < 0 || g > 255
-         || b < 0 || b > 255)
-            print_error("Floor color components out of range.\n", info);
-        info->f_color = (r << 24) | (g << 16) | (b << 8) | 255;
-        free(value);
-        return (1);
-    }
-    if (ft_strncmp(trim, "C ", 2) == 0)
-    {
-        value = ft_strtrim(trim + 2, " \n\r\t");
-        if (!value || !check_color(value))
-            print_error("Invalid ceiling color.\n", info);
-        if (sscanf(value, "%d,%d,%d", &r, &g, &b) != 3
-         || r < 0 || r > 255
-         || g < 0 || g > 255
-         || b < 0 || b > 255)
-            print_error("Ceiling color components out of range.\n", info);
-        info->c_color = (r << 24) | (g << 16) | (b << 8) | 255;
-        free(value);
-        return (1);
-    }
-    return (0);
-}
-
 int	check_id(char *line, t_data *info)
 {
 	char	*trim;
@@ -144,4 +108,13 @@ int	check_id(char *line, t_data *info)
 		|| handle_fc(trim, info);
 	free(trim);
 	return (result);
+}
+
+int	handle_fc(char *trim, t_data *info)
+{
+	if (ft_strncmp(trim, "F ", 2) == 0)
+		return (parse_color(trim + 2, info, 1));
+	if (ft_strncmp(trim, "C ", 2) == 0)
+		return (parse_color(trim + 2, info, 0));
+	return (0);
 }

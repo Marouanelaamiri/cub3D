@@ -6,19 +6,15 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/01 21:00:52 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/01 23:35:34 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef PARSER_H
 # define PARSER_H
 
 #define TILE_SIZE 60
-#define COLOR_RED    0xFF0000FF  // Red with full opacity
-#define COLOR_GREEN  0x00FF00FF  // Green with full opacity
-#define COLOR_BLUE   0x0000FFFF  // Blue with full opacity
-#define COLOR_BLACK  0x000000FF  // Black with full opacity
-#define COLOR_WHITE  0xFFFFFFFF  // White with full opacity
 #define SPEED 0.1f
 #define FOV 1
 #define BUFFER_SIZE   600
@@ -32,8 +28,8 @@ typedef struct s_data
 	char *so_texture;
 	char *we_texture;
 	char *ea_texture;
-	char  hit_side;//
-    float hit_wall_x;//
+	char  hit_side;
+    float hit_wall_x;
 	mlx_texture_t *tex;
 	float tex_x;
 	float tex_y;
@@ -69,6 +65,10 @@ typedef struct s_data
 	char *error_message;
 }	t_data;
 
+void	assign_floor_color(t_data *info, int r, int g, int b);
+void	assign_ceiling_color(t_data *info, int r, int g, int b);
+void	validate_floor_rgb(int r, int g, int b, t_data *info);
+void	validate_ceiling_rgb(int r, int g, int b, t_data *info);
 int put_map_2dv(t_data *data);
 void	clean_map(t_data *info);
 t_data	*parser_map(int ac, char **av);
@@ -95,9 +95,11 @@ int final_check(t_data *info);
 void check_arguments(int ac, char **av);
 t_data	*malloc_map(void);
 t_data *parser_map(int ac, char **av);
+int	parse_color(char *str, t_data *info, int is_floor);
 void check_map_char(t_data *info, int i, int len);
 void	check_line_for_player(t_data *info, int i, int len);
 void	map_parsing(t_data *info, int *started, char *line);
+int		handle_fc(char *trim, t_data *info);
 void check_map_line(t_data *info, char *line);
 int	validate_map_file(char *path, t_data *info);
 void check_borders(t_data *info);

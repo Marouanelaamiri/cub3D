@@ -1,8 +1,9 @@
 
 NO  textures/Tile.png
-SO  textures/Tile.png
-WE  textures/Tile.png
-EA  textures/Tile.png
+SO  textures/Tile2.png
+WE  textures/Tile3.png
+EA  textures/Tile4.png
+
    
 F 0,0,0
 C 255,81,92
