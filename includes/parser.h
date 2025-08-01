@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/01 20:36:35 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/01 20:55:13 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,7 @@
 # define PARSER_H
 
 #define TILE_SIZE 60
-#define COLOR_RED    0xFF0000FF  // Red with full opacity
-#define COLOR_GREEN  0x00FF00FF  // Green with full opacity
-#define COLOR_BLUE   0x0000FFFF  // Blue with full opacity
-#define COLOR_BLACK  0x000000FF  // Black with full opacity
-#define COLOR_WHITE  0xFFFFFFFF  // White with full opacity
-#define SPEED 0.1f
+#define SPEED 1.0f
 #define FOV 1
 #define BUFFER_SIZE   600
 #define MAP_WIDTH 1920
@@ -35,8 +30,8 @@ typedef struct s_data
 	char *so_texture;
 	char *we_texture;
 	char *ea_texture;
-	char  hit_side;//
-    float hit_wall_x;//
+	char  hit_side;
+    float hit_wall_x;
 	mlx_texture_t *tex;
 	float tex_x;
 	float tex_y;
