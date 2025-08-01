@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/01 21:08:53 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/01 21:26:57 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,10 @@ typedef struct s_data
 	char *error_message;
 }	t_data;
 
+void	assign_floor_color(t_data *info, int r, int g, int b);
+void	assign_ceiling_color(t_data *info, int r, int g, int b);
+void	validate_floor_rgb(int r, int g, int b, t_data *info);
+void	validate_ceiling_rgb(int r, int g, int b, t_data *info);
 int put_map_2dv(t_data *data);
 void	clean_map(t_data *info);
 t_data	*parser_map(int ac, char **av);
@@ -93,6 +97,7 @@ int final_check(t_data *info);
 void check_arguments(int ac, char **av);
 t_data	*malloc_map(void);
 t_data *parser_map(int ac, char **av);
+int	parse_color(char *str, t_data *info, int is_floor);
 void check_map_char(t_data *info, int i, int len);
 void	check_line_for_player(t_data *info, int i, int len);
 void	map_parsing(t_data *info, int *started, char *line);
