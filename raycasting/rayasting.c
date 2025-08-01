@@ -6,7 +6,7 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/01 20:36:08 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/01 20:42:14 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void set_wh_map(t_data *data) {
 
 static float	cast_ray(t_data *data, float angle)
 {
+	float hit_dist;
 	float	px = data->player_x * TILE_SIZE + TILE_SIZE / 2;
 	float	py = data->player_y * TILE_SIZE + TILE_SIZE / 2;
 	float	dir_x = cosf(angle);
@@ -61,15 +62,30 @@ static float	cast_ray(t_data *data, float angle)
 	float	delta_x = fabsf(1 / dir_x);
 	float	delta_y = fabsf(1 / dir_y);
 
-	int	step_x = (dir_x < 0) ? -1 : 1;
-	int	step_y = (dir_y < 0) ? -1 : 1;
+	int step_x;
+	if (dir_x < 0)
+		step_x = -1;
+	else
+		step_x = 1;
 
-	float	side_dist_x = (step_x < 0)
-		? (px - map_x * TILE_SIZE) * delta_x
-		: ((map_x + 1) * TILE_SIZE - px) * delta_x;
-	float	side_dist_y = (step_y < 0)
-		? (py - map_y * TILE_SIZE) * delta_y
-		: ((map_y + 1) * TILE_SIZE - py) * delta_y;
+	int step_y;
+	if (dir_y < 0)
+		step_y = -1;
+	else
+		step_y = 1;
+
+	float side_dist_x;
+	if (step_x < 0)
+		side_dist_x = (px - map_x * TILE_SIZE) * delta_x;
+	else
+		side_dist_x = ((map_x + 1) * TILE_SIZE - px) * delta_x;
+
+	float side_dist_y;
+	if (step_y < 0)
+		side_dist_y = (py - map_y * TILE_SIZE) * delta_y;
+	else
+		side_dist_y = ((map_y + 1) * TILE_SIZE - py) * delta_y;
+
 
 	int	hit = 0;
 	int	side;
@@ -94,19 +110,28 @@ static float	cast_ray(t_data *data, float angle)
 			hit = 1;
 	}
 
-	float hit_dist = (side == 0)
-		? (side_dist_x - delta_x * TILE_SIZE)
-		: (side_dist_y - delta_y * TILE_SIZE);
+
+	if (side == 0)
+		hit_dist = side_dist_x - delta_x * TILE_SIZE;
+	else
+		hit_dist = side_dist_y - delta_y * TILE_SIZE;
 
 	if (side == 0)
 	{
-		data->hit_side = (step_x > 0) ? 'E' : 'W';
+		if (step_x > 0)
+    		data->hit_side = 'E';
+		else
+   			data->hit_side = 'W';
+
 		float wall_y = py + hit_dist * dir_y;
 		data->hit_wall_x = fmodf(wall_y, TILE_SIZE) / TILE_SIZE;
 	}
 	else
 	{
-		data->hit_side = (step_y > 0) ? 'S' : 'N';
+		if (step_y > 0) 
+			data->hit_side = 'S'; 
+		else 
+			data->hit_side = 'N';
 		float wall_x = px + hit_dist * dir_x;
 		data->hit_wall_x = fmodf(wall_x, TILE_SIZE) / TILE_SIZE;
 	}
@@ -137,10 +162,14 @@ static void draw_column(t_data *data, int col, float dist)
 	int			y = 0;
 	uint32_t	color;
 
-	if (data->hit_side == 'N') data->tex = data->no;
-	else if (data->hit_side == 'S') data->tex = data->so;
-	else if (data->hit_side == 'W') data->tex = data->we;
-	else                            data->tex = data->ea;
+	if (data->hit_side == 'N') 
+		data->tex = data->no;
+	else if (data->hit_side == 'S') 
+		data->tex = data->so;
+	else if (data->hit_side == 'W') 
+		data->tex = data->we;
+	else                            
+		data->tex = data->ea;
 
 	int			tw = data->tex->width;
 	int			th = data->tex->height;
@@ -151,8 +180,10 @@ static void draw_column(t_data *data, int col, float dist)
 	data->tex_x = (int)(data->hit_wall_x * (float)tw);
 	if (data->hit_side == 'S' || data->hit_side == 'E')
 		data->tex_x = tw - data->tex_x - 1;
-	if (data->tex_x < 0)    data->tex_x = 0;
-	if (data->tex_x >= tw) data->tex_x = tw - 1;
+	if (data->tex_x < 0)    
+		data->tex_x = 0;
+	if (data->tex_x >= tw) 
+		data->tex_x = tw - 1;
 
 	while (y < MAP_HEIGHT)
 	{
@@ -161,8 +192,10 @@ static void draw_column(t_data *data, int col, float dist)
 		else if (y <= bottom)
 		{
 			data->tex_y = (y - top) * th / wall_h;
-			if (data->tex_y < 0)    data->tex_y = 0;
-			if (data->tex_y >= th) data->tex_y = th - 1;
+			if (data->tex_y < 0)    
+				data->tex_y = 0;
+			if (data->tex_y >= th) 
+				data->tex_y = th - 1;
 			color = pxs[(int)(data->tex_y * tw + data->tex_x)];
 		}
 		else
