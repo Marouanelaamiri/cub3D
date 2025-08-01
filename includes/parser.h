@@ -3,21 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/01 21:26:57 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/01 23:35:34 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 
 #ifndef PARSER_H
 # define PARSER_H
 
 #define TILE_SIZE 60
-#define SPEED 1.0f
+#define SPEED 0.1f
 #define FOV 1
 #define BUFFER_SIZE   600
 #define MAP_WIDTH 1920

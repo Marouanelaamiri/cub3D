@@ -6,7 +6,7 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/01 20:42:14 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/01 23:31:58 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,6 @@ static void draw_column(t_data *data, int col, float dist)
 		put_pixel(data->addr, col, y, color,
 				  data->line_len, data->bpp,
 				  MAP_HEIGHT * TILE_SIZE , MAP_HEIGHT *TILE_SIZE);
-		//put_pixel(data, col, y, color, data->line_len, data->bpp);
 		++y;
 	}
 }
@@ -243,20 +242,20 @@ static int	is_wall(t_data *data, float x, float y)
 
 	if (ty < 0 || ty >= data->recmap_height) 
 		return (1);
-	if (tx < 0 || tx >= (int)ft_strlen(data->map[ty])) 
+	if (tx < 0 || tx >= (int)ft_strlen(data->map[ty]))
 		return (1);
-	return (data->map[ty][tx] == '1');
+	if (data->map[ty][tx] == '1' || data->map[ty + 1][tx + 1] == '1')
+		return (1);
+	return (0);
 }
 
 void	key_hook(void *param)
 {
-	t_data	*data;
-	float	new_x;
-	float	new_y;
+	t_data	*data = (t_data *)param;
+	float	new_x, new_y;
+	int		changed = 0;
 
-	data = (t_data *)param;
-	
- 	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
+	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
 	{
 		new_x = data->player_x + cosf(data->ray_angle) * SPEED;
 		new_y = data->player_y + sinf(data->ray_angle) * SPEED;
@@ -264,21 +263,21 @@ void	key_hook(void *param)
 		{
 			data->player_x = new_x;
 			data->player_y = new_y;
+			changed = 1;
 		}
-		redraw(data);
 	}
-	else if (mlx_is_key_down(data->mlx, MLX_KEY_S))
+	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
 	{
 		new_x = data->player_x - cosf(data->ray_angle) * SPEED;
 		new_y = data->player_y - sinf(data->ray_angle) * SPEED;
-		if (!is_wall(data, new_x , new_y ))
+		if (!is_wall(data, new_x, new_y))
 		{
 			data->player_x = new_x;
 			data->player_y = new_y;
+			changed = 1;
 		}
-		redraw(data);
 	}
-	else if (mlx_is_key_down(data->mlx, MLX_KEY_A)) // strafe left
+	if (mlx_is_key_down(data->mlx, MLX_KEY_A)) // strafe left
 	{
 		new_x = data->player_x + cosf(data->ray_angle - M_PI_2) * SPEED;
 		new_y = data->player_y + sinf(data->ray_angle - M_PI_2) * SPEED;
@@ -286,10 +285,10 @@ void	key_hook(void *param)
 		{
 			data->player_x = new_x;
 			data->player_y = new_y;
+			changed = 1;
 		}
-		redraw(data);
 	}
-	else if (mlx_is_key_down(data->mlx, MLX_KEY_D)) // strafe right
+	if (mlx_is_key_down(data->mlx, MLX_KEY_D)) // strafe right
 	{
 		new_x = data->player_x + cosf(data->ray_angle + M_PI_2) * SPEED;
 		new_y = data->player_y + sinf(data->ray_angle + M_PI_2) * SPEED;
@@ -297,25 +296,28 @@ void	key_hook(void *param)
 		{
 			data->player_x = new_x;
 			data->player_y = new_y;
+			changed = 1;
 		}
-		redraw(data);
 	}
-	else if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
+	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 	{
 		data->ray_angle -= 0.05f;
 		if (data->ray_angle < 0)
 			data->ray_angle += 2 * M_PI;
-		redraw(data);
+		changed = 1;
 	}
-	else if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
+	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
 	{
 		data->ray_angle += 0.05f;
 		if (data->ray_angle >= 2 * M_PI)
 			data->ray_angle -= 2 * M_PI;
-		redraw(data);
+		changed = 1;
 	}
-	return ;
+
+	if (changed)
+		redraw(data);
 }
+
 
 
 void	terminate_program(void *param)
