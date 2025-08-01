@@ -1,8 +1,8 @@
 
-NO  textures/noimg.png
-SO  textures/soimg.png
-WE  textures/weimg.png
-EA  textures/eaimg.png
+NO  textures/Tile.png
+SO  textures/Tile.png
+WE  textures/Tile.png
+EA  textures/Tile.png
    
 F 0,0,0
 C 225,225,225    
