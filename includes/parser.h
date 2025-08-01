@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/31 21:39:18 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/01 20:31:54 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@
 #define COLOR_BLUE   0x0000FFFF  // Blue with full opacity
 #define COLOR_BLACK  0x000000FF  // Black with full opacity
 #define COLOR_WHITE  0xFFFFFFFF  // White with full opacity
-#define SPEED 0.1
-#define FOV 1.0
+#define SPEED 0.5f
+#define FOV 1
 #define BUFFER_SIZE   600
-#define MAP_WIDTH 720
-#define MAP_HEIGHT 600
+#define MAP_WIDTH 1920
+#define MAP_HEIGHT 1080
+#define COLLISION_MARGIN 0.1f
 
 typedef struct s_data
 {

@@ -35,7 +35,7 @@ MLX_LIB     := -L$(MLX_DIR)/build -lmlx42
 #                            Compiler & Linker Flags
 # ──────────────────────────────────────────────────────────────────────────────
 
-CFLAGS      := -Wall -Wextra -Werror -Iincludes $(MLX_INC) $(GLFW_INC)
+CFLAGS      := -Wall -Wextra -Werror -Iincludes $(MLX_INC) $(GLFW_INC) -fsanitize=address
 LDFLAGS     := $(MLX_LIB) $(GLFW_LIB) $(OSX_FRAMEWORKS) -pthread
 
 # ──────────────────────────────────────────────────────────────────────────────

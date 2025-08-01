@@ -6,7 +6,7 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:13:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/31 21:19:39 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/01 20:03:49 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,7 @@ int main(int argc, char **argv)
     printf(" Map: %d columns × %d rows\n", info->map_width, info->map_height);
     printf(" Player at (%.1f, %.1f) facing '%c'\n",
            info->player_x, info->player_y, info->player_direction);
-    put_map_2dv(info);
-    //main_raycasting(info);
-
-    // ────────────────────────────────
-    // New: load all four textures into info->no/so/we/ea
-    load_textures(info);
-    // ────────────────────────────────
-
-    // Now launch your put_map_2dv (which initializes MLX, does raycasting, enters the loop)
     ret = put_map_2dv(info);
-
-    // Cleanup after window closes
     clean_map(info);
     free(info);
     return (ret == 0 ? EXIT_SUCCESS : EXIT_FAILURE);
