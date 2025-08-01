@@ -306,89 +306,8 @@ void	key_hook(void *param)
 	}
 }
 
-// 	static float cast_ray(t_data *data, float angle)
-// 	{
-// 		float	px;
-// 		float	py;
-// 		float	x;
-// 		float	y;
-
-// 		px = data->player_x * TILE_SIZE + TILE_SIZE / 2;
-// 		py = data->player_y * TILE_SIZE + TILE_SIZE / 2;
-// 		x = px;
-// 		y = py;
-// 		while (1)
-// 		{
-// 			int	tile_x = (int)(x / TILE_SIZE);
-// 			int	tile_y = (int)(y / TILE_SIZE);
-
-// 			if (tile_x < 0 || tile_y < 0 || tile_y >= data->recmap_height ||
-// 				tile_x >= (int)ft_strlen(data->map[tile_y]) ||
-// 				data->map[tile_y][tile_x] == '1')
-// 				break ;
-// 			x += cosf(angle);
-// 			y += sinf(angle);
-// 		}
-// 		float dx = x - px;
-// 		float dy = y - py;
-// 		return (sqrtf(dx * dx + dy * dy));
-// 	}
-
-// 	static void draw_column(t_data *data, int col, float dist, int screen_width,
-// 							int screen_height)
-// 	{
-// 		int	wall_height;
-// 		int	wall_top;
-// 		int	wall_bottom;
-// 		int	y;
-// 		int	color;
-
-// 		wall_height = (int)((TILE_SIZE * screen_height) / (dist + 0.0001));
-// 		if (wall_height > screen_height)
-// 			wall_height = screen_height;
-// 		wall_top = (screen_height / 2) - (wall_height / 2);
-// 		wall_bottom = wall_top + wall_height;
-// 		y = 0;
-// 		while (y < screen_height)
-// 		{
-// 			if (y < wall_top)
-// 				color = data->c_color;
-// 			else if (y >= wall_top && y <= wall_bottom)
-// 				color = COLOR_RED;
-// 			else
-// 				color = data->f_color;
-// 			put_pixel(data->addr, col, y, color, data->line_len, data->bpp,
-// 					screen_width, screen_height);
-// 			y++;
-// 		}
-// 	}
-
-// 	static void render_3d(t_data *data)
-// 	{
-// 		int		w;
-// 		int		h;
-// 		float	step;
-// 		float	angle;
-// 		int		col;
-
-// 		w = data->recmap_with * TILE_SIZE;
-// 		h = data->recmap_height * TILE_SIZE;
-// 		step = data->fov / w;
-// 		angle = data->ray_angle - (data->fov / 2);
-// 		col = 0;
-// 		while (col < w)
-// 		{
-// 			float	dist = cast_ray(data, angle);
-// 			dist *= cosf(angle - data->ray_angle); // fish-eye fix
-// 			draw_column(data, col, dist, w, h);
-// 			angle += step;
-// 			col++;
-// 		}
-// 	}
-
-
-	char	*ft_strdupv2(char *str)
-	{
+char	*ft_strdupv2(char *str)
+{
 		int		i;
 		int		j;
 		int		len;
@@ -477,4 +396,3 @@ void	key_hook(void *param)
 		mlx_loop(data->mlx);
 		return (0);
 	}
-
