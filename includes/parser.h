@@ -6,7 +6,7 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/01 20:31:54 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/01 20:36:35 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #define COLOR_BLUE   0x0000FFFF  // Blue with full opacity
 #define COLOR_BLACK  0x000000FF  // Black with full opacity
 #define COLOR_WHITE  0xFFFFFFFF  // White with full opacity
-#define SPEED 0.5f
+#define SPEED 0.1f
 #define FOV 1
 #define BUFFER_SIZE   600
 #define MAP_WIDTH 1920

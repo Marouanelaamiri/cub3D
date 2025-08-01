@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 13:53:16 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/20 17:52:23 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/01 20:15:58 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,6 @@ void	clean_map(t_data *info)
 		free(info->we_texture);
 	if (info->ea_texture)
 		free(info->ea_texture);
-	// if (info->c_color)
-	// 	free(info->c_color);
-	// if (info->f_color)
-	// 	free(info->f_color);
 	clean_map_arr(info);
 	if (info->error_message)
 		free(info->error_message);

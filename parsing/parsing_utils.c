@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:03:36 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/20 17:52:03 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/01 20:16:24 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,33 +92,6 @@ static int	handle_we_ea(char *trim, t_data *info)
 	}
 	return (0);
 }
-
-// static int	handle_fc(char *trim, t_data *info)
-// {
-// 	char	*value;
-
-// 	if (ft_strncmp(trim, "F ", 2) == 0)
-// 	{
-// 		if (info->f_color)
-// 			print_error("Duplicate floor color identifier.\n", info);
-// 		value = ft_strtrim(trim + 2, " \n\r\t");
-// 		if (!value || !check_color(value))
-// 			print_error("Invalid floor color.\n", info);
-// 		info->f_color = value;
-// 		return (1);
-// 	}
-// 	if (ft_strncmp(trim, "C ", 2) == 0)
-// 	{
-// 		if (info->c_color)
-// 			print_error("Duplicate ceiling color identifier.\n", info);
-// 		value = ft_strtrim(trim + 2, " \n\r\t");
-// 		if (!value || !check_color(value))
-// 			print_error("Invalid ceiling color.\n", info);
-// 		info->c_color = value;
-// 		return (1);
-// 	}
-// 	return (0);
-// }
 
 static int	handle_fc(char *trim, t_data *info)
 {

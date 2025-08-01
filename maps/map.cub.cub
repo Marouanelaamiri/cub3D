@@ -3,9 +3,9 @@ NO  textures/noimg.png
 SO  textures/soimg.png
 WE  textures/weimg.png
 EA  textures/eaimg.png
-
-F 42,0,0
-C 152,0,2    
+   
+F 0,0,0
+C 225,225,225    
 
 
 
