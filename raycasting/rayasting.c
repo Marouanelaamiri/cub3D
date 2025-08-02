@@ -6,7 +6,7 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/01 23:31:58 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/02 23:24:21 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,25 +228,72 @@ static void	redraw(t_data *data)
 {
 	mlx_delete_image(data->mlx, data->img);
 	data->img      = mlx_new_image(data->mlx, MAP_WIDTH, MAP_HEIGHT);
-	data->addr     = (char *)data->img->pixels;
-	data->bpp      = 32;
-	data->line_len = data->img->width * 4;
+	// data->addr     = (char *)data->img->pixels;
+	// data->bpp      = 32;
+	// data->line_len = data->img->width * 4;
 	render_3d(data);
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 }
 
 static int	is_wall(t_data *data, float x, float y)
 {
-	int tx = (int)x;
-	int ty = (int)y;
+	  // Convert player position to pixel coordinates
+    float px = x * TILE_SIZE;
+    float py = y * TILE_SIZE;
+    float buffer = PLAYER_RADIUS;
+    
+    // Calculate the area to check around the player
+    int start_x = (int)((px - buffer) / TILE_SIZE);
+    int end_x = (int)((px + TILE_SIZE + buffer) / TILE_SIZE);
+    int start_y = (int)((py - buffer) / TILE_SIZE);
+    int end_y = (int)((py + TILE_SIZE + buffer) / TILE_SIZE);
+    
+    // Check all tiles in the area using while loops
+    int ty = start_y;
+    while (ty <= end_y) {
+        if (ty >= 0 && ty < data->recmap_height) {
+            int tx = start_x;
+            while (tx <= end_x) {
+                if (tx >= 0 && tx < (int)ft_strlen(data->map[ty])) {
+                    if (data->map[ty][tx] == '1') {
+                        // Calculate wall boundaries
+                        float wall_left = tx * TILE_SIZE;
+                        float wall_right = (tx + 1) * TILE_SIZE;
+                        float wall_top = ty * TILE_SIZE;
+                        float wall_bottom = (ty + 1) * TILE_SIZE;
+                        
+                        // Calculate player boundaries with buffer
+                        float player_left = px - buffer;
+                        float player_right = px + TILE_SIZE + buffer;
+                        float player_top = py - buffer;
+                        float player_bottom = py + TILE_SIZE + buffer;
+                        
+                        // Check for overlap
+                        if (player_right > wall_left && 
+                            player_left < wall_right &&
+                            player_bottom > wall_top && 
+                            player_top < wall_bottom) {
+                            return 1; // Collision detected
+                        }
+                    }
+                }
+                tx++;
+            }
+        }
+        ty++;
+    }
+    return 0;
+}
 
-	if (ty < 0 || ty >= data->recmap_height) 
-		return (1);
-	if (tx < 0 || tx >= (int)ft_strlen(data->map[ty]))
-		return (1);
-	if (data->map[ty][tx] == '1' || data->map[ty + 1][tx + 1] == '1')
-		return (1);
-	return (0);
+
+void terminate_program(void *param)
+{
+    t_data *data = (t_data *)param;
+    if (data->img)
+        mlx_delete_image(data->mlx, data->img);
+    if (data->mlx)
+        mlx_terminate(data->mlx);
+    exit(0);
 }
 
 void	key_hook(void *param)
@@ -255,13 +302,19 @@ void	key_hook(void *param)
 	float	new_x, new_y;
 	int		changed = 0;
 
+	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
+		terminate_program(param);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
 	{
 		new_x = data->player_x + cosf(data->ray_angle) * SPEED;
 		new_y = data->player_y + sinf(data->ray_angle) * SPEED;
-		if (!is_wall(data, new_x, new_y))
+		if (!is_wall(data, new_x, data->player_y))
 		{
 			data->player_x = new_x;
+			changed = 1;
+		}
+		if (!is_wall(data, data->player_x, new_y))
+		{
 			data->player_y = new_y;
 			changed = 1;
 		}
@@ -270,31 +323,43 @@ void	key_hook(void *param)
 	{
 		new_x = data->player_x - cosf(data->ray_angle) * SPEED;
 		new_y = data->player_y - sinf(data->ray_angle) * SPEED;
-		if (!is_wall(data, new_x, new_y))
+		if (!is_wall(data, new_x, data->player_y))
 		{
 			data->player_x = new_x;
+			changed = 1;
+		}
+		if (!is_wall(data, data->player_x, new_y))
+		{
 			data->player_y = new_y;
 			changed = 1;
 		}
 	}
-	if (mlx_is_key_down(data->mlx, MLX_KEY_A)) // strafe left
+	if (mlx_is_key_down(data->mlx, MLX_KEY_A))
 	{
 		new_x = data->player_x + cosf(data->ray_angle - M_PI_2) * SPEED;
 		new_y = data->player_y + sinf(data->ray_angle - M_PI_2) * SPEED;
-		if (!is_wall(data, new_x, new_y))
+		if (!is_wall(data, new_x, data->player_y))
 		{
 			data->player_x = new_x;
+			changed = 1;
+		}
+		if (!is_wall(data, data->player_x, new_y))
+		{
 			data->player_y = new_y;
 			changed = 1;
 		}
 	}
-	if (mlx_is_key_down(data->mlx, MLX_KEY_D)) // strafe right
+	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
 	{
 		new_x = data->player_x + cosf(data->ray_angle + M_PI_2) * SPEED;
 		new_y = data->player_y + sinf(data->ray_angle + M_PI_2) * SPEED;
-		if (!is_wall(data, new_x, new_y))
+		if (!is_wall(data, new_x, data->player_y))
 		{
 			data->player_x = new_x;
+			changed = 1;
+		}
+		if (!is_wall(data, data->player_x, new_y))
+		{
 			data->player_y = new_y;
 			changed = 1;
 		}
@@ -313,27 +378,19 @@ void	key_hook(void *param)
 			data->ray_angle -= 2 * M_PI;
 		changed = 1;
 	}
-
+	
 	if (changed)
 		redraw(data);
-}
-
-
-
-void	terminate_program(void *param)
-{
-	t_data *data = (t_data *)param;
-	mlx_delete_image(data->mlx, data->img);
-	mlx_terminate(data->mlx);
-	exit(0);
 }
 
 int	put_map_2dv(t_data *data)
 {
 	set_wh_map(data);
-	data->mlx = mlx_init(MAP_WIDTH, MAP_HEIGHT, "Cub3D Fake 3D", false);
-	if (!data->mlx) return (1);
-	if (load_textures(data)) return (1);
+	data->mlx = mlx_init(MAP_WIDTH, MAP_HEIGHT, "Cub3D", false);
+	if (!data->mlx) 
+		return (1);
+	if (load_textures(data)) 
+		return (1);
 
 	data->img      = mlx_new_image(data->mlx, MAP_WIDTH, MAP_HEIGHT);
 	data->addr     = (char *)data->img->pixels;
@@ -360,6 +417,7 @@ int	put_map_2dv(t_data *data)
 	}
 
 	redraw(data);
+	
 	mlx_loop_hook(data->mlx, key_hook, data);
 	mlx_close_hook(data->mlx, terminate_program, data);
 	mlx_loop(data->mlx);

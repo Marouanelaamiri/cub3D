@@ -6,7 +6,7 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/01 23:35:34 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/02 23:15:45 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #define MAP_WIDTH 1920
 #define MAP_HEIGHT 1080
 #define COLLISION_MARGIN 0.1f
+#define PLAYER_RADIUS 38
 
 typedef struct s_data
 {
