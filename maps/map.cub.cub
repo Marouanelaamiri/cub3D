@@ -1,10 +1,10 @@
-NO  textures/Tile.png
-SO  textures/Tile2.png
-WE  textures/Tile3.png
-EA  textures/Tile4.png
+NO  textures/eclipse.png
+SO  textures/eclipse.png
+WE  textures/eclipse.png
+EA  textures/eclipse.png
 
    
-F 204,85,0
+	F 0,0,0
 C 136,8,8
 
 
