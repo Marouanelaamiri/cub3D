@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/02 23:42:56 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/03 00:27:26 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #ifndef PARSER_H
 # define PARSER_H
 
-#define TILE_SIZE 60
+#define TILE_SIZE 64
 #define SPEED 0.1f
 #define FOV 1
 #define BUFFER_SIZE   600
