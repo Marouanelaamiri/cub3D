@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rayasting.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/01 23:31:58 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/02 23:01:54 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,20 +139,20 @@ static float	cast_ray(t_data *data, float angle)
 }
 
 
-static void	put_pixel(char *data, int x, int y,
-			uint32_t color, int line_len,
-			int bpp, int width, int height)
-{
-	int	offset;
+// static void	put_pixel(char *data, int x, int y,
+// 			uint32_t color, int line_len,
+// 			int bpp, int width, int height)
+// {
+// 	int	offset;
 
-	if (x < 0 || y < 0 || x >= width || y >= height)
-		return ;
-	offset = y * line_len + x * (bpp / 8);
-	data[offset + 0] = color & 0xFF;
-	data[offset + 1] = (color >> 8) & 0xFF;
-	data[offset + 2] = (color >> 16) & 0xFF;
-	data[offset + 3] = (color >> 24) & 0xFF;
-}
+// 	if (x < 0 || y < 0 || x >= width || y >= height)
+// 		return ;
+// 	offset = y * line_len + x * (bpp / 8);
+// 	data[offset + 0] = color & 0xFF;
+// 	data[offset + 1] = (color >> 8) & 0xFF;
+// 	data[offset + 2] = (color >> 16) & 0xFF;
+// 	data[offset + 3] = (color >> 24) & 0xFF;
+// }
 
 static void draw_column(t_data *data, int col, float dist)
 {
@@ -200,9 +200,7 @@ static void draw_column(t_data *data, int col, float dist)
 		}
 		else
 			color = data->f_color;
-		put_pixel(data->addr, col, y, color,
-				  data->line_len, data->bpp,
-				  MAP_HEIGHT * TILE_SIZE , MAP_HEIGHT *TILE_SIZE);
+		mlx_put_pixel(data->img, col, y, color);
 		++y;
 	}
 }
