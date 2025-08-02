@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rayasting.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/02 23:27:59 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/03 00:18:51 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,21 +139,72 @@ static float	cast_ray(t_data *data, float angle)
 }
 
 
-// static void	put_pixel(char *data, int x, int y,
-// 			uint32_t color, int line_len,
-// 			int bpp, int width, int height)
+static void	put_pixel(char *data, int x, int y,
+			uint32_t color, int line_len,
+			int bpp, int width, int height)
+{
+	int	offset;
+
+	if (x < 0 || y < 0 || x >= width || y >= height)
+		return ;
+	offset = y * line_len + x * (bpp / 8);
+	data[offset + 0] = color & 0xFF;
+	data[offset + 1] = (color >> 8) & 0xFF;
+	data[offset + 2] = (color >> 16) & 0xFF;
+	data[offset + 3] = (color >> 24) & 0xFF;
+}
+
+// static void draw_column(t_data *data, int col, float dist)
 // {
-// 	int	offset;
+// 	int			wall_h = (int)((TILE_SIZE * MAP_HEIGHT) / (dist + 0.0001f));
+// 	int			top = (MAP_HEIGHT - wall_h) / 2;
+// 	int			bottom = top + wall_h - 1;
+// 	int			y = 0;
+// 	uint32_t	color;
 
-// 	if (x < 0 || y < 0 || x >= width || y >= height)
-// 		return ;
-// 	offset = y * line_len + x * (bpp / 8);
-// 	data[offset + 0] = color & 0xFF;
-// 	data[offset + 1] = (color >> 8) & 0xFF;
-// 	data[offset + 2] = (color >> 16) & 0xFF;
-// 	data[offset + 3] = (color >> 24) & 0xFF;
+// 	if (data->hit_side == 'N') 
+// 		data->tex = data->no;
+// 	else if (data->hit_side == 'S') 
+// 		data->tex = data->so;
+// 	else if (data->hit_side == 'W') 
+// 		data->tex = data->we;
+// 	else                            
+// 		data->tex = data->ea;
+
+// 	int			tw = data->tex->width;
+// 	int			th = data->tex->height;
+// 	uint32_t	*pxs = (uint32_t *)data->tex->pixels;
+
+// 	if (wall_h > MAP_HEIGHT) wall_h = MAP_HEIGHT;
+
+// 	data->tex_x = (int)(data->hit_wall_x * (float)tw);
+// 	if (data->hit_side == 'S' || data->hit_side == 'E')
+// 		data->tex_x = tw - data->tex_x - 1;
+// 	if (data->tex_x < 0)    
+// 		data->tex_x = 0;
+// 	if (data->tex_x >= tw) 
+// 		data->tex_x = tw - 1;
+
+// 	while (y < MAP_HEIGHT)
+// 	{
+// 		if (y < top)
+// 			color = data->c_color;
+// 		else if (y <= bottom)
+// 		{
+// 			data->tex_y = (y - top) * th / wall_h;
+// 			if (data->tex_y < 0)    
+// 				data->tex_y = 0;
+// 			if (data->tex_y >= th) 
+// 				data->tex_y = th - 1;
+// 			color = pxs[(int)(data->tex_y * tw + data->tex_x)];
+// 		}
+// 		else
+// 			color = data->f_color;
+// 		put_pixel(data->addr, col, y,
+// 			color, data->line_len, data->bpp, MAP_WIDTH, MAP_HEIGHT);
+// 		++y;
+// 	}
 // }
-
 static void draw_column(t_data *data, int col, float dist)
 {
 	int			wall_h = (int)((TILE_SIZE * MAP_HEIGHT) / (dist + 0.0001f));
@@ -162,6 +213,7 @@ static void draw_column(t_data *data, int col, float dist)
 	int			y = 0;
 	uint32_t	color;
 
+	// Select the correct texture
 	if (data->hit_side == 'N') 
 		data->tex = data->no;
 	else if (data->hit_side == 'S') 
@@ -175,8 +227,10 @@ static void draw_column(t_data *data, int col, float dist)
 	int			th = data->tex->height;
 	uint32_t	*pxs = (uint32_t *)data->tex->pixels;
 
-	if (wall_h > MAP_HEIGHT) wall_h = MAP_HEIGHT;
+	if (wall_h > MAP_HEIGHT)
+		wall_h = MAP_HEIGHT;
 
+	// Calculate texture X coordinate
 	data->tex_x = (int)(data->hit_wall_x * (float)tw);
 	if (data->hit_side == 'S' || data->hit_side == 'E')
 		data->tex_x = tw - data->tex_x - 1;
@@ -188,19 +242,31 @@ static void draw_column(t_data *data, int col, float dist)
 	while (y < MAP_HEIGHT)
 	{
 		if (y < top)
-			color = data->c_color;
+		{
+			// Use MLX for ceiling
+			mlx_put_pixel(data->img, col, y, data->c_color);
+		}
 		else if (y <= bottom)
 		{
+			// Get texture Y coordinate
 			data->tex_y = (y - top) * th / wall_h;
 			if (data->tex_y < 0)    
 				data->tex_y = 0;
 			if (data->tex_y >= th) 
 				data->tex_y = th - 1;
+
+			// Get pixel color from texture
 			color = pxs[(int)(data->tex_y * tw + data->tex_x)];
+
+			// Use custom put_pixel for textures (to fix BGRA layout)
+			put_pixel((char *)data->addr, col, y, color,
+				data->line_len, data->bpp, MAP_WIDTH, MAP_HEIGHT);
 		}
 		else
-			color = data->f_color;
-		mlx_put_pixel(data->img, col, y, color);
+		{
+			// Use MLX for floor
+			mlx_put_pixel(data->img, col, y, data->f_color);
+		}
 		++y;
 	}
 }

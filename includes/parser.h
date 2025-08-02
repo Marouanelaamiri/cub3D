@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/02 23:28:31 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/02 23:42:56 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #define MAP_WIDTH 1920
 #define MAP_HEIGHT 1080
 #define COLLISION_MARGIN 0.1f
-#define PLAYER_RADIUS 38
+#define PLAYER_RADIUS 0.1f
 
 typedef struct s_data
 {
