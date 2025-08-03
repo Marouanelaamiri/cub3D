@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/03 00:28:35 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/03 21:24:03 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,57 +154,6 @@ static void	put_pixel(char *data, int x, int y,
 	data[offset + 3] = (color >> 24) & 0xFF;
 }
 
-// static void draw_column(t_data *data, int col, float dist)
-// {
-// 	int			wall_h = (int)((TILE_SIZE * MAP_HEIGHT) / (dist + 0.0001f));
-// 	int			top = (MAP_HEIGHT - wall_h) / 2;
-// 	int			bottom = top + wall_h - 1;
-// 	int			y = 0;
-// 	uint32_t	color;
-
-// 	if (data->hit_side == 'N') 
-// 		data->tex = data->no;
-// 	else if (data->hit_side == 'S') 
-// 		data->tex = data->so;
-// 	else if (data->hit_side == 'W') 
-// 		data->tex = data->we;
-// 	else                            
-// 		data->tex = data->ea;
-
-// 	int			tw = data->tex->width;
-// 	int			th = data->tex->height;
-// 	uint32_t	*pxs = (uint32_t *)data->tex->pixels;
-
-// 	if (wall_h > MAP_HEIGHT) wall_h = MAP_HEIGHT;
-
-// 	data->tex_x = (int)(data->hit_wall_x * (float)tw);
-// 	if (data->hit_side == 'S' || data->hit_side == 'E')
-// 		data->tex_x = tw - data->tex_x - 1;
-// 	if (data->tex_x < 0)    
-// 		data->tex_x = 0;
-// 	if (data->tex_x >= tw) 
-// 		data->tex_x = tw - 1;
-
-// 	while (y < MAP_HEIGHT)
-// 	{
-// 		if (y < top)
-// 			color = data->c_color;
-// 		else if (y <= bottom)
-// 		{
-// 			data->tex_y = (y - top) * th / wall_h;
-// 			if (data->tex_y < 0)    
-// 				data->tex_y = 0;
-// 			if (data->tex_y >= th) 
-// 				data->tex_y = th - 1;
-// 			color = pxs[(int)(data->tex_y * tw + data->tex_x)];
-// 		}
-// 		else
-// 			color = data->f_color;
-// 		put_pixel(data->addr, col, y,
-// 			color, data->line_len, data->bpp, MAP_WIDTH, MAP_HEIGHT);
-// 		++y;
-// 	}
-// }
 static void draw_column(t_data *data, int col, float dist)
 {
 	int wall_h = (int)((TILE_SIZE * MAP_HEIGHT) / (dist + 0.0001f));
@@ -271,81 +220,133 @@ static void draw_column(t_data *data, int col, float dist)
 
 static void	render_3d(t_data *data)
 {
-	int		w     = MAP_WIDTH;
-	float	step  = data->fov / (float)w;
-	float	angle = data->ray_angle - (data->fov / 2);
-	int		col   = 0;
+	int		w      = MAP_WIDTH;
+	float	step   = data->fov / (float)w;
+	float	angle  = data->ray_angle - (data->fov / 2);
+	int		col    = 0;
 
 	while (col < w)
 	{
-		float dist = cast_ray(data, angle);
-		dist *= cosf(angle - data->ray_angle);
-		draw_column(data, col, dist);
+		// 1) Cast the ray to get the raw distance to the wall
+		float raw_dist = cast_ray(data, angle);
+
+		// 2) Fish-eye correction: project onto camera plane
+		float angle_diff     = angle - data->ray_angle;
+		float corrected_dist = raw_dist * cosf(angle_diff);
+
+		// ─── CLAMP VERY SMALL DISTANCES ─────────────────────
+		// Prevent wall_h → ∞ when distance → 0
+		// Here we choose 20% of TILE_SIZE as the minimum
+		{
+			float min_dist = TILE_SIZE * 0.2f;
+			if (corrected_dist < min_dist)
+				corrected_dist = min_dist;
+		}
+		// ─────────────────────────────────────────────────────
+
+		// 3) Draw column with the (clamped) corrected distance
+		draw_column(data, col, corrected_dist);
+
 		angle += step;
 		++col;
 	}
 }
 
+
 static void	redraw(t_data *data)
 {
 	mlx_delete_image(data->mlx, data->img);
 	data->img      = mlx_new_image(data->mlx, MAP_WIDTH, MAP_HEIGHT);
-	// data->addr     = (char *)data->img->pixels;
-	// data->bpp      = 32;
-	// data->line_len = data->img->width * 4;
+	data->addr     = (char *)data->img->pixels;
+	data->bpp      = 32;
+	data->line_len = data->img->width * 4;
 	render_3d(data);
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 }
-
-static int	is_wall(t_data *data, float x, float y)
+static int is_colliding(t_data *data, float new_px, float new_py)
 {
-	  // Convert player position to pixel coordinates
-    float px = x * TILE_SIZE;
-    float py = y * TILE_SIZE;
-    float buffer = PLAYER_RADIUS;
-    
-    // Calculate the area to check around the player
-    int start_x = (int)((px - buffer) / TILE_SIZE);
-    int end_x = (int)((px + TILE_SIZE + buffer) / TILE_SIZE);
-    int start_y = (int)((py - buffer) / TILE_SIZE);
-    int end_y = (int)((py + TILE_SIZE + buffer) / TILE_SIZE);
-    
-    // Check all tiles in the area using while loops
-    int ty = start_y;
-    while (ty <= end_y) {
-        if (ty >= 0 && ty < data->recmap_height) {
-            int tx = start_x;
-            while (tx <= end_x) {
-                if (tx >= 0 && tx < (int)ft_strlen(data->map[ty])) {
-                    if (data->map[ty][tx] == '1') {
-                        // Calculate wall boundaries
-                        float wall_left = tx * TILE_SIZE;
-                        float wall_right = (tx + 1) * TILE_SIZE;
-                        float wall_top = ty * TILE_SIZE;
-                        float wall_bottom = (ty + 1) * TILE_SIZE;
-                        
-                        // Calculate player boundaries with buffer
-                        float player_left = px - buffer;
-                        float player_right = px + TILE_SIZE + buffer;
-                        float player_top = py - buffer;
-                        float player_bottom = py + TILE_SIZE + buffer;
-                        
-                        // Check for overlap
-                        if (player_right > wall_left && 
-                            player_left < wall_right &&
-                            player_bottom > wall_top && 
-                            player_top < wall_bottom) {
-                            return 1; // Collision detected
-                        }
-                    }
-                }
-                tx++;
+    // convert map-coords (tiles) to world-pixels
+    float px = new_px * TILE_SIZE;
+    float py = new_py * TILE_SIZE;
+    float pad = TILE_SIZE * COLLIDE_PAD;
+
+    // check all four corners of the player's collision square
+    // dx,dy = ±pad offsets
+    int dy = -1;
+    while (dy <= 1)
+    {
+        int dx = -1;
+        while (dx <= 1)
+        {
+            // only corners: skip center (dx=0,dy=0)
+            if (dx != 0 && dy != 0)
+            {
+                float cx = px + dx * pad;
+                float cy = py + dy * pad;
+                int tx = (int)(cx / TILE_SIZE);
+                int ty = (int)(cy / TILE_SIZE);
+
+                // out-of-bounds ⇒ treat as wall
+                if (ty < 0 || ty >= data->recmap_height
+                 || tx < 0 || tx >= (int)ft_strlen(data->map[ty])
+                 || data->map[ty][tx] == '1')
+                    return 1;
             }
+            dx += 2; // only -1 and +1
         }
-        ty++;
+        dy += 2;
     }
     return 0;
 }
+// static int	is_wall(t_data *data, float x, float y)
+// {
+// 	  // Convert player position to pixel coordinates
+//     float px = x * TILE_SIZE;
+//     float py = y * TILE_SIZE;
+//     float buffer = PLAYER_RADIUS;
+    
+//     // Calculate the area to check around the player
+//     int start_x = (int)((px - buffer) / TILE_SIZE);
+//     int end_x = (int)((px + TILE_SIZE + buffer) / TILE_SIZE);
+//     int start_y = (int)((py - buffer) / TILE_SIZE);
+//     int end_y = (int)((py + TILE_SIZE + buffer) / TILE_SIZE);
+    
+//     // Check all tiles in the area using while loops
+//     int ty = start_y;
+//     while (ty <= end_y) {
+//         if (ty >= 0 && ty < data->recmap_height) {
+//             int tx = start_x;
+//             while (tx <= end_x) {
+//                 if (tx >= 0 && tx < (int)ft_strlen(data->map[ty])) {
+//                     if (data->map[ty][tx] == '1') {
+//                         // Calculate wall boundaries
+//                         float wall_left = tx * TILE_SIZE;
+//                         float wall_right = (tx + 1) * TILE_SIZE;
+//                         float wall_top = ty * TILE_SIZE;
+//                         float wall_bottom = (ty + 1) * TILE_SIZE;
+                        
+//                         // Calculate player boundaries with buffer
+//                         float player_left = px - buffer;
+//                         float player_right = px + TILE_SIZE + buffer;
+//                         float player_top = py - buffer;
+//                         float player_bottom = py + TILE_SIZE + buffer;
+                        
+//                         // Check for overlap
+//                         if (player_right > wall_left && 
+//                             player_left < wall_right &&
+//                             player_bottom > wall_top && 
+//                             player_top < wall_bottom) {
+//                             return 1; // Collision detected
+//                         }
+//                     }
+//                 }
+//                 tx++;
+//             }
+//         }
+//         ty++;
+//     }
+//     return 0;
+// }
 
 
 void terminate_program(void *param)
@@ -358,74 +359,174 @@ void terminate_program(void *param)
     exit(0);
 }
 
+// void	key_hook(void *param)
+// {
+// 	t_data	*data = (t_data *)param;
+// 	float	new_x, new_y;
+// 	int		changed = 0;
+
+// 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
+// 		terminate_program(param);
+// 	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
+// 	{
+// 		new_x = data->player_x + cosf(data->ray_angle) * SPEED;
+// 		new_y = data->player_y + sinf(data->ray_angle) * SPEED;
+// 		if (!is_wall(data, new_x, data->player_y))
+// 		{
+// 			data->player_x = new_x;
+// 			changed = 1;
+// 		}
+// 		if (!is_wall(data, data->player_x, new_y))
+// 		{
+// 			data->player_y = new_y;
+// 			changed = 1;
+// 		}
+// 	}
+// 	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
+// 	{
+// 		new_x = data->player_x - cosf(data->ray_angle) * SPEED;
+// 		new_y = data->player_y - sinf(data->ray_angle) * SPEED;
+// 		if (!is_wall(data, new_x, data->player_y))
+// 		{
+// 			data->player_x = new_x;
+// 			changed = 1;
+// 		}
+// 		if (!is_wall(data, data->player_x, new_y))
+// 		{
+// 			data->player_y = new_y;
+// 			changed = 1;
+// 		}
+// 	}
+// 	if (mlx_is_key_down(data->mlx, MLX_KEY_A))
+// 	{
+// 		new_x = data->player_x + cosf(data->ray_angle - M_PI_2) * SPEED;
+// 		new_y = data->player_y + sinf(data->ray_angle - M_PI_2) * SPEED;
+// 		if (!is_wall(data, new_x, data->player_y))
+// 		{
+// 			data->player_x = new_x;
+// 			changed = 1;
+// 		}
+// 		if (!is_wall(data, data->player_x, new_y))
+// 		{
+// 			data->player_y = new_y;
+// 			changed = 1;
+// 		}
+// 	}
+// 	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
+// 	{
+// 		new_x = data->player_x + cosf(data->ray_angle + M_PI_2) * SPEED;
+// 		new_y = data->player_y + sinf(data->ray_angle + M_PI_2) * SPEED;
+// 		if (!is_wall(data, new_x, data->player_y))
+// 		{
+// 			data->player_x = new_x;
+// 			changed = 1;
+// 		}
+// 		if (!is_wall(data, data->player_x, new_y))
+// 		{
+// 			data->player_y = new_y;
+// 			changed = 1;
+// 		}
+// 	}
+// 	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
+// 	{
+// 		data->ray_angle -= 0.05f;
+// 		if (data->ray_angle < 0)
+// 			data->ray_angle += 2 * M_PI;
+// 		changed = 1;
+// 	}
+// 	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
+// 	{
+// 		data->ray_angle += 0.05f;
+// 		if (data->ray_angle >= 2 * M_PI)
+// 			data->ray_angle -= 2 * M_PI;
+// 		changed = 1;
+// 	}
+	
+// 	if (changed)
+// 		redraw(data);
+// }
 void	key_hook(void *param)
 {
 	t_data	*data = (t_data *)param;
-	float	new_x, new_y;
-	int		changed = 0;
+	float	new_x;
+	float	new_y;
+	int		changed;
 
+	changed = 0;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 		terminate_program(param);
+
+	/* ─── Forward (W) ───────────────────────────────────────── */
 	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
 	{
 		new_x = data->player_x + cosf(data->ray_angle) * SPEED;
 		new_y = data->player_y + sinf(data->ray_angle) * SPEED;
-		if (!is_wall(data, new_x, data->player_y))
+		/* try X */
+		if (!is_colliding(data, new_x, data->player_y))
 		{
 			data->player_x = new_x;
 			changed = 1;
 		}
-		if (!is_wall(data, data->player_x, new_y))
+		/* try Y */
+		if (!is_colliding(data, data->player_x, new_y))
 		{
 			data->player_y = new_y;
 			changed = 1;
 		}
 	}
+
+	/* ─── Backward (S) ──────────────────────────────────────── */
 	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
 	{
 		new_x = data->player_x - cosf(data->ray_angle) * SPEED;
 		new_y = data->player_y - sinf(data->ray_angle) * SPEED;
-		if (!is_wall(data, new_x, data->player_y))
+		if (!is_colliding(data, new_x, data->player_y))
 		{
 			data->player_x = new_x;
 			changed = 1;
 		}
-		if (!is_wall(data, data->player_x, new_y))
+		if (!is_colliding(data, data->player_x, new_y))
 		{
 			data->player_y = new_y;
 			changed = 1;
 		}
 	}
+
+	/* ─── Strafe Left (A) ───────────────────────────────────── */
 	if (mlx_is_key_down(data->mlx, MLX_KEY_A))
 	{
 		new_x = data->player_x + cosf(data->ray_angle - M_PI_2) * SPEED;
 		new_y = data->player_y + sinf(data->ray_angle - M_PI_2) * SPEED;
-		if (!is_wall(data, new_x, data->player_y))
+		if (!is_colliding(data, new_x, data->player_y))
 		{
 			data->player_x = new_x;
 			changed = 1;
 		}
-		if (!is_wall(data, data->player_x, new_y))
+		if (!is_colliding(data, data->player_x, new_y))
 		{
 			data->player_y = new_y;
 			changed = 1;
 		}
 	}
+
+	/* ─── Strafe Right (D) ──────────────────────────────────── */
 	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
 	{
 		new_x = data->player_x + cosf(data->ray_angle + M_PI_2) * SPEED;
 		new_y = data->player_y + sinf(data->ray_angle + M_PI_2) * SPEED;
-		if (!is_wall(data, new_x, data->player_y))
+		if (!is_colliding(data, new_x, data->player_y))
 		{
 			data->player_x = new_x;
 			changed = 1;
 		}
-		if (!is_wall(data, data->player_x, new_y))
+		if (!is_colliding(data, data->player_x, new_y))
 		{
 			data->player_y = new_y;
 			changed = 1;
 		}
 	}
+
+	/* ─── Rotate Left ◀ ────────────────────────────────────── */
 	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 	{
 		data->ray_angle -= 0.05f;
@@ -433,6 +534,8 @@ void	key_hook(void *param)
 			data->ray_angle += 2 * M_PI;
 		changed = 1;
 	}
+
+	/* ─── Rotate Right ▶ ───────────────────────────────────── */
 	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
 	{
 		data->ray_angle += 0.05f;
@@ -440,10 +543,11 @@ void	key_hook(void *param)
 			data->ray_angle -= 2 * M_PI;
 		changed = 1;
 	}
-	
+
 	if (changed)
 		redraw(data);
 }
+
 
 int	put_map_2dv(t_data *data)
 {
