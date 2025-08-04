@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/03 21:24:03 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/04 23:28:34 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,38 +218,37 @@ static void draw_column(t_data *data, int col, float dist)
 }
 
 
-static void	render_3d(t_data *data)
+static void render_3d(t_data *data)
 {
-	int		w      = MAP_WIDTH;
-	float	step   = data->fov / (float)w;
-	float	angle  = data->ray_angle - (data->fov / 2);
-	int		col    = 0;
+    int   w     = MAP_WIDTH;
+    float step  = data->fov / (float)w;
+    float angle = data->ray_angle - (data->fov / 2);
+	  int         col   = 0;
 
-	while (col < w)
-	{
-		// 1) Cast the ray to get the raw distance to the wall
-		float raw_dist = cast_ray(data, angle);
+    while (col < w)
+    {
+        // 1) cast your ray
+        float raw_dist = cast_ray(data, angle);
 
-		// 2) Fish-eye correction: project onto camera plane
-		float angle_diff     = angle - data->ray_angle;
-		float corrected_dist = raw_dist * cosf(angle_diff);
+        // 2) clamp the *raw* distance so you never get closer than RENDER_PAD
+        const float min_px = RENDER_PAD * TILE_SIZE;
+        if (raw_dist < min_px)
+            raw_dist = min_px;
 
-		// ─── CLAMP VERY SMALL DISTANCES ─────────────────────
-		// Prevent wall_h → ∞ when distance → 0
-		// Here we choose 20% of TILE_SIZE as the minimum
-		{
-			float min_dist = TILE_SIZE * 0.2f;
-			if (corrected_dist < min_dist)
-				corrected_dist = min_dist;
-		}
-		// ─────────────────────────────────────────────────────
+        // 3) fish-eye correction
+        float diff = angle - data->ray_angle;
+        float corrected = raw_dist * cosf(diff);
 
-		// 3) Draw column with the (clamped) corrected distance
-		draw_column(data, col, corrected_dist);
+        // 4) clamp corrected too (just in case)
+        if (corrected < min_px)
+            corrected = min_px;
 
-		angle += step;
-		++col;
-	}
+        // 5) draw using 'corrected'
+        draw_column(data, col, corrected);
+
+        angle += step;
+        ++col;
+    }
 }
 
 
@@ -263,39 +262,40 @@ static void	redraw(t_data *data)
 	render_3d(data);
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 }
-static int is_colliding(t_data *data, float new_px, float new_py)
+static int
+is_colliding(t_data *data, float new_px, float new_py)
 {
-    // convert map-coords (tiles) to world-pixels
-    float px = new_px * TILE_SIZE;
-    float py = new_py * TILE_SIZE;
-    float pad = TILE_SIZE * COLLIDE_PAD;
+    // 1) Compute the true center of the player in world pixels
+    const float px = new_px * TILE_SIZE + (TILE_SIZE / 2.0f);
+    const float py = new_py * TILE_SIZE + (TILE_SIZE / 2.0f);
 
-    // check all four corners of the player's collision square
-    // dx,dy = ±pad offsets
-    int dy = -1;
-    while (dy <= 1)
+    // 2) Collision pad in pixels
+    const float r = COLLIDE_PAD * TILE_SIZE;
+
+    // 3) Corners of the player's AABB
+    float corners[4][2] = {
+        { px - r, py - r },
+        { px + r, py - r },
+        { px - r, py + r },
+        { px + r, py + r }
+    };
+
+    // 4) For each corner, convert to map-tile and check
+    for (int i = 0; i < 4; i++)
     {
-        int dx = -1;
-        while (dx <= 1)
-        {
-            // only corners: skip center (dx=0,dy=0)
-            if (dx != 0 && dy != 0)
-            {
-                float cx = px + dx * pad;
-                float cy = py + dy * pad;
-                int tx = (int)(cx / TILE_SIZE);
-                int ty = (int)(cy / TILE_SIZE);
+        int mx = (int)(corners[i][0] / TILE_SIZE);
+        int my = (int)(corners[i][1] / TILE_SIZE);
 
-                // out-of-bounds ⇒ treat as wall
-                if (ty < 0 || ty >= data->recmap_height
-                 || tx < 0 || tx >= (int)ft_strlen(data->map[ty])
-                 || data->map[ty][tx] == '1')
-                    return 1;
-            }
-            dx += 2; // only -1 and +1
+        // If outside the map or on a '1', it's a collision
+        if (my < 0 || my >= data->recmap_height
+         || mx < 0 || mx >= (int)ft_strlen(data->map[my])
+         || data->map[my][mx] == '1')
+        {
+            return 1;
         }
-        dy += 2;
     }
+
+    // No corner hit a wall
     return 0;
 }
 // static int	is_wall(t_data *data, float x, float y)
@@ -445,109 +445,85 @@ void terminate_program(void *param)
 // 	if (changed)
 // 		redraw(data);
 // }
-void	key_hook(void *param)
+void key_hook(void *param)
 {
-	t_data	*data = (t_data *)param;
-	float	new_x;
-	float	new_y;
-	int		changed;
+    t_data *data = (t_data *)param;
+    int     changed = 0;
 
-	changed = 0;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
-		terminate_program(param);
+    if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
+        terminate_program(param);
 
-	/* ─── Forward (W) ───────────────────────────────────────── */
-	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
-	{
-		new_x = data->player_x + cosf(data->ray_angle) * SPEED;
-		new_y = data->player_y + sinf(data->ray_angle) * SPEED;
-		/* try X */
-		if (!is_colliding(data, new_x, data->player_y))
-		{
-			data->player_x = new_x;
-			changed = 1;
-		}
-		/* try Y */
-		if (!is_colliding(data, data->player_x, new_y))
-		{
-			data->player_y = new_y;
-			changed = 1;
-		}
-	}
+    // ─── 1) check raw forward distance ─────────────────────────
+    // cast a ray in your current view direction; this returns tiles
+    float raw_dist = cast_ray(data, data->ray_angle);
+    // if you’re closer than STOP_PAD, skip all movement
+    if (raw_dist < STOP_PAD)
+    {
+        // you might still want to allow rotation:
+        if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT)
+         || mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
+            changed = 1;
+        // redraw (so rotation still happens)
+        if (changed)
+            redraw(data);
+        return;
+    }
 
-	/* ─── Backward (S) ──────────────────────────────────────── */
-	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
-	{
-		new_x = data->player_x - cosf(data->ray_angle) * SPEED;
-		new_y = data->player_y - sinf(data->ray_angle) * SPEED;
-		if (!is_colliding(data, new_x, data->player_y))
-		{
-			data->player_x = new_x;
-			changed = 1;
-		}
-		if (!is_colliding(data, data->player_x, new_y))
-		{
-			data->player_y = new_y;
-			changed = 1;
-		}
-	}
+    // ─── 2) accumulate movement vector as before ───────────────
+    float dx = 0.0f, dy = 0.0f;
+    if (mlx_is_key_down(data->mlx, MLX_KEY_W))
+    {
+        dx += cosf(data->ray_angle) * SPEED;
+        dy += sinf(data->ray_angle) * SPEED;
+    }
+    if (mlx_is_key_down(data->mlx, MLX_KEY_S))
+    {
+        dx -= cosf(data->ray_angle) * SPEED;
+        dy -= sinf(data->ray_angle) * SPEED;
+    }
+    if (mlx_is_key_down(data->mlx, MLX_KEY_A))
+    {
+        dx += cosf(data->ray_angle - M_PI_2) * SPEED;
+        dy += sinf(data->ray_angle - M_PI_2) * SPEED;
+    }
+    if (mlx_is_key_down(data->mlx, MLX_KEY_D))
+    {
+        dx += cosf(data->ray_angle + M_PI_2) * SPEED;
+        dy += sinf(data->ray_angle + M_PI_2) * SPEED;
+    }
 
-	/* ─── Strafe Left (A) ───────────────────────────────────── */
-	if (mlx_is_key_down(data->mlx, MLX_KEY_A))
-	{
-		new_x = data->player_x + cosf(data->ray_angle - M_PI_2) * SPEED;
-		new_y = data->player_y + sinf(data->ray_angle - M_PI_2) * SPEED;
-		if (!is_colliding(data, new_x, data->player_y))
-		{
-			data->player_x = new_x;
-			changed = 1;
-		}
-		if (!is_colliding(data, data->player_x, new_y))
-		{
-			data->player_y = new_y;
-			changed = 1;
-		}
-	}
+    // ─── 3) apply combined collision check ─────────────────────
+    if (dx != 0.0f || dy != 0.0f)
+    {
+        float nx = data->player_x + dx;
+        float ny = data->player_y + dy;
+        if (!is_colliding(data, nx, ny))
+        {
+            data->player_x = nx;
+            data->player_y = ny;
+            changed = 1;
+        }
+    }
 
-	/* ─── Strafe Right (D) ──────────────────────────────────── */
-	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
-	{
-		new_x = data->player_x + cosf(data->ray_angle + M_PI_2) * SPEED;
-		new_y = data->player_y + sinf(data->ray_angle + M_PI_2) * SPEED;
-		if (!is_colliding(data, new_x, data->player_y))
-		{
-			data->player_x = new_x;
-			changed = 1;
-		}
-		if (!is_colliding(data, data->player_x, new_y))
-		{
-			data->player_y = new_y;
-			changed = 1;
-		}
-	}
+    // ─── 4) rotation (still allowed when you’re “stopped”) ────
+    if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
+    {
+        data->ray_angle -= 0.05f;
+        if (data->ray_angle < 0.0f)
+            data->ray_angle += 2.0f * M_PI;
+        changed = 1;
+    }
+    if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
+    {
+        data->ray_angle += 0.05f;
+        if (data->ray_angle >= 2.0f * M_PI)
+            data->ray_angle -= 2.0f * M_PI;
+        changed = 1;
+    }
 
-	/* ─── Rotate Left ◀ ────────────────────────────────────── */
-	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
-	{
-		data->ray_angle -= 0.05f;
-		if (data->ray_angle < 0)
-			data->ray_angle += 2 * M_PI;
-		changed = 1;
-	}
-
-	/* ─── Rotate Right ▶ ───────────────────────────────────── */
-	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
-	{
-		data->ray_angle += 0.05f;
-		if (data->ray_angle >= 2 * M_PI)
-			data->ray_angle -= 2 * M_PI;
-		changed = 1;
-	}
-
-	if (changed)
-		redraw(data);
+    if (changed)
+        redraw(data);
 }
-
 
 int	put_map_2dv(t_data *data)
 {
