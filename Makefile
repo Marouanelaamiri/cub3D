@@ -2,88 +2,94 @@
 #                          Project Settings
 # ──────────────────────────────────────────────────────────────────────────────
 
-NAME        := cub3D
-CC          := cc
+NAME     := cub3D
+CC       := cc
 
 # ──────────────────────────────────────────────────────────────────────────────
-#                      Detect Homebrew Prefix & macOS
+#                      Detect Platform & set GLFW flags
 # ──────────────────────────────────────────────────────────────────────────────
 
-UNAME_S     := $(shell uname -s)
+UNAME_S := $(shell uname -s)
+
 ifeq ($(UNAME_S),Darwin)
-  # where brew is installed on this Mac
-  BREW_PREFIX := $(shell brew --prefix)
-  # GLFW from Homebrew
-  GLFW_DIR    := $(BREW_PREFIX)/opt/glfw
-  GLFW_INC    := -I$(GLFW_DIR)/include
-  GLFW_LIB    := -L$(GLFW_DIR)/lib -lglfw
-  # frameworks needed by MLX42 & OpenGL on macOS
-  OSX_FRAMEWORKS := -framework Cocoa -framework IOKit -framework CoreVideo -framework OpenGL
+  # macOS (Homebrew)
+  BREW_PREFIX   := $(shell brew --prefix)
+  GLFW_INC      := -I$(BREW_PREFIX)/opt/glfw/include
+  GLFW_LIB      := -L$(BREW_PREFIX)/opt/glfw/lib -lglfw
+  PLATFORM_LDFLAGS := -framework Cocoa -framework IOKit \
+                      -framework CoreVideo -framework OpenGL
+
+else ifeq ($(UNAME_S),Linux)
+  # Linux (pkg-config)
+  GLFW_INC      := $(shell pkg-config --cflags glfw3)
+  GLFW_LIB      := $(shell pkg-config --static --libs glfw3)
+  PLATFORM_LDFLAGS := -ldl -lm
+
 else
-  $(error This Makefile is macOS‑only)
+  $(error Unsupported OS: $(UNAME_S))
 endif
 
 # ──────────────────────────────────────────────────────────────────────────────
 #                               MLX42 Config
 # ──────────────────────────────────────────────────────────────────────────────
 
-MLX_DIR     := NEWMLX42
-MLX_INC     := -I$(MLX_DIR)/include
-MLX_LIB     := -L$(MLX_DIR)/build -lmlx42
+MLX_DIR := NEWMLX42
+MLX_INC := -I$(MLX_DIR)/include
+MLX_LIB := -L$(MLX_DIR)/build -lmlx42
 
 # ──────────────────────────────────────────────────────────────────────────────
 #                            Compiler & Linker Flags
 # ──────────────────────────────────────────────────────────────────────────────
 
-CFLAGS      := -Wall -Wextra -Werror -Iincludes $(MLX_INC) $(GLFW_INC) 
-LDFLAGS     := $(MLX_LIB) $(GLFW_LIB) $(OSX_FRAMEWORKS) -pthread
+CFLAGS  := -Wall -Wextra -Werror -Iincludes $(MLX_INC) $(GLFW_INC)
+LDFLAGS := $(MLX_LIB) $(GLFW_LIB) $(PLATFORM_LDFLAGS) -pthread
 
 # ──────────────────────────────────────────────────────────────────────────────
 #                             Source & Object Lists
 # ──────────────────────────────────────────────────────────────────────────────
 
-SRC         := main.c
-SRC_PARS    := parsing/parsing.c \
-               parsing/parsing_utils.c \
-               parsing/parsing_utils2.c \
-               parsing/parsing_utils3.c \
-               parsing/parsing_utils4.c \
-               parsing/parsing_utils5.c \
-			   parsing/parsing_colors.c \
-               parsing/detol.c \
-               parsing/allocation.c \
-			   parsing/color_utils.c \
-               parsing/init.c \
-               parsing/textures.c
-SRC_EXEC    := raycasting/rayasting.c
-SRC_HLP     := helpers/ft_atoi.c \
-               helpers/ft_bzero.c \
-               helpers/ft_calloc.c \
-               helpers/ft_isalnum.c \
-               helpers/ft_isalpha.c \
-               helpers/ft_isdigit.c \
-               helpers/ft_itoa.c \
-               helpers/ft_memcpy.c \
-               helpers/ft_memset.c \
-               helpers/ft_split.c \
-               helpers/ft_strchr.c \
-               helpers/ft_strdup.c \
-               helpers/ft_strjoin.c \
-               helpers/ft_strlcat.c \
-               helpers/ft_strlcpy.c \
-               helpers/ft_strlen.c \
-               helpers/ft_strncmp.c \
-               helpers/ft_strnstr.c \
-               helpers/ft_strrchr.c \
-               helpers/ft_strtrim.c \
-               helpers/ft_substr.c \
-               helpers/get_next_line.c \
-               helpers/ft_realloc.c \
-               helpers/ft_strcmp.c \
-               helpers/ft_getmax.c
+SRC       := main.c
+SRC_PARS  := parsing/parsing.c \
+             parsing/parsing_utils.c \
+             parsing/parsing_utils2.c \
+             parsing/parsing_utils3.c \
+             parsing/parsing_utils4.c \
+             parsing/parsing_utils5.c \
+             parsing/parsing_colors.c \
+             parsing/detol.c \
+             parsing/allocation.c \
+             parsing/color_utils.c \
+             parsing/init.c \
+             parsing/textures.c
+SRC_EXEC  := raycasting/rayasting.c
+SRC_HLP   := helpers/ft_atoi.c \
+             helpers/ft_bzero.c \
+             helpers/ft_calloc.c \
+             helpers/ft_isalnum.c \
+             helpers/ft_isalpha.c \
+             helpers/ft_isdigit.c \
+             helpers/ft_itoa.c \
+             helpers/ft_memcpy.c \
+             helpers/ft_memset.c \
+             helpers/ft_split.c \
+             helpers/ft_strchr.c \
+             helpers/ft_strdup.c \
+             helpers/ft_strjoin.c \
+             helpers/ft_strlcat.c \
+             helpers/ft_strlcpy.c \
+             helpers/ft_strlen.c \
+             helpers/ft_strncmp.c \
+             helpers/ft_strnstr.c \
+             helpers/ft_strrchr.c \
+             helpers/ft_strtrim.c \
+             helpers/ft_substr.c \
+             helpers/get_next_line.c \
+             helpers/ft_realloc.c \
+             helpers/ft_strcmp.c \
+             helpers/ft_getmax.c
 
-ALL_SRC     := $(SRC) $(SRC_PARS) $(SRC_EXEC) $(SRC_HLP)
-OBJ         := $(ALL_SRC:.c=.o)
+ALL_SRC := $(SRC) $(SRC_PARS) $(SRC_EXEC) $(SRC_HLP)
+OBJ     := $(ALL_SRC:.c=.o)
 
 # ──────────────────────────────────────────────────────────────────────────────
 #                               Build Targets
