@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/04 23:36:41 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/04 23:39:44 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@
 #define BUFFER_SIZE   600
 #define MAP_WIDTH 1920
 #define MAP_HEIGHT 1080
-#define COLLISION_MARGIN 0.1f
-#define PLAYER_RADIUS 0.1f
 
 typedef struct s_data
 {
