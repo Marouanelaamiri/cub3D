@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/04 23:27:38 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/04 23:36:41 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 #ifndef PARSER_H
 # define PARSER_H
 
-#define TILE_SIZE 64
-#define COLLIDE_PAD 0.2f
+#define TILE_SIZE 60
+#define COLLIDE_PAD 0.49f
 #define RENDER_PAD  0.3f
 #define STOP_PAD    0.3f 
 #define SPEED 0.1f
