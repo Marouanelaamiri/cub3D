@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:29:20 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/01 21:29:24 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/05 20:00:53 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,6 @@ void	init_data(t_data *info)
 	info->player_y = 0.0f;
 	info->player_direction = '\0';
 	info->player_char = 0;
-	info->player_x = 3;
-	info->player_y = 3;
-	info->player_angle = M_PI / 2;
-	info->error_message = NULL;
 }
 
 void	update_map(t_data *info, char **valid_map, char *checked)

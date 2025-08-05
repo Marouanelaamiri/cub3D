@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 13:53:16 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/03 00:24:40 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/05 20:00:59 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ void	clean_map(t_data *info)
 	if (info->ea_texture)
 		free(info->ea_texture);
 	clean_map_arr(info);
-	if (info->error_message)
-		free(info->error_message);
 }
 
 char	*trimming_line(char *line, t_data *info)

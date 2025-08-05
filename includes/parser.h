@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/05 00:29:55 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/05 20:36:07 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #ifndef PARSER_H
 # define PARSER_H
