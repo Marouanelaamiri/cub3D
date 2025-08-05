@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:13:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/01 20:03:49 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/05 20:52:55 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void f()
 {
 	system("leaks cub3D");
 }
-
-#include "parser.h"   // now includes load_textures()
 
 int main(int argc, char **argv)
 {
