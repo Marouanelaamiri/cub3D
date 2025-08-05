@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rayasting.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/04 23:35:33 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/05 02:26:19 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static float	cast_ray(t_data *data, float angle)
 
 	int	map_x = (int)(px / TILE_SIZE);
 	int	map_y = (int)(py / TILE_SIZE);
-
+	
 	float	delta_x = fabsf(1 / dir_x);
 	float	delta_y = fabsf(1 / dir_y);
 
@@ -154,69 +154,145 @@ static void	put_pixel(char *data, int x, int y,
 	data[offset + 3] = (color >> 24) & 0xFF;
 }
 
+// static void draw_column(t_data *data, int col, float dist)
+// {
+// 	int wall_h = (MAP_HEIGHT / dist) * 100;
+//     int top    = (MAP_HEIGHT - wall_h) / 2;
+//     int bottom = top + wall_h;
+// 	int y = 0;
+// 	uint32_t color;
+
+// 	// Choose texture based on hit side
+// 	if (data->hit_side == 'N') 
+// 		data->tex = data->no;
+// 	else if (data->hit_side == 'S') 
+// 		data->tex = data->so;
+// 	else if (data->hit_side == 'W') 
+// 		data->tex = data->we;
+// 	else                            
+// 		data->tex = data->ea;
+
+// 	int tw = data->tex->width;
+// 	int th = data->tex->height;
+// 	uint32_t *pxs = (uint32_t *)data->tex->pixels;
+
+// 	if (wall_h >= MAP_HEIGHT)
+// 	{
+// 		top = 0;
+// 		bottom = MAP_HEIGHT;
+// 		wall_h = MAP_HEIGHT;
+// 	}
+
+// 	// Calculate tex_x based on wall hit point
+// 	data->tex_x = (int)(data->hit_wall_x * (float)tw);
+// 	if (data->hit_side == 'S' || data->hit_side == 'E')
+// 		data->tex_x = tw - data->tex_x - 1;
+
+// 	if (data->tex_x < 0)
+// 		data->tex_x = 0;
+// 	if (data->tex_x >= tw)
+// 		data->tex_x = tw - 1;
+
+// 	while (y < MAP_HEIGHT)
+// 	{
+// 		if (y < top)
+// 			mlx_put_pixel(data->img, col, y, data->c_color);
+// 		else if (y < bottom)
+// 		{
+// 			// Use floating point for more precision
+// 			float tex_pos = (y - top) * ((float)th / wall_h);
+// 			int tex_y = (int)tex_pos;
+
+// 			if (tex_y < 0) tex_y = 0;
+// 			if (tex_y >= th) tex_y = th - 1;
+
+// 			color = pxs[(int)(tex_y * tw + data->tex_x)];
+
+// 			put_pixel((char *)data->addr, col, y, color,
+// 				data->line_len, data->bpp, MAP_WIDTH, MAP_HEIGHT);
+// 		}
+// 		else
+// 			mlx_put_pixel(data->img, col, y, data->f_color);
+// 		y++;
+// 	}
+// }
+
+
 static void draw_column(t_data *data, int col, float dist)
 {
-	int wall_h = (int)((TILE_SIZE * MAP_HEIGHT) / (dist + 0.0001f));
-	int top = (MAP_HEIGHT - wall_h) / 2;
-	int bottom = top + wall_h;
-	int y = 0;
-	uint32_t color;
+    // 1. Calculate wall height with safe distance handling
+    const float min_dist = 0.1f; // Prevent division by extremely small numbers
+    int wall_h = (int)((TILE_SIZE * MAP_HEIGHT) / fmaxf(dist, min_dist));
+    int top = (MAP_HEIGHT - wall_h) / 2;
+    int bottom = top + wall_h;
 
-	// Choose texture based on hit side
-	if (data->hit_side == 'N') 
-		data->tex = data->no;
-	else if (data->hit_side == 'S') 
-		data->tex = data->so;
-	else if (data->hit_side == 'W') 
-		data->tex = data->we;
-	else                            
-		data->tex = data->ea;
+    // 2. Select appropriate texture
+    if (data->hit_side == 'N') 
+        data->tex = data->no;
+    else if (data->hit_side == 'S') 
+        data->tex = data->so;
+    else if (data->hit_side == 'W') 
+        data->tex = data->we;
+    else                            
+        data->tex = data->ea;
 
-	int tw = data->tex->width;
-	int th = data->tex->height;
-	uint32_t *pxs = (uint32_t *)data->tex->pixels;
+    // 3. Get texture dimensions
+    const int tw = data->tex->width;
+    const int th = data->tex->height;
+    uint32_t *pxs = (uint32_t *)data->tex->pixels;
 
-	if (wall_h > MAP_HEIGHT)
-	{
-		top = 0;
-		bottom = MAP_HEIGHT;
-		wall_h = MAP_HEIGHT;
-	}
+    // 4. Handle cases where wall height exceeds screen height
+    if (wall_h > MAP_HEIGHT)
+    {
+        top = 0;
+        bottom = MAP_HEIGHT;
+        wall_h = MAP_HEIGHT;
+    }
 
-	// Calculate tex_x based on wall hit point
-	data->tex_x = (int)(data->hit_wall_x * (float)tw);
-	if (data->hit_side == 'S' || data->hit_side == 'E')
-		data->tex_x = tw - data->tex_x - 1;
+    // 5. Calculate texture X-coordinate with proper edge handling
+    float wall_x = fmodf(data->hit_wall_x, TILE_SIZE);
+    if (wall_x < 0)
+		wall_x += TILE_SIZE;
+    data->tex_x = (int)(wall_x * tw);
+    
+    // Flip for certain sides to match texture orientation
+    if (data->hit_side == 'S' || data->hit_side == 'E')
+        data->tex_x = tw - data->tex_x - 1;
+    
+    // Clamp to texture bounds
+    data->tex_x = fmax(0, fmin(tw - 1, data->tex_x));
 
-	if (data->tex_x < 0)
-		data->tex_x = 0;
-	if (data->tex_x >= tw)
-		data->tex_x = tw - 1;
+    // 6. Draw the column
+    for (int y = 0; y < MAP_HEIGHT; y++)
+    {
+        if (y < top)
+        {
+            // Draw ceiling
+            mlx_put_pixel(data->img, col, y, data->c_color);
+        }
+        else if (y < bottom)
+        {
+            // Calculate texture Y-coordinate
+            float ratio = (float)(y - top) / wall_h;
+            int tex_y = (int)(ratio * (th - 1));
+            tex_y = fmax(0, fmin(th - 1, tex_y));
 
-	while (y < MAP_HEIGHT)
-	{
-		if (y < top)
-			mlx_put_pixel(data->img, col, y, data->c_color);
-		else if (y < bottom)
-		{
-			// Use floating point for more precision
-			float tex_pos = (y - top) * ((float)th / wall_h);
-			int tex_y = (int)tex_pos;
+            // Get pixel color with bounds checking
+            int tex_index = tex_y * tw + data->tex_x;
+            uint32_t color = (tex_index >= 0 && tex_index < tw * th) 
+                          ? pxs[tex_index] 
+                          : 0xFF0000FF; // Fallback color (red) for debugging
 
-			if (tex_y < 0) tex_y = 0;
-			if (tex_y >= th) tex_y = th - 1;
-
-			color = pxs[(int)(tex_y * tw + data->tex_x)];
-
-			put_pixel((char *)data->addr, col, y, color,
-				data->line_len, data->bpp, MAP_WIDTH, MAP_HEIGHT);
-		}
-		else
-			mlx_put_pixel(data->img, col, y, data->f_color);
-		y++;
-	}
+            put_pixel((char *)data->addr, col, y, color,
+                     data->line_len, data->bpp, MAP_WIDTH, MAP_HEIGHT);
+        }
+        else
+        {
+            // Draw floor
+            mlx_put_pixel(data->img, col, y, data->f_color);
+        }
+    }
 }
-
 
 static void render_3d(t_data *data)
 {
@@ -227,25 +303,16 @@ static void render_3d(t_data *data)
 
     while (col < w)
     {
-        // 1) cast your ray
         float raw_dist = cast_ray(data, angle);
 
-        // 2) clamp the *raw* distance so you never get closer than RENDER_PAD
         const float min_px = RENDER_PAD * TILE_SIZE;
         if (raw_dist < min_px)
             raw_dist = min_px;
-
-        // 3) fish-eye correction
         float diff = angle - data->ray_angle;
         float corrected = raw_dist * cosf(diff);
-
-        // 4) clamp corrected too (just in case)
         if (corrected < min_px)
             corrected = min_px;
-
-        // 5) draw using 'corrected'
         draw_column(data, col, corrected);
-
         angle += step;
         ++col;
     }
@@ -265,37 +332,36 @@ static void	redraw(t_data *data)
 static int
 is_colliding(t_data *data, float new_px, float new_py)
 {
-    // 1) Compute the true center of the player in world pixels
+    // ─── NEW: direct tile check ───────────────────────────────
+    int tile_x = (int)new_px;
+    int tile_y = (int)new_py;
+    if (tile_y >= 0 && tile_y < data->recmap_height
+     && tile_x >= 0 && tile_x < (int)ft_strlen(data->map[tile_y])
+     && data->map[tile_y][tile_x] == '1')
+    {
+        return 1;  // stepping directly into a wall tile → collision
+    }
+    // ────────────────────────────────────────────────────────────
+
+    // existing AABB‐corner code follows unchanged…
     const float px = new_px * TILE_SIZE + (TILE_SIZE / 2.0f);
     const float py = new_py * TILE_SIZE + (TILE_SIZE / 2.0f);
-
-    // 2) Collision pad in pixels
-    const float r = COLLIDE_PAD * TILE_SIZE;
-
-    // 3) Corners of the player's AABB
+    const float r  = COLLIDE_PAD * TILE_SIZE;
     float corners[4][2] = {
         { px - r, py - r },
         { px + r, py - r },
         { px - r, py + r },
         { px + r, py + r }
     };
-
-    // 4) For each corner, convert to map-tile and check
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 4; ++i)
     {
         int mx = (int)(corners[i][0] / TILE_SIZE);
         int my = (int)(corners[i][1] / TILE_SIZE);
-
-        // If outside the map or on a '1', it's a collision
         if (my < 0 || my >= data->recmap_height
          || mx < 0 || mx >= (int)ft_strlen(data->map[my])
          || data->map[my][mx] == '1')
-        {
             return 1;
-        }
     }
-
-    // No corner hit a wall
     return 0;
 }
 // static int	is_wall(t_data *data, float x, float y)
@@ -445,84 +511,104 @@ void terminate_program(void *param)
 // 	if (changed)
 // 		redraw(data);
 // }
-void key_hook(void *param)
+
+// ─── Insert this helper above key_hook ────────────────────────────
+
+
+void	key_hook(void *param)
 {
-    t_data *data = (t_data *)param;
-    int     changed = 0;
+	t_data	*data = (t_data *)param;
+	float	new_x;
+	float	new_y;
+	int		changed;
 
-    if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
-        terminate_program(param);
+	changed = 0;
+	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
+		terminate_program(param);
 
-    // ─── 1) check raw forward distance ─────────────────────────
-    // cast a ray in your current view direction; this returns tiles
-    float raw_dist = cast_ray(data, data->ray_angle);
-    // if you’re closer than STOP_PAD, skip all movement
-    if (raw_dist < STOP_PAD)
-    {
-        // you might still want to allow rotation:
-        if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT)
-         || mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
-            changed = 1;
-        // redraw (so rotation still happens)
-        if (changed)
-            redraw(data);
-        return;
-    }
+	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
+	{
+		new_x = data->player_x + cosf(data->ray_angle) * SPEED;
+		new_y = data->player_y + sinf(data->ray_angle) * SPEED;
+		if (!is_colliding(data, new_x, data->player_y))
+		{
+			data->player_x = new_x;
+			changed = 1;
+		}
+		if (!is_colliding(data, data->player_x, new_y))
+		{
+			data->player_y = new_y;
+			changed = 1;
+		}
+	}
+	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
+	{
+		new_x = data->player_x - cosf(data->ray_angle) * SPEED;
+		new_y = data->player_y - sinf(data->ray_angle) * SPEED;
+		if (!is_colliding(data, new_x, data->player_y))
+		{
+			data->player_x = new_x;
+			changed = 1;
+		}
+		if (!is_colliding(data, data->player_x, new_y))
+		{
+			data->player_y = new_y;
+			changed = 1;
+		}
+	}
+	if (mlx_is_key_down(data->mlx, MLX_KEY_A))
+	{
+		new_x = data->player_x + cosf(data->ray_angle - M_PI_2) * SPEED;
+		new_y = data->player_y + sinf(data->ray_angle - M_PI_2) * SPEED;
+		if (!is_colliding(data, new_x, data->player_y))
+		{
+			data->player_x = new_x;
+			changed = 1;
+		}
+		if (!is_colliding(data, data->player_x, new_y))
+		{
+			data->player_y = new_y;
+			changed = 1;
+		}
+	}
 
-    // ─── 2) accumulate movement vector as before ───────────────
-    float dx = 0.0f, dy = 0.0f;
-    if (mlx_is_key_down(data->mlx, MLX_KEY_W))
-    {
-        dx += cosf(data->ray_angle) * SPEED;
-        dy += sinf(data->ray_angle) * SPEED;
-    }
-    if (mlx_is_key_down(data->mlx, MLX_KEY_S))
-    {
-        dx -= cosf(data->ray_angle) * SPEED;
-        dy -= sinf(data->ray_angle) * SPEED;
-    }
-    if (mlx_is_key_down(data->mlx, MLX_KEY_A))
-    {
-        dx += cosf(data->ray_angle - M_PI_2) * SPEED;
-        dy += sinf(data->ray_angle - M_PI_2) * SPEED;
-    }
-    if (mlx_is_key_down(data->mlx, MLX_KEY_D))
-    {
-        dx += cosf(data->ray_angle + M_PI_2) * SPEED;
-        dy += sinf(data->ray_angle + M_PI_2) * SPEED;
-    }
+	/* ─── Strafe Right (D) ──────────────────────────────────── */
+	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
+	{
+		new_x = data->player_x + cosf(data->ray_angle + M_PI_2) * SPEED;
+		new_y = data->player_y + sinf(data->ray_angle + M_PI_2) * SPEED;
+		if (!is_colliding(data, new_x, data->player_y))
+		{
+			data->player_x = new_x;
+			changed = 1;
+		}
+		if (!is_colliding(data, data->player_x, new_y))
+		{
+			data->player_y = new_y;
+			changed = 1;
+		}
+	}
 
-    // ─── 3) apply combined collision check ─────────────────────
-    if (dx != 0.0f || dy != 0.0f)
-    {
-        float nx = data->player_x + dx;
-        float ny = data->player_y + dy;
-        if (!is_colliding(data, nx, ny))
-        {
-            data->player_x = nx;
-            data->player_y = ny;
-            changed = 1;
-        }
-    }
+	/* ─── Rotate Left ◀ ────────────────────────────────────── */
+	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
+	{
+		data->ray_angle -= 0.05f;
+		if (data->ray_angle < 0)
+			data->ray_angle += 2 * M_PI;
+		changed = 1;
+	}
 
-    // ─── 4) rotation (still allowed when you’re “stopped”) ────
-    if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
-    {
-        data->ray_angle -= 0.05f;
-        if (data->ray_angle < 0.0f)
-            data->ray_angle += 2.0f * M_PI;
-        changed = 1;
-    }
-    if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
-    {
-        data->ray_angle += 0.05f;
-        if (data->ray_angle >= 2.0f * M_PI)
-            data->ray_angle -= 2.0f * M_PI;
-        changed = 1;
-    }
+	/* ─── Rotate Right ▶ ───────────────────────────────────── */
+	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
+	{
+		data->ray_angle += 0.05f;
+		if (data->ray_angle >= 2 * M_PI)
+			data->ray_angle -= 2 * M_PI;
+		changed = 1;
+	}
 
-    if (changed)
-        redraw(data);
+	if (changed)
+		redraw(data);
 }
 
 int	put_map_2dv(t_data *data)
