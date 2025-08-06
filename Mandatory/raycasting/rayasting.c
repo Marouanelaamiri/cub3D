@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rayasting.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/05 20:34:51 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/06 23:51:48 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,14 +241,6 @@ static void draw_column(t_data *data, int col, float dist)
     const int th = data->tex->height;
     uint32_t *pxs = (uint32_t *)data->tex->pixels;
 
-    // 4. Handle cases where wall height exceeds screen height
-    if (wall_h > MAP_HEIGHT)
-    {
-        top = 0;
-        bottom = MAP_HEIGHT;
-        wall_h = MAP_HEIGHT;
-    }
-
     // 5. Calculate texture X-coordinate with proper edge handling
     float wall_x = fmodf(data->hit_wall_x, TILE_SIZE);
     if (wall_x < 0)
@@ -270,7 +262,7 @@ static void draw_column(t_data *data, int col, float dist)
             // Draw ceiling
             mlx_put_pixel(data->img, col, y, data->c_color);
         }
-        else if (y < bottom)
+        else if (y > top && y < bottom)
         {
             // Calculate texture Y-coordinate
             float ratio = (float)(y - top) / wall_h;
@@ -279,14 +271,12 @@ static void draw_column(t_data *data, int col, float dist)
 
             // Get pixel color with bounds checking
             int tex_index = tex_y * tw + data->tex_x;
-            uint32_t color = (tex_index >= 0 && tex_index < tw * th) 
-                          ? pxs[tex_index] 
-                          : 0xFF0000FF; // Fallback color (red) for debugging
+            uint32_t color =  pxs[tex_index] ;// Fallback color (red) for debugging
 
             put_pixel((char *)data->addr, col, y, color,
                      data->line_len, data->bpp, MAP_WIDTH, MAP_HEIGHT);
         }
-        else
+        else if (y > bottom)
         {
             // Draw floor
             mlx_put_pixel(data->img, col, y, data->f_color);
