@@ -6,14 +6,15 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/07 20:26:05 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/07 21:44:28 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 #include <math.h>
 
-float get_angle_from_dir(char dir) {
+float get_angle_from_dir(char dir) 
+{
 	if (dir == 'N') return (M_PI / 2);
 	if (dir == 'S') return (3 * M_PI / 2);
 	if (dir == 'E') return (0);
@@ -21,11 +22,13 @@ float get_angle_from_dir(char dir) {
 	return (0);
 }
 
-void set_char(t_data *data, char c) {
+void set_char(t_data *data, char c) 
+{
 	data->player_char = c;
 }
 
-void set_fov(t_data *data, float fov) {
+void set_fov(t_data *data, float fov) 
+{
 	data->fov = fov;
 }
 
@@ -166,14 +169,9 @@ static void	put_pixel(char *data, int x, int y,
 	data[offset + 3] = (color >> 24) & 0xFF;
 }
 
-static void draw_column(t_data *data, int col, float dist)
+void init_texters(t_data *data)
 {
-    const float min_dist = 0.1f;
-    int wall_h = (int)((TILE_SIZE * MAP_HEIGHT) / fmaxf(dist, min_dist));
-    int top = (MAP_HEIGHT - wall_h) / 2;
-    int bottom = top + wall_h;
-
-    if (data->hit_side == 'N') 
+	if (data->hit_side == 'N') 
         data->tex = data->no;
     else if (data->hit_side == 'S') 
         data->tex = data->so;
@@ -181,40 +179,50 @@ static void draw_column(t_data *data, int col, float dist)
         data->tex = data->we;
     else                            
         data->tex = data->ea;
-    const int tw = data->tex->width;
-    const int th = data->tex->height;
-    uint32_t *pxs = (uint32_t *)data->tex->pixels;
-	
-    float wall_x = fmodf(data->hit_wall_x, TILE_SIZE);
-    if (wall_x < 0)
-		wall_x += TILE_SIZE;
-    data->tex_x = (int)(wall_x * tw);
-    
-    if (data->hit_side == 'S' || data->hit_side == 'E')
-        data->tex_x = tw - data->tex_x - 1;
-        data->tex_x = fmax(0, fmin(tw - 1, data->tex_x));
+}
 
-    for (int y = 0; y < MAP_HEIGHT; y++)
+void ft_paint(t_data *data, uint32_t *pxs, float dist, int col)
+{
+	int wall_h = (int)((TILE_SIZE * MAP_HEIGHT) / fmaxf(dist, 0.1f));
+    int top = (MAP_HEIGHT - wall_h) / 2;
+    int bottom = top + wall_h;
+	int y = 0;
+
+	while (y < MAP_HEIGHT)
     {
         if (y < top)
-        {
             mlx_put_pixel(data->img, col, y, data->c_color);
-        }
         else if (y > top && y < bottom)
         {
             float ratio = (float)(y - top) / wall_h;
-            int tex_y = (int)(ratio * (th - 1));
-            tex_y = fmax(0, fmin(th - 1, tex_y));
-            int tex_index = tex_y * tw + data->tex_x;
+            int tex_y = (int)(ratio * (data->tex->height - 1));
+            tex_y = fmax(0, fmin(data->tex->height - 1, tex_y));
+            int tex_index = tex_y * data->tex->width + data->tex_x;
             uint32_t color =  pxs[tex_index] ;
             put_pixel((char *)data->addr, col, y, color,
                      data->line_len, data->bpp, MAP_WIDTH, MAP_HEIGHT);
         }
         else if (y > bottom)
-        {
             mlx_put_pixel(data->img, col, y, data->f_color);
-        }
+		y++;
     }
+}
+
+static void draw_column(t_data *data, int col, float dist)
+{
+	init_texters(data);
+    uint32_t *pxs = (uint32_t *)data->tex->pixels;
+	
+    float wall_x = fmodf(data->hit_wall_x, TILE_SIZE);
+    if (wall_x < 0)
+		wall_x += TILE_SIZE;
+    data->tex_x = (int)(wall_x * data->tex->width);
+    
+    if (data->hit_side == 'S' || data->hit_side == 'E')
+        data->tex_x = data->tex->width - data->tex_x - 1;
+    data->tex_x = fmax(0, fmin(data->tex->width - 1, data->tex_x));
+
+    ft_paint(data, pxs, dist, col);
 }
 
 static void render_3d(t_data *data)
@@ -290,17 +298,35 @@ void terminate_program(void *param)
     exit(0);
 }
 
-void	key_hook(void *param)
+int ft_retate(t_data *data, int flag)
 {
-	t_data	*data = (t_data *)param;
-	float	new_x;
-	float	new_y;
-	int		changed;
+	int changed;
 
 	changed = 0;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
-		terminate_program(param);
+	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
+	{
+		data->ray_angle -= 0.05f;
+		if (data->ray_angle < 0)
+			data->ray_angle += 2 * M_PI;
+		changed = 1;
+	}
+	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
+	{
+		data->ray_angle += 0.05f;
+		if (data->ray_angle >= 2 * M_PI)
+			data->ray_angle -= 2 * M_PI;
+		changed = 1;
+	}
+	if (flag == 1)
+		return (1);
+	return (changed);
+}
 
+int key_w(t_data *data, int flag, float new_x, float new_y)
+{
+	int changed;
+
+	changed = 0;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
 	{
 		new_x = data->player_x + cosf(data->ray_angle) * SPEED;
@@ -316,6 +342,16 @@ void	key_hook(void *param)
 			changed = 1;
 		}
 	}
+	if (flag == 1)
+		return (1);
+	return (changed);
+}
+
+int key_s(t_data *data, int flag, float new_x, float new_y)
+{
+	int changed;
+
+	changed = 0;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
 	{
 		new_x = data->player_x - cosf(data->ray_angle) * SPEED;
@@ -331,6 +367,16 @@ void	key_hook(void *param)
 			changed = 1;
 		}
 	}
+	if (flag == 1)
+		return (1);
+	return (changed);
+}
+
+int key_a(t_data *data, int flag, float new_x, float new_y)
+{
+	int changed;
+
+	changed = 0;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_A))
 	{
 		new_x = data->player_x + cosf(data->ray_angle - M_PI_2) * SPEED;
@@ -346,8 +392,16 @@ void	key_hook(void *param)
 			changed = 1;
 		}
 	}
+	if (flag == 1)
+		return (1);
+	return (changed);
+}
 
-	/* ─── Strafe Right (D) ──────────────────────────────────── */
+int key_d(t_data *data, int flag, float new_x, float new_y)
+{
+	int changed;
+
+	changed = 0;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
 	{
 		new_x = data->player_x + cosf(data->ray_angle + M_PI_2) * SPEED;
@@ -363,38 +417,31 @@ void	key_hook(void *param)
 			changed = 1;
 		}
 	}
+	if (flag == 1)
+		return (1);
+	return (changed);
+}
 
-	/* ─── Rotate Left ◀ ────────────────────────────────────── */
-	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
-	{
-		data->ray_angle -= 0.05f;
-		if (data->ray_angle < 0)
-			data->ray_angle += 2 * M_PI;
-		changed = 1;
-	}
+void	key_hook(void *param)
+{
+	t_data	*data = (t_data *)param;
+	float	new_x;
+	float	new_y;
+	int		changed;
 
-	/* ─── Rotate Right ▶ ───────────────────────────────────── */
-	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
-	{
-		data->ray_angle += 0.05f;
-		if (data->ray_angle >= 2 * M_PI)
-			data->ray_angle -= 2 * M_PI;
-		changed = 1;
-	}
-
+	new_x = 0.0;
+	new_y = 0.0;
+	changed = 0;
+	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
+		terminate_program(param);
+	changed = key_w(data, changed, new_x, new_y);
+	changed = key_s(data, changed, new_x, new_y);
+	changed = key_a(data, changed, new_x, new_y);
+	changed = key_d(data, changed, new_x, new_y);
+	changed = ft_retate(data, changed);
 	if (changed)
 		redraw(data);
 }
-
-// void init_struct(t_data *data)
-// {
-// 	data->img      = mlx_new_image(data->mlx, MAP_WIDTH, MAP_HEIGHT);
-// 	data->addr     = (char *)data->img->pixels;
-// 	data->bpp      = 32;
-// 	data->line_len = data->img->width * 4;
-// 	data->endian   = 0;
-// 	data->fov      = FOV;
-// }
 
 void init_player(t_data *data)
 {
@@ -426,7 +473,7 @@ void ff()
 
 int	put_map_2dv(t_data *data)
 {
-	atexit(ff);
+	//atexit(ff);
 	set_wh_map(data);
 	data->mlx = mlx_init(MAP_WIDTH, MAP_HEIGHT, "Cub3D", false);
 	if (!data->mlx) 
