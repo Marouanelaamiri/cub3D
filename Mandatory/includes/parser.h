@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/07 18:52:46 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/07 19:36:28 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 #define TILE_SIZE 60
 #define COLLIDE_PAD 0.3f
 #define RENDER_PAD  0.3f
-#define SPEED 0.1f
+#define SPEED 0.15f
 #define FOV 1
 #define BUFFER_SIZE	42
-#define MAP_WIDTH 1920
-#define MAP_HEIGHT 1080
+#define MAP_WIDTH 1600
+#define MAP_HEIGHT 900
 
 typedef struct s_data
 {
