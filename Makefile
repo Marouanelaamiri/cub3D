@@ -2,12 +2,13 @@
 # Compiler and Flags
 # ─────────────────────────────────────────────
 CC     = cc
-CFLAGS = -Wall -Wextra -Werror -IMandatory/includes 
+CFLAGS = -Wall -Wextra -Werror -IMandatory/includes #-fsanitize=address -g
 
 # ─────────────────────────────────────────────
 # GLFW & MLX
 # ─────────────────────────────────────────────
-GLFW_DIR  = /mnt/homes/malaamir/.brew/opt/glfw
+USER = aromani
+GLFW_DIR  = /mnt/homes/$(USER)/.brew/opt/glfw
 GLFW_INC  = -I$(GLFW_DIR)/include
 GLFW_LIB  = -L$(GLFW_DIR)/lib -lglfw
 

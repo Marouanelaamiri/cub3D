@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rayasting.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/07 18:51:37 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/07 20:08:32 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,15 @@ static float	cast_ray(t_data *data, float angle)
 	return hit_dist;
 }
 
+void init_struct(t_data *data)
+{
+	data->img      = mlx_new_image(data->mlx, MAP_WIDTH, MAP_HEIGHT);
+	data->addr     = (char *)data->img->pixels;
+	data->bpp      = 32;
+	data->line_len = data->img->width * 4;
+	data->endian   = 0;
+	data->fov      = FOV;
+}
 
 static void	put_pixel(char *data, int x, int y,
 			uint32_t color, int line_len,
@@ -231,7 +240,7 @@ static void render_3d(t_data *data)
 static void	redraw(t_data *data)
 {
 	mlx_delete_image(data->mlx, data->img);
-	data->img      = mlx_new_image(data->mlx, MAP_WIDTH, MAP_HEIGHT);
+	init_struct(data);
 	render_3d(data);
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 }
@@ -374,15 +383,15 @@ void	key_hook(void *param)
 		redraw(data);
 }
 
-void init_struct(t_data *data)
-{
-	data->img      = mlx_new_image(data->mlx, MAP_WIDTH, MAP_HEIGHT);
-	data->addr     = (char *)data->img->pixels;
-	data->bpp      = 32;
-	data->line_len = data->img->width * 4;
-	data->endian   = 0;
-	data->fov      = FOV;
-}
+// void init_struct(t_data *data)
+// {
+// 	data->img      = mlx_new_image(data->mlx, MAP_WIDTH, MAP_HEIGHT);
+// 	data->addr     = (char *)data->img->pixels;
+// 	data->bpp      = 32;
+// 	data->line_len = data->img->width * 4;
+// 	data->endian   = 0;
+// 	data->fov      = FOV;
+// }
 
 void init_player(t_data *data)
 {
@@ -407,8 +416,14 @@ void init_player(t_data *data)
 	}
 }
 
+void ff()
+{
+	system("leaks cub3D");
+}
+
 int	put_map_2dv(t_data *data)
 {
+	atexit(ff);
 	set_wh_map(data);
 	data->mlx = mlx_init(MAP_WIDTH, MAP_HEIGHT, "Cub3D", false);
 	if (!data->mlx) 
@@ -419,7 +434,7 @@ int	put_map_2dv(t_data *data)
 	init_player(data);
 	redraw(data);
 	mlx_loop_hook(data->mlx, key_hook, data);
-	//mlx_close_hook(data->mlx, terminate_program, data);
+	mlx_close_hook(data->mlx, terminate_program, data);
 	mlx_loop(data->mlx);
 	return (0);
 }
