@@ -1,2 +1,0 @@
-Norm
-bonus (mini map , doors , gun, mouse)

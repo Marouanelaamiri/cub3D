@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:13:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/07 19:18:52 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/07 19:40:07 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void f()
 
 int main(int argc, char **argv)
 {
+	// atexit(f);
     t_data *info;
     int     ret;
 

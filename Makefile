@@ -2,7 +2,7 @@
 # Compiler and Flags
 # ─────────────────────────────────────────────
 CC     = cc
-CFLAGS = -Wall -Wextra -Werror -IMandatory/includes
+CFLAGS = -Wall -Wextra -Werror -IMandatory/includes 
 
 # ─────────────────────────────────────────────
 # GLFW & MLX
