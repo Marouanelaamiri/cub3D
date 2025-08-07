@@ -6,7 +6,7 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/06 23:51:48 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/07 18:22:59 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,12 +289,11 @@ static void render_3d(t_data *data)
     int   w     = MAP_WIDTH;
     float step  = data->fov / (float)w;
     float angle = data->ray_angle - (data->fov / 2);
-	  int         col   = 0;
+	int         col   = 0;
 
     while (col < w)
     {
         float raw_dist = cast_ray(data, angle);
-
         const float min_px = RENDER_PAD * TILE_SIZE;
         if (raw_dist < min_px)
             raw_dist = min_px;
@@ -313,9 +312,6 @@ static void	redraw(t_data *data)
 {
 	mlx_delete_image(data->mlx, data->img);
 	data->img      = mlx_new_image(data->mlx, MAP_WIDTH, MAP_HEIGHT);
-	data->addr     = (char *)data->img->pixels;
-	data->bpp      = 32;
-	data->line_len = data->img->width * 4;
 	render_3d(data);
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 }
@@ -601,26 +597,25 @@ void	key_hook(void *param)
 		redraw(data);
 }
 
-int	put_map_2dv(t_data *data)
+void init_struct(t_data *data)
 {
-	set_wh_map(data);
-	data->mlx = mlx_init(MAP_WIDTH, MAP_HEIGHT, "Cub3D", false);
-	if (!data->mlx) 
-		return (1);
-	if (load_textures(data)) 
-		return (1);
-
 	data->img      = mlx_new_image(data->mlx, MAP_WIDTH, MAP_HEIGHT);
 	data->addr     = (char *)data->img->pixels;
 	data->bpp      = 32;
 	data->line_len = data->img->width * 4;
 	data->endian   = 0;
 	data->fov      = FOV;
+}
 
-	int iy = 0;
+void init_player(t_data *data)
+{
+	int	iy;
+	int	ix;
+	
+	iy = 0;
 	while (iy < data->recmap_height)
 	{
-		int ix = 0;
+		ix = 0;
 		while (data->map[iy][ix])
 		{
 			if (ft_strchr("NSWE", data->map[iy][ix]))
@@ -633,11 +628,21 @@ int	put_map_2dv(t_data *data)
 		}
 		iy++;
 	}
+}
 
+int	put_map_2dv(t_data *data)
+{
+	set_wh_map(data);
+	data->mlx = mlx_init(MAP_WIDTH, MAP_HEIGHT, "Cub3D", false);
+	if (!data->mlx) 
+		return (1);
+	if (load_textures(data)) 
+		return (1);
+	init_struct(data);
+	init_player(data);
 	redraw(data);
-	
 	mlx_loop_hook(data->mlx, key_hook, data);
-	mlx_close_hook(data->mlx, terminate_program, data);
+	//mlx_close_hook(data->mlx, terminate_program, data);
 	mlx_loop(data->mlx);
 	return (0);
 }
