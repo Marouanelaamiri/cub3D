@@ -6,7 +6,7 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/07 20:08:32 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/07 20:26:05 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,16 @@ void set_fov(t_data *data, float fov) {
 	data->fov = fov;
 }
 
-static void set_wh_map(t_data *data) {
+static void set_wh_map(t_data *data) 
+{
 	int y = 0;
 	int max_width = 0;
-	while (data->map[y]) {
+	while (data->map[y]) 
+	{
 		int x = 0;
 		int width = 0;
-		while (data->map[y][x]) {
+		while (data->map[y][x]) 
+		{
 			if (data->map[y][x] != ' ' && data->map[y][x] != '\t')
 				width++;
 			x++;
