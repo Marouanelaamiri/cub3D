@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rayasting.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/07 18:22:59 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/07 18:51:37 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,79 +154,13 @@ static void	put_pixel(char *data, int x, int y,
 	data[offset + 3] = (color >> 24) & 0xFF;
 }
 
-// static void draw_column(t_data *data, int col, float dist)
-// {
-// 	int wall_h = (MAP_HEIGHT / dist) * 100;
-//     int top    = (MAP_HEIGHT - wall_h) / 2;
-//     int bottom = top + wall_h;
-// 	int y = 0;
-// 	uint32_t color;
-
-// 	// Choose texture based on hit side
-// 	if (data->hit_side == 'N') 
-// 		data->tex = data->no;
-// 	else if (data->hit_side == 'S') 
-// 		data->tex = data->so;
-// 	else if (data->hit_side == 'W') 
-// 		data->tex = data->we;
-// 	else                            
-// 		data->tex = data->ea;
-
-// 	int tw = data->tex->width;
-// 	int th = data->tex->height;
-// 	uint32_t *pxs = (uint32_t *)data->tex->pixels;
-
-// 	if (wall_h >= MAP_HEIGHT)
-// 	{
-// 		top = 0;
-// 		bottom = MAP_HEIGHT;
-// 		wall_h = MAP_HEIGHT;
-// 	}
-
-// 	// Calculate tex_x based on wall hit point
-// 	data->tex_x = (int)(data->hit_wall_x * (float)tw);
-// 	if (data->hit_side == 'S' || data->hit_side == 'E')
-// 		data->tex_x = tw - data->tex_x - 1;
-
-// 	if (data->tex_x < 0)
-// 		data->tex_x = 0;
-// 	if (data->tex_x >= tw)
-// 		data->tex_x = tw - 1;
-
-// 	while (y < MAP_HEIGHT)
-// 	{
-// 		if (y < top)
-// 			mlx_put_pixel(data->img, col, y, data->c_color);
-// 		else if (y < bottom)
-// 		{
-// 			// Use floating point for more precision
-// 			float tex_pos = (y - top) * ((float)th / wall_h);
-// 			int tex_y = (int)tex_pos;
-
-// 			if (tex_y < 0) tex_y = 0;
-// 			if (tex_y >= th) tex_y = th - 1;
-
-// 			color = pxs[(int)(tex_y * tw + data->tex_x)];
-
-// 			put_pixel((char *)data->addr, col, y, color,
-// 				data->line_len, data->bpp, MAP_WIDTH, MAP_HEIGHT);
-// 		}
-// 		else
-// 			mlx_put_pixel(data->img, col, y, data->f_color);
-// 		y++;
-// 	}
-// }
-
-
 static void draw_column(t_data *data, int col, float dist)
 {
-    // 1. Calculate wall height with safe distance handling
-    const float min_dist = 0.1f; // Prevent division by extremely small numbers
+    const float min_dist = 0.1f;
     int wall_h = (int)((TILE_SIZE * MAP_HEIGHT) / fmaxf(dist, min_dist));
     int top = (MAP_HEIGHT - wall_h) / 2;
     int bottom = top + wall_h;
 
-    // 2. Select appropriate texture
     if (data->hit_side == 'N') 
         data->tex = data->no;
     else if (data->hit_side == 'S') 
@@ -235,50 +169,37 @@ static void draw_column(t_data *data, int col, float dist)
         data->tex = data->we;
     else                            
         data->tex = data->ea;
-
-    // 3. Get texture dimensions
     const int tw = data->tex->width;
     const int th = data->tex->height;
     uint32_t *pxs = (uint32_t *)data->tex->pixels;
-
-    // 5. Calculate texture X-coordinate with proper edge handling
+	
     float wall_x = fmodf(data->hit_wall_x, TILE_SIZE);
     if (wall_x < 0)
 		wall_x += TILE_SIZE;
     data->tex_x = (int)(wall_x * tw);
     
-    // Flip for certain sides to match texture orientation
     if (data->hit_side == 'S' || data->hit_side == 'E')
         data->tex_x = tw - data->tex_x - 1;
-    
-    // Clamp to texture bounds
-    data->tex_x = fmax(0, fmin(tw - 1, data->tex_x));
+        data->tex_x = fmax(0, fmin(tw - 1, data->tex_x));
 
-    // 6. Draw the column
     for (int y = 0; y < MAP_HEIGHT; y++)
     {
         if (y < top)
         {
-            // Draw ceiling
             mlx_put_pixel(data->img, col, y, data->c_color);
         }
         else if (y > top && y < bottom)
         {
-            // Calculate texture Y-coordinate
             float ratio = (float)(y - top) / wall_h;
             int tex_y = (int)(ratio * (th - 1));
             tex_y = fmax(0, fmin(th - 1, tex_y));
-
-            // Get pixel color with bounds checking
             int tex_index = tex_y * tw + data->tex_x;
-            uint32_t color =  pxs[tex_index] ;// Fallback color (red) for debugging
-
+            uint32_t color =  pxs[tex_index] ;
             put_pixel((char *)data->addr, col, y, color,
                      data->line_len, data->bpp, MAP_WIDTH, MAP_HEIGHT);
         }
         else if (y > bottom)
         {
-            // Draw floor
             mlx_put_pixel(data->img, col, y, data->f_color);
         }
     }
@@ -307,7 +228,6 @@ static void render_3d(t_data *data)
     }
 }
 
-
 static void	redraw(t_data *data)
 {
 	mlx_delete_image(data->mlx, data->img);
@@ -315,21 +235,18 @@ static void	redraw(t_data *data)
 	render_3d(data);
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 }
-static int
-is_colliding(t_data *data, float new_px, float new_py)
+
+static int is_colliding(t_data *data, float new_px, float new_py)
 {
-    // ─── NEW: direct tile check ───────────────────────────────
+
     int tile_x = (int)new_px;
     int tile_y = (int)new_py;
     if (tile_y >= 0 && tile_y < data->recmap_height
      && tile_x >= 0 && tile_x < (int)ft_strlen(data->map[tile_y])
      && data->map[tile_y][tile_x] == '1')
     {
-        return 1;  // stepping directly into a wall tile → collision
+        return 1;
     }
-    // ────────────────────────────────────────────────────────────
-
-    // existing AABB‐corner code follows unchanged…
     const float px = new_px * TILE_SIZE + (TILE_SIZE / 2.0f);
     const float py = new_py * TILE_SIZE + (TILE_SIZE / 2.0f);
     const float r  = COLLIDE_PAD * TILE_SIZE;
@@ -350,56 +267,6 @@ is_colliding(t_data *data, float new_px, float new_py)
     }
     return 0;
 }
-// static int	is_wall(t_data *data, float x, float y)
-// {
-// 	  // Convert player position to pixel coordinates
-//     float px = x * TILE_SIZE;
-//     float py = y * TILE_SIZE;
-//     float buffer = PLAYER_RADIUS;
-    
-//     // Calculate the area to check around the player
-//     int start_x = (int)((px - buffer) / TILE_SIZE);
-//     int end_x = (int)((px + TILE_SIZE + buffer) / TILE_SIZE);
-//     int start_y = (int)((py - buffer) / TILE_SIZE);
-//     int end_y = (int)((py + TILE_SIZE + buffer) / TILE_SIZE);
-    
-//     // Check all tiles in the area using while loops
-//     int ty = start_y;
-//     while (ty <= end_y) {
-//         if (ty >= 0 && ty < data->recmap_height) {
-//             int tx = start_x;
-//             while (tx <= end_x) {
-//                 if (tx >= 0 && tx < (int)ft_strlen(data->map[ty])) {
-//                     if (data->map[ty][tx] == '1') {
-//                         // Calculate wall boundaries
-//                         float wall_left = tx * TILE_SIZE;
-//                         float wall_right = (tx + 1) * TILE_SIZE;
-//                         float wall_top = ty * TILE_SIZE;
-//                         float wall_bottom = (ty + 1) * TILE_SIZE;
-                        
-//                         // Calculate player boundaries with buffer
-//                         float player_left = px - buffer;
-//                         float player_right = px + TILE_SIZE + buffer;
-//                         float player_top = py - buffer;
-//                         float player_bottom = py + TILE_SIZE + buffer;
-                        
-//                         // Check for overlap
-//                         if (player_right > wall_left && 
-//                             player_left < wall_right &&
-//                             player_bottom > wall_top && 
-//                             player_top < wall_bottom) {
-//                             return 1; // Collision detected
-//                         }
-//                     }
-//                 }
-//                 tx++;
-//             }
-//         }
-//         ty++;
-//     }
-//     return 0;
-// }
-
 
 void terminate_program(void *param)
 {
@@ -410,96 +277,6 @@ void terminate_program(void *param)
         mlx_terminate(data->mlx);
     exit(0);
 }
-
-// void	key_hook(void *param)
-// {
-// 	t_data	*data = (t_data *)param;
-// 	float	new_x, new_y;
-// 	int		changed = 0;
-
-// 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
-// 		terminate_program(param);
-// 	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
-// 	{
-// 		new_x = data->player_x + cosf(data->ray_angle) * SPEED;
-// 		new_y = data->player_y + sinf(data->ray_angle) * SPEED;
-// 		if (!is_wall(data, new_x, data->player_y))
-// 		{
-// 			data->player_x = new_x;
-// 			changed = 1;
-// 		}
-// 		if (!is_wall(data, data->player_x, new_y))
-// 		{
-// 			data->player_y = new_y;
-// 			changed = 1;
-// 		}
-// 	}
-// 	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
-// 	{
-// 		new_x = data->player_x - cosf(data->ray_angle) * SPEED;
-// 		new_y = data->player_y - sinf(data->ray_angle) * SPEED;
-// 		if (!is_wall(data, new_x, data->player_y))
-// 		{
-// 			data->player_x = new_x;
-// 			changed = 1;
-// 		}
-// 		if (!is_wall(data, data->player_x, new_y))
-// 		{
-// 			data->player_y = new_y;
-// 			changed = 1;
-// 		}
-// 	}
-// 	if (mlx_is_key_down(data->mlx, MLX_KEY_A))
-// 	{
-// 		new_x = data->player_x + cosf(data->ray_angle - M_PI_2) * SPEED;
-// 		new_y = data->player_y + sinf(data->ray_angle - M_PI_2) * SPEED;
-// 		if (!is_wall(data, new_x, data->player_y))
-// 		{
-// 			data->player_x = new_x;
-// 			changed = 1;
-// 		}
-// 		if (!is_wall(data, data->player_x, new_y))
-// 		{
-// 			data->player_y = new_y;
-// 			changed = 1;
-// 		}
-// 	}
-// 	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
-// 	{
-// 		new_x = data->player_x + cosf(data->ray_angle + M_PI_2) * SPEED;
-// 		new_y = data->player_y + sinf(data->ray_angle + M_PI_2) * SPEED;
-// 		if (!is_wall(data, new_x, data->player_y))
-// 		{
-// 			data->player_x = new_x;
-// 			changed = 1;
-// 		}
-// 		if (!is_wall(data, data->player_x, new_y))
-// 		{
-// 			data->player_y = new_y;
-// 			changed = 1;
-// 		}
-// 	}
-// 	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
-// 	{
-// 		data->ray_angle -= 0.05f;
-// 		if (data->ray_angle < 0)
-// 			data->ray_angle += 2 * M_PI;
-// 		changed = 1;
-// 	}
-// 	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
-// 	{
-// 		data->ray_angle += 0.05f;
-// 		if (data->ray_angle >= 2 * M_PI)
-// 			data->ray_angle -= 2 * M_PI;
-// 		changed = 1;
-// 	}
-	
-// 	if (changed)
-// 		redraw(data);
-// }
-
-// ─── Insert this helper above key_hook ────────────────────────────
-
 
 void	key_hook(void *param)
 {
