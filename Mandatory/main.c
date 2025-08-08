@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:13:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/07 19:40:07 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/08 15:36:24 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int main(int argc, char **argv)
 {
 	// atexit(f);
     t_data *info;
+    t_algo *algo = malloc(sizeof(t_algo));
     int     ret;
 
     if (argc != 2)
@@ -31,11 +32,12 @@ int main(int argc, char **argv)
         fprintf(stderr, "Usage: %s <map_file.cub>\n", argv[0]);
         return EXIT_FAILURE;
     }
-
+    
     info = parser_map(argc, argv);
     if (!info)
         return EXIT_FAILURE;
-
+    ft_memset(algo,0,sizeof(t_algo));
+    info->algo = algo;
     printf("✅ Parsing succeeded!\n");
     printf(" Map: %d columns × %d rows\n", info->map_width, info->map_height);
     printf(" Player at (%.1f, %.1f) facing '%c'\n",

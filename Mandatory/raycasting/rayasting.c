@@ -6,7 +6,7 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/07 21:44:28 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/08 16:59:35 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,14 @@
 
 float get_angle_from_dir(char dir) 
 {
-	if (dir == 'N') return (M_PI / 2);
-	if (dir == 'S') return (3 * M_PI / 2);
-	if (dir == 'E') return (0);
-	if (dir == 'W') return (M_PI);
+	if (dir == 'N') 
+		return (M_PI / 2);
+	if (dir == 'S') 
+		return (3 * M_PI / 2);
+	if (dir == 'E') 
+		return (0);
+	if (dir == 'W') 
+		return (M_PI);
 	return (0);
 }
 
@@ -54,94 +58,99 @@ static void set_wh_map(t_data *data)
 	data->recmap_with = max_width;
 }
 
-static float	cast_ray(t_data *data, float angle)
+void init_algo(t_data *data, float angle)
 {
-	float hit_dist;
-	float	px = data->player_x * TILE_SIZE + TILE_SIZE / 2;
-	float	py = data->player_y * TILE_SIZE + TILE_SIZE / 2;
-	float	dir_x = cosf(angle);
-	float	dir_y = sinf(angle);
-
-	int	map_x = (int)(px / TILE_SIZE);
-	int	map_y = (int)(py / TILE_SIZE);
-	
-	float	delta_x = fabsf(1 / dir_x);
-	float	delta_y = fabsf(1 / dir_y);
-
-	int step_x;
-	if (dir_x < 0)
-		step_x = -1;
+	data->algo->px = data->player_x * TILE_SIZE + TILE_SIZE / 2;
+	data->algo->py = data->player_y * TILE_SIZE + TILE_SIZE / 2;
+	data->algo->dir_x = cosf(angle);
+	data->algo->dir_y = sinf(angle);
+	data->algo->map_x = (int)(data->algo->px / TILE_SIZE);
+	data->algo->map_y = (int)(data->algo->py / TILE_SIZE);
+	data->algo->delta_x = fabsf(1 / data->algo->dir_x);
+	data->algo->delta_y = fabsf(1 / data->algo->dir_y);
+	if (data->algo->dir_x < 0)
+		data->algo->step_x = -1;
 	else
-		step_x = 1;
-
-	int step_y;
-	if (dir_y < 0)
-		step_y = -1;
+		data->algo->step_x = 1;
+	if (data->algo->dir_y < 0)
+		data->algo->step_y = -1;
 	else
-		step_y = 1;
-
-	float side_dist_x;
-	if (step_x < 0)
-		side_dist_x = (px - map_x * TILE_SIZE) * delta_x;
+		data->algo->step_y = 1;
+	if (data->algo->step_x < 0)
+		data->algo->side_dist_x = (data->algo->px - data->algo->map_x * TILE_SIZE) * data->algo->delta_x;
 	else
-		side_dist_x = ((map_x + 1) * TILE_SIZE - px) * delta_x;
-
-	float side_dist_y;
-	if (step_y < 0)
-		side_dist_y = (py - map_y * TILE_SIZE) * delta_y;
+		data->algo->side_dist_x = ((data->algo->map_x + 1) * TILE_SIZE - data->algo->px) * data->algo->delta_x;
+	if (data->algo->step_y < 0)
+		data->algo->side_dist_y = (data->algo->py - data->algo->map_y * TILE_SIZE) * data->algo->delta_y;
 	else
-		side_dist_y = ((map_y + 1) * TILE_SIZE - py) * delta_y;
+		data->algo->side_dist_y = ((data->algo->map_y + 1) * TILE_SIZE - data->algo->py) * data->algo->delta_y;
 
+}
 
+void send_ray(t_data *data)
+{
 	int	hit = 0;
-	int	side;
-
+	
 	while (!hit)
 	{
-		if (side_dist_x < side_dist_y)
+		if (data->algo->side_dist_x < data->algo->side_dist_y)
 		{
-			side_dist_x += delta_x * TILE_SIZE;
-			map_x += step_x;
-			side = 0;
+			data->algo->side_dist_x += data->algo->delta_x * TILE_SIZE;
+			data->algo->map_x += data->algo->step_x;
+			data->algo->side = 0;
 		}
 		else
 		{
-			side_dist_y += delta_y * TILE_SIZE;
-			map_y += step_y;
-			side = 1;
+			data->algo->side_dist_y += data->algo->delta_y * TILE_SIZE;
+			data->algo->map_y += data->algo->step_y;
+			data->algo->side = 1;
 		}
-		if (map_y < 0 || map_y >= data->recmap_height
-			|| map_x < 0 || map_x >= (int)ft_strlen(data->map[map_y])
-			|| data->map[map_y][map_x] == '1')
+		if (data->algo->map_y < 0 || data->algo->map_y >= data->recmap_height
+			|| data->algo->map_x < 0 || data->algo->map_x >= (int)ft_strlen(data->map[data->algo->map_y])
+			|| data->map[data->algo->map_y][data->algo->map_x] == '1')
 			hit = 1;
 	}
+} 
 
+void texters_count(t_data *data, float hit_dist)
+{
+	float wall_x;
+	float wall_y;
 
-	if (side == 0)
-		hit_dist = side_dist_x - delta_x * TILE_SIZE;
-	else
-		hit_dist = side_dist_y - delta_y * TILE_SIZE;
-
-	if (side == 0)
+	wall_x	= 0.0;
+	wall_y	= 0.0;
+	if (data->algo->side == 0)
 	{
-		if (step_x > 0)
+		if (data->algo->step_x > 0)
     		data->hit_side = 'E';
 		else
    			data->hit_side = 'W';
-
-		float wall_y = py + hit_dist * dir_y;
+		wall_y = data->algo->py + hit_dist * data->algo->dir_y;
 		data->hit_wall_x = fmodf(wall_y, TILE_SIZE) / TILE_SIZE;
 	}
 	else
 	{
-		if (step_y > 0) 
+		if (data->algo->step_y > 0) 
 			data->hit_side = 'S'; 
 		else 
 			data->hit_side = 'N';
-		float wall_x = px + hit_dist * dir_x;
+		wall_x = data->algo->px + hit_dist * data->algo->dir_x;
 		data->hit_wall_x = fmodf(wall_x, TILE_SIZE) / TILE_SIZE;
 	}
-	return hit_dist;
+}
+
+static float	cast_ray(t_data *data, float angle)
+{
+	float hit_dist;
+	ft_memset(data->algo,0,sizeof(t_algo));
+	init_algo(data, angle);
+	send_ray(data);
+	if (data->algo->side == 0)
+		hit_dist = data->algo->side_dist_x - data->algo->delta_x * TILE_SIZE;
+	else
+		hit_dist = data->algo->side_dist_y - data->algo->delta_y * TILE_SIZE;
+	texters_count(data, hit_dist);
+	return (hit_dist);
 }
 
 void init_struct(t_data *data)
@@ -154,15 +163,16 @@ void init_struct(t_data *data)
 	data->fov      = FOV;
 }
 
-static void	put_pixel(char *data, int x, int y,
-			uint32_t color, int line_len,
-			int bpp, int width, int height)
+static void	put_pixel(t_data *d, int x, int y,
+			uint32_t color)
 {
 	int	offset;
+	char *data;
 
-	if (x < 0 || y < 0 || x >= width || y >= height)
+	data = (char *)d->addr;
+	if (x < 0 || y < 0 || x >= MAP_WIDTH || y >= MAP_HEIGHT)
 		return ;
-	offset = y * line_len + x * (bpp / 8);
+	offset = y * d->line_len + x * (d->bpp / 8);
 	data[offset + 0] = color & 0xFF;
 	data[offset + 1] = (color >> 8) & 0xFF;
 	data[offset + 2] = (color >> 16) & 0xFF;
@@ -197,10 +207,9 @@ void ft_paint(t_data *data, uint32_t *pxs, float dist, int col)
             float ratio = (float)(y - top) / wall_h;
             int tex_y = (int)(ratio * (data->tex->height - 1));
             tex_y = fmax(0, fmin(data->tex->height - 1, tex_y));
-            int tex_index = tex_y * data->tex->width + data->tex_x;
-            uint32_t color =  pxs[tex_index] ;
-            put_pixel((char *)data->addr, col, y, color,
-                     data->line_len, data->bpp, MAP_WIDTH, MAP_HEIGHT);
+            //int tex_index = tex_y * data->tex->width + data->tex_x;
+            uint32_t color =  pxs[(int)(tex_y * data->tex->width + data->tex_x)];
+            put_pixel(data, col, y, color);
         }
         else if (y > bottom)
             mlx_put_pixel(data->img, col, y, data->f_color);

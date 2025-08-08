@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/07 19:36:28 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/08 16:57:57 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,27 @@
 #define BUFFER_SIZE	42
 #define MAP_WIDTH 1600
 #define MAP_HEIGHT 900
+
+//typedef struct t_data;
+
+typedef struct s_algo
+{
+	float	px;
+	float	py;
+	float	dir_x;
+	float	dir_y;
+	int	map_x;
+	int	map_y;
+	float	delta_x;
+	float	delta_y;
+	int step_x;
+	int step_y;
+	float side_dist_x;
+	float side_dist_y;
+	int	side;
+	struct t_data *data;
+}	t_algo;
+
 
 typedef struct s_data
 {
@@ -63,6 +84,7 @@ typedef struct s_data
 	char player_direction;
 	int has_error;
 	char *error_message;
+	t_algo *algo;
 }	t_data;
 
 void	assign_floor_color(t_data *info, int r, int g, int b);
