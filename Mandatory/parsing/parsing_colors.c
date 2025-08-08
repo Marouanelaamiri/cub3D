@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:29:36 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/01 23:30:51 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/08 21:50:44 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,71 @@ static void	color_error_or_exit(char *value, t_data *info, int is_floor)
 	}
 }
 
+static int	validate_token(const char *s)
+{
+    if (!*s)
+        return (0);
+    if (*s == '+' || *s == '-')
+        s++;
+    if (!*s)
+        return (0);
+    while (*s)
+    {
+        if (!ft_isdigit(*s))
+            return (0);
+        s++;
+    }
+    return (1);
+}
+
+static int	convert_tokens(char **tokens, int *r, int *g, int *b)
+{
+    int	i;
+
+    i = 0;
+    while (i < 3)
+    {
+        if (!validate_token(tokens[i]))
+            return (0);
+        i++;
+    }
+    *r = ft_atoi(tokens[0]);
+    *g = ft_atoi(tokens[1]);
+    *b = ft_atoi(tokens[2]);
+    return (1);
+}
+
+static int	parse_rgb_triplet(const char *value, int *r, int *g, int *b)
+{
+    char	*dup;
+    char	*p;
+    char	*tokens[3];
+    int		i;
+
+    dup = ft_strdup(value);
+    if (!dup)
+        return (0);
+    p = dup;
+    i = 0;
+    while (i < 3)
+    {
+        tokens[i] = p;
+        while (*p && *p != ',')
+            p++;
+        if (*p == ',')
+        {
+            *p = '\0';
+            p++;
+        }
+        i++;
+    }
+    if (*p != '\0')
+        return (free(dup), 0);
+    if (!convert_tokens(tokens, r, g, b))
+        return (free(dup), 0);
+    return (free(dup), 1);
+}
+
 int	parse_color(char *str, t_data *info, int is_floor)
 {
 	char	*value;
@@ -32,7 +97,7 @@ int	parse_color(char *str, t_data *info, int is_floor)
 
 	value = ft_strtrim(str, " \n\r\t");
 	color_error_or_exit(value, info, is_floor);
-	if (sscanf(value, "%d,%d,%d", &r, &g, &b) != 3)
+	if (!parse_rgb_triplet(value, &r, &g, &b))
 	{
 		if (is_floor)
 			print_error("Floor color components out of range.\n", info);
