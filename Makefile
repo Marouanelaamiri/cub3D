@@ -36,7 +36,7 @@ MANDATORY_SRC = \
 	$(MANDATORY_DIR)/parsing/detol.c \
 	$(MANDATORY_DIR)/parsing/allocation.c \
 	$(MANDATORY_DIR)/parsing/init.c \
-	$(MANDATORY_DIR)/raycasting/rayasting.c \
+	$(MANDATORY_DIR)/raycasting/raycasting.c \
 	$(MANDATORY_DIR)/helpers/ft_atoi.c \
 	$(MANDATORY_DIR)/helpers/ft_bzero.c \
 	$(MANDATORY_DIR)/helpers/ft_calloc.c \
@@ -61,7 +61,13 @@ MANDATORY_SRC = \
 	$(MANDATORY_DIR)/helpers/get_next_line.c \
 	$(MANDATORY_DIR)/helpers/ft_realloc.c \
 	$(MANDATORY_DIR)/helpers/ft_strcmp.c \
-	$(MANDATORY_DIR)/helpers/ft_getmax.c
+	$(MANDATORY_DIR)/helpers/ft_getmax.c \
+	$(MANDATORY_DIR)/raycasting/moves.c \
+	$(MANDATORY_DIR)/raycasting/dda_algo.c \
+	$(MANDATORY_DIR)/raycasting/helpers_00.c \
+	$(MANDATORY_DIR)/raycasting/helpers_01.c \
+	$(MANDATORY_DIR)/raycasting/drawing.c \
+
 
 MANDATORY_OBJ = $(MANDATORY_SRC:.c=.o)
 

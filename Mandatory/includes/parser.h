@@ -6,7 +6,7 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/08 16:57:57 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/08 18:22:06 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_algo
 	float side_dist_x;
 	float side_dist_y;
 	int	side;
-	struct t_data *data;
+	//struct t_data *data;
 }	t_algo;
 
 
@@ -91,7 +91,6 @@ void	assign_floor_color(t_data *info, int r, int g, int b);
 void	assign_ceiling_color(t_data *info, int r, int g, int b);
 void	validate_floor_rgb(int r, int g, int b, t_data *info);
 void	validate_ceiling_rgb(int r, int g, int b, t_data *info);
-int put_map_2dv(t_data *data);
 void	clean_map(t_data *info);
 t_data	*parser_map(int ac, char **av);
 void free_malloc(t_data *info, char *line, char **valid_map , int height);
@@ -160,6 +159,23 @@ char	**ft_realloc(char **lines, int line_count, char *new_line);
 void	*ft_free(char **arr, int count);
 void 	free_split(char **arr);
 int		ft_strcmp(const char *s1, const char *s2);
-int main_raycasting(t_data *t);
+//int main_raycasting(t_data *t);
+//exec_part
+int ft_retate(t_data *data, int flag);
+int key_w(t_data *data, int flag, float new_x, float new_y);
+int key_s(t_data *data, int flag, float new_x, float new_y);
+int key_a(t_data *data, int flag, float new_x, float new_y);
+int key_d(t_data *data, int flag, float new_x, float new_y);
+int is_colliding(t_data *data, float new_px, float new_py);
+float	cast_ray(t_data *data, float angle);
+int	main_raycasting(t_data *data);
+void	put_pixel(t_data *d, int x, int y, uint32_t color);
+void set_wh_map(t_data *data);
+void set_fov(t_data *data, float fov);
+void set_char(t_data *data, char c);
+float get_angle_from_dir(char dir);
+void	redraw(t_data *data);
+void init_struct(t_data *data);
+void init_player(t_data *data);
 
 #endif

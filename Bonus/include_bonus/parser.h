@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/05 20:36:07 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/08 18:33:18 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,6 @@ char	**ft_realloc(char **lines, int line_count, char *new_line);
 void	*ft_free(char **arr, int count);
 void 	free_split(char **arr);
 int		ft_strcmp(const char *s1, const char *s2);
-int main_raycasting(t_data *t);
+//int main_raycasting(t_data *t);
 
 #endif

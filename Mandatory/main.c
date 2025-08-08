@@ -6,7 +6,7 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:13:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/08 15:36:24 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/08 17:55:06 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void f()
 
 int main(int argc, char **argv)
 {
-	// atexit(f);
+	 atexit(f);
     t_data *info;
     t_algo *algo = malloc(sizeof(t_algo));
     int     ret;
@@ -42,7 +42,7 @@ int main(int argc, char **argv)
     printf(" Map: %d columns × %d rows\n", info->map_width, info->map_height);
     printf(" Player at (%.1f, %.1f) facing '%c'\n",
            info->player_x, info->player_y, info->player_direction);
-    ret = put_map_2dv(info);
+    ret = main_raycasting(info);
     clean_map(info);
     free(info);
     return (ret == 0 ? EXIT_SUCCESS : EXIT_FAILURE);
