@@ -1,107 +1,14 @@
 Norm
 bonus (mini map , doors , gun, mouse)
 
-leaks when u press the x on window
-Process:         cub3D [60418]
-Path:            /Volumes/VOLUME/*/cub3D
-Load Address:    0x100b75000
-Identifier:      cub3D
-Version:         ???
-Code Type:       X86-64
-Parent Process:  zsh [36857]
+valgrind leaks
 
-Date/Time:       2025-08-07 19:38:58.260 +0100
-Launch Time:     2025-08-07 19:38:56.024 +0100
-OS Version:      Mac OS X 10.15.7 (19H15)
-Report Version:  7
-Analysis Tool:   /Applications/Xcode.app/Contents/Developer/usr/bin/leaks
-Analysis Tool Version:  Xcode 12.4 (12D4e)
+==12471== LEAK SUMMARY:
+==12471==    definitely lost: 0 bytes in 0 blocks
+==12471==    indirectly lost: 0 bytes in 0 blocks
+==12471==      possibly lost: 0 bytes in 0 blocks
+==12471==    still reachable: 67,415,093 bytes in 2,733 blocks
+==12471==         suppressed: 32 bytes in 1 blocks
+==12471== 
 
-Physical footprint:         48.0M
-Physical footprint (peak):  48.0M
-----
-
-leaks Report Version: 4.0
-Process 60418: 21399 nodes malloced for 89607 KB
-Process 60418: 8 leaks for 75513984 total leaked bytes.
-
-    8 (72.0M) << TOTAL >>
-
-      2 (18.0M) ROOT LEAK: 0x7fb469c0d700 [32]
-         1 (18.0M) 0x7fb471e5d000 [18878464]
-
-      2 (18.0M) ROOT LEAK: 0x7fb469c2bd60 [32]
-         1 (18.0M) 0x7fb47305e000 [18878464]
-
-      2 (18.0M) ROOT LEAK: 0x7fb469c3d4d0 [32]
-         1 (18.0M) 0x7fb47425f000 [18878464]
-
-      2 (18.0M) ROOT LEAK: 0x7fb469d3bba0 [32]
-         1 (18.0M) 0x7fb47005c000 [18878464]
-
-
-fsanitizer 
-
-=================================================================
-==61362==ERROR: AddressSanitizer: heap-use-after-free on address 0x000125899800 at pc 0x00010a5a7063 bp 0x7ffee5667130 sp 0x7ffee5667128
-WRITE of size 1 at 0x000125899800 thread T0
-    #0 0x10a5a7062 in put_pixel+0xe2 (cub3D:x86_64+0x10000f062)
-    #1 0x10a5a6e5f in draw_column+0xecf (cub3D:x86_64+0x10000ee5f)
-    #2 0x10a5a5662 in render_3d+0x282 (cub3D:x86_64+0x10000d662)
-    #3 0x10a5a4461 in redraw+0x131 (cub3D:x86_64+0x10000c461)
-    #4 0x10a5a4e9d in put_map_2dv+0xfd (cub3D:x86_64+0x10000ce9d)
-    #5 0x10a59ba75 in main+0x335 (cub3D:x86_64+0x100003a75)
-    #6 0x7fff70bfecc8 in start+0x0 (libdyld.dylib:x86_64+0x1acc8)
-
-0x000125899800 is located 0 bytes inside of 5760000-byte region [0x000125899800,0x000125e17c00)
-freed by thread T0 here:
-    #0 0x10a67a2c6 in wrap_free+0xa6 (libclang_rt.asan_osx_dynamic.dylib:x86_64h+0x492c6)
-    #1 0x10a5ad483 in mlx_freen+0xc3 (cub3D:x86_64+0x100015483)
-    #2 0x10a5a43c3 in redraw+0x93 (cub3D:x86_64+0x10000c3c3)
-    #3 0x10a5a4e9d in put_map_2dv+0xfd (cub3D:x86_64+0x10000ce9d)
-    #4 0x10a59ba75 in main+0x335 (cub3D:x86_64+0x100003a75)
-    #5 0x7fff70bfecc8 in start+0x0 (libdyld.dylib:x86_64+0x1acc8)
-
-previously allocated by thread T0 here:
-    #0 0x10a67a552 in wrap_calloc+0xa2 (libclang_rt.asan_osx_dynamic.dylib:x86_64h+0x49552)
-    #1 0x10a5abd1c in mlx_new_image+0x8c (cub3D:x86_64+0x100013d1c)
-    #2 0x10a5a455d in init_struct+0x5d (cub3D:x86_64+0x10000c55d)
-    #3 0x10a5a4e8b in put_map_2dv+0xeb (cub3D:x86_64+0x10000ce8b)
-    #4 0x10a59ba75 in main+0x335 (cub3D:x86_64+0x100003a75)
-    #5 0x7fff70bfecc8 in start+0x0 (libdyld.dylib:x86_64+0x1acc8)
-
-SUMMARY: AddressSanitizer: heap-use-after-free (cub3D:x86_64+0x10000f062) in put_pixel+0xe2
-Shadow bytes around the buggy address:
-  0x100024b132b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x100024b132c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x100024b132d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x100024b132e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x100024b132f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x100024b13300:[fd]fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x100024b13310: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x100024b13320: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x100024b13330: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x100024b13340: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x100024b13350: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-  Shadow gap:              cc
-==61362==ABORTING
-[1]    61362 abort      ./cub3D Mandatory/maps/map.cub.cub
+no need to handle 
