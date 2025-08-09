@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:29:36 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/08 21:50:44 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/09 17:54:21 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	convert_tokens(char **tokens, int *r, int *g, int *b)
     return (1);
 }
 
-static int	parse_rgb_triplet(const char *value, int *r, int *g, int *b)
+static int	parse_rgb(const char *value, int *r, int *g, int *b)
 {
     char	*dup;
     char	*p;
@@ -97,7 +97,7 @@ int	parse_color(char *str, t_data *info, int is_floor)
 
 	value = ft_strtrim(str, " \n\r\t");
 	color_error_or_exit(value, info, is_floor);
-	if (!parse_rgb_triplet(value, &r, &g, &b))
+	if (!parse_rgb(value, &r, &g, &b))
 	{
 		if (is_floor)
 			print_error("Floor color components out of range.\n", info);
