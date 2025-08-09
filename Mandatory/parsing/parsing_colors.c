@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:29:36 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/09 17:54:21 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/09 20:00:46 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static int	convert_tokens(char **tokens, int *r, int *g, int *b)
     i = 0;
     while (i < 3)
     {
+		while (ft_whitespaces(*tokens[i]))
+			tokens[i]++;
         if (!validate_token(tokens[i]))
             return (0);
         i++;
@@ -56,7 +58,6 @@ static int	convert_tokens(char **tokens, int *r, int *g, int *b)
     *b = ft_atoi(tokens[2]);
     return (1);
 }
-
 static int	parse_rgb(const char *value, int *r, int *g, int *b)
 {
     char	*dup;

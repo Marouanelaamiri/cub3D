@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 13:53:16 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/05 20:00:59 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/09 19:34:47 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,6 @@ void	clean_map(t_data *info)
 	if (info->ea_texture)
 		free(info->ea_texture);
 	clean_map_arr(info);
-}
-
-char	*trimming_line(char *line, t_data *info)
-{
-	char	*trimmed;
-	int		i;
-
-	trimmed = ft_strdup(line);
-	if (!trimmed)
-		print_error("Error: Memory allocation failed.\n", info);
-	if (trimmed[ft_strlen(trimmed) - 1] == '\n')
-		trimmed[ft_strlen(trimmed) - 1] = '\0';
-	i = 0;
-	while (trimmed[i])
-	{
-		if (trimmed[i] == '\t')
-			trimmed[i] = ' ';
-		i++;
-	}
-	return (trimmed);
 }
 
 void	ft_free_array(char **arr)

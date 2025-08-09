@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   allocation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 14:07:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/14 18:14:51 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/09 19:57:42 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,29 @@ void	free_malloc(t_data *info, char *line, char **valid_map, int height)
 	free(valid_map);
 	info->has_error = 1;
 	write(2, "Error: Memory allocation failed.\n", 34);
+}
+
+char	*trimming_line(char *line, t_data *info)
+{
+	int	i = 0;
+
+	while (line[i])
+	{
+		if (line[i] == '\t')
+		{
+			print_error("Error: Tab characters are not allowed in map.\n", info);
+			return (NULL);
+		}
+		i++;
+	}
+
+	char *dup = ft_strdup(line);
+	if (!dup)
+		print_error("Error: Memory allocation failed.\n", info);
+
+	int len = ft_strlen(dup);
+	if (len > 0 && dup[len - 1] == '\n')
+		dup[len - 1] = '\0';
+
+	return (dup);
 }
