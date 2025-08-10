@@ -1,7 +1,7 @@
 Norm
 bonus (mini map , doors , gun, mouse)
-
-valgrind leaks
+================================================================
+valgrind still reachable leaks no need to handle 
 
 ==12471== LEAK SUMMARY:
 ==12471==    definitely lost: 0 bytes in 0 blocks
@@ -10,5 +10,4 @@ valgrind leaks
 ==12471==    still reachable: 67,415,093 bytes in 2,733 blocks
 ==12471==         suppressed: 32 bytes in 1 blocks
 ==12471== 
-
-no need to handle 
+=================================================================
