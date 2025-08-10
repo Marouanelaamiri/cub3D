@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:25:22 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/01 23:45:10 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/10 17:54:22 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	assign_floor_color(t_data *info, int r, int g, int b)
 {
-	info->f_color = (r << 24) | (g << 16) | (b << 8) | 255;
+	info->f_color = (r << 24) | (g << 16) | (b << 8) | 225;
 }
 
 void	assign_ceiling_color(t_data *info, int r, int g, int b)

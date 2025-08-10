@@ -11,3 +11,6 @@ valgrind still reachable leaks no need to handle
 ==12471==         suppressed: 32 bytes in 1 blocks
 ==12471== 
 =================================================================
+
+
+how can i do this add a preprocessing step to replace spaces with '0' 

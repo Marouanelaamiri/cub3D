@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:13:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/10 16:52:17 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/10 21:31:15 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void f()
 
 int main(int argc, char **argv)
 {
-	 atexit(f);
+	//  atexit(f);
     t_data *info;
     t_algo *algo = malloc(sizeof(t_algo));
     int     ret;
@@ -37,6 +37,8 @@ int main(int argc, char **argv)
         return (EXIT_FAILURE);
     ft_memset(algo,0,sizeof(t_algo));
     info->algo = algo;
+	replace_spaces_with_zero(info);
+	debug_print_map(info); // need to be removed
     ret = main_raycasting(info);
     clean_map(info);
     free(info);
