@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils5.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 15:00:33 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/16 15:01:36 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/10 16:57:45 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,23 @@ static int	read_lines(int fd, t_data *info)
 	return (1);
 }
 
+void debug_print_map(t_data *info)// need to be removed
+{
+    int i;
+
+    write(1, "=== Map after parsing ===\n", 27);
+    for (i = 0; i < info->map_height; i++)
+    {
+		write(1, "\n", 1);
+        write(1, "Row ", 4);
+        char num[12];
+        int len = snprintf(num, sizeof(num), "%d: ", i);
+        write(1, num, len);
+        write(1, info->map[i], ft_strlen(info->map[i]));
+		write(1, "\n", 1);
+    }
+}
+
 int	validate_map_file(char *path, t_data *info)
 {
 	int	fd;
@@ -102,6 +119,7 @@ int	validate_map_file(char *path, t_data *info)
 	close(fd);
 	if (!ok)
 		return (0);
+	debug_print_map(info);
 	if (!final_check(info))
 	{
 		write(2, "Error: Map validation failed.\n", 30);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 14:35:44 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/15 15:56:21 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/10 16:53:32 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int	final_check(t_data *info)
 	char	*player_err;
 
 	player_err = "Error: Invalid player count.\n";
-	printf("DEBUG: final_check → player_count = %d\n", info->player_count);
 	check_config(info);
 	check_borders(info);
 	pc = info->player_count;

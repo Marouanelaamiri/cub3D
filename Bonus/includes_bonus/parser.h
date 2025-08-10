@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/08 18:33:18 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/10 16:41:17 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,34 @@
 # define PARSER_H
 
 #define TILE_SIZE 60
-#define COLLIDE_PAD 0.49f
+#define COLLIDE_PAD 0.3f
 #define RENDER_PAD  0.3f
-#define STOP_PAD    0.3f 
-#define SPEED 0.1f
+#define SPEED 0.23f
 #define FOV 1
-#define BUFFER_SIZE   600
-#define MAP_WIDTH 1920
-#define MAP_HEIGHT 1080
+#define BUFFER_SIZE	42
+#define MAP_WIDTH 1600
+#define MAP_HEIGHT 900
+
+//typedef struct t_data;
+
+typedef struct s_algo
+{
+	float	px;
+	float	py;
+	float	dir_x;
+	float	dir_y;
+	int	map_x;
+	int	map_y;
+	float	delta_x;
+	float	delta_y;
+	int step_x;
+	int step_y;
+	float side_dist_x;
+	float side_dist_y;
+	int	side;
+	//struct t_data *data;
+}	t_algo;
+
 
 typedef struct s_data
 {
@@ -64,13 +84,13 @@ typedef struct s_data
 	char player_direction;
 	int has_error;
 	char *error_message;
+	t_algo *algo;
 }	t_data;
 
 void	assign_floor_color(t_data *info, int r, int g, int b);
 void	assign_ceiling_color(t_data *info, int r, int g, int b);
 void	validate_floor_rgb(int r, int g, int b, t_data *info);
 void	validate_ceiling_rgb(int r, int g, int b, t_data *info);
-int put_map_2dv(t_data *data);
 void	clean_map(t_data *info);
 t_data	*parser_map(int ac, char **av);
 void free_malloc(t_data *info, char *line, char **valid_map , int height);
@@ -140,5 +160,22 @@ void	*ft_free(char **arr, int count);
 void 	free_split(char **arr);
 int		ft_strcmp(const char *s1, const char *s2);
 //int main_raycasting(t_data *t);
+//exec_part
+int ft_retate(t_data *data, int flag);
+int key_w(t_data *data, int flag, float new_x, float new_y);
+int key_s(t_data *data, int flag, float new_x, float new_y);
+int key_a(t_data *data, int flag, float new_x, float new_y);
+int key_d(t_data *data, int flag, float new_x, float new_y);
+int is_colliding(t_data *data, float new_px, float new_py);
+float	cast_ray(t_data *data, float angle);
+int	main_raycasting(t_data *data);
+void	put_pixel(t_data *d, int x, int y, uint32_t color);
+void set_wh_map(t_data *data);
+void set_fov(t_data *data, float fov);
+void set_char(t_data *data, char c);
+float get_angle_from_dir(char dir);
+void	redraw(t_data *data);
+void init_struct(t_data *data);
+void init_player(t_data *data);
 
 #endif

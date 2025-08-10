@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:29:36 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/10 16:58:53 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/10 17:18:41 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,6 @@ static int	validate_token(const char *s)
 {
     if (!*s)
         return (0);
-    if (*s == '+' || *s == '-')
-        s++;
-    if (!*s)
-        return (0);
     while (*s)
     {
         if (!ft_isdigit(*s))
@@ -47,7 +43,7 @@ static int	convert_tokens(char **tokens, int *r, int *g, int *b)
     i = 0;
     while (i < 3)
     {
-		while (ft_whitespaces(*tokens[i]))
+		while (tokens[i] && tokens[i][0] != '\0' && ft_whitespaces(tokens[i][0]))
 			tokens[i]++;
         if (!validate_token(tokens[i]))
             return (0);

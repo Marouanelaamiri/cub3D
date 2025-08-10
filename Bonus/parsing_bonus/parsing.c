@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:03:23 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/16 15:03:06 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/09 19:23:22 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	check_map_char(t_data *info, int i, int len)
 			j++;
 			continue ;
 		}
-		printf("DEBUG: map[%d][%d] = '%c'\n", i, j, c);
 		if (!ft_strchr("01NSEW", c))
 			print_error("Error: Invalid character in map.\n", info);
 		j++;
