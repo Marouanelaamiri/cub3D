@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 14:07:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/09 19:57:42 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/10 16:37:41 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,11 @@ char	*trimming_line(char *line, t_data *info)
 	{
 		if (line[i] == '\t')
 		{
-			print_error("Error: Tab characters are not allowed in map.\n", info);
+			print_error("Error: Tab not allowed in map.\n", info);
 			return (NULL);
 		}
 		i++;
 	}
-
 	char *dup = ft_strdup(line);
 	if (!dup)
 		print_error("Error: Memory allocation failed.\n", info);
