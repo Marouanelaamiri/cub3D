@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 15:00:33 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/11 16:08:04 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/11 20:25:22 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ int	validate_map_file(char *path, t_data *info)
 	close(fd);
 	if (!ok)
 		return (0);
-	debug_print_map(info);
 	if (!final_check(info))
 	{
 		write(2, "Error: Map validation failed.\n", 30);
