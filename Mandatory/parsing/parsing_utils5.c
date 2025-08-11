@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 15:00:33 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/10 16:57:45 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/11 16:08:04 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void debug_print_map(t_data *info)// need to be removed
 {
     int i;
 
-    write(1, "=== Map after parsing ===\n", 27);
+    write(1, "=== Map after padding/and patching holes ===\n", 46);
     for (i = 0; i < info->map_height; i++)
     {
 		write(1, "\n", 1);

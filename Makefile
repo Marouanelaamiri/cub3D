@@ -67,6 +67,7 @@
 # 	$(MANDATORY_DIR)/raycasting/helpers_00.c \
 # 	$(MANDATORY_DIR)/raycasting/helpers_01.c \
 # 	$(MANDATORY_DIR)/raycasting/drawing.c \
+# 	$(MANDATORY_DIR)/parsing/padding.c \
 
 
 # MANDATORY_OBJ = $(MANDATORY_SRC:.c=.o)
@@ -152,6 +153,7 @@ MANDATORY_SRC = \
 	$(MANDATORY_DIR)/parsing/allocation.c \
 	$(MANDATORY_DIR)/parsing/init.c \
 	$(MANDATORY_DIR)/raycasting/raycasting.c \
+	$(MANDATORY_DIR)/parsing/padding.c \
 	$(MANDATORY_DIR)/helpers/ft_atoi.c \
 	$(MANDATORY_DIR)/helpers/ft_bzero.c \
 	$(MANDATORY_DIR)/helpers/ft_calloc.c \

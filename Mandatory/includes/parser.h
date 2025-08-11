@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/10 21:30:55 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/11 16:06:21 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ void check_borders(t_data *info);
 void	ft_free_array(char **arr);
 int load_textures(t_data *data);
 void replace_spaces_with_zero(t_data *data);
+void pad_map_edges_with_walls(t_data *info);
 void debug_print_map(t_data *info); // need to be removed
 //============================================================//
 int	ft_getmax(int a, int b);

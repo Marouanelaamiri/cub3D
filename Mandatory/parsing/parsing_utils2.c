@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 13:34:16 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/10 22:25:13 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/11 16:11:33 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	check_surround(t_data *info, int i, int j, int len)
 
 	map = info->map;
 	printf("Checking surround at (%d,%d): tile=%c\n", i, j, map[i][j]);
-	err_msg = "Error: Player is not surrounded by walls.\n";
+	err_msg = "Error: map is not surrounded by walls.\n";
 	if (i > 0) //check up
 	{
 		up_len = ft_strlen(map[i - 1]);
@@ -37,22 +37,6 @@ void	check_surround(t_data *info, int i, int j, int len)
 	if ((j > 0 && map[i][j - 1] == ' ') // check left
 		|| (j < len - 1 && map[i][j + 1] == ' ')) // check right
 		print_error(err_msg, info);
-}
-
-void replace_spaces_with_zero(t_data *info)
-{
-    int i = 0;
-    while (i < info->map_height)
-    {
-        int j = 0;
-        while (info->map[i][j])
-        {
-            if (info->map[i][j] == ' ')
-                info->map[i][j] = '0';
-            j++;
-        }
-        i++;
-    }
 }
 
 int	check_comma(char *line)
