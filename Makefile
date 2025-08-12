@@ -34,7 +34,7 @@
 # 	$(MANDATORY_DIR)/parsing/color_utils.c \
 # 	$(MANDATORY_DIR)/parsing/textures.c \
 # 	$(MANDATORY_DIR)/parsing/detol.c \
-# 	$(MANDATORY_DIR)/parsing/allocation.c \
+# 	$(MANDATORY_DIR)/parsing/parsing_utils6.c \
 # 	$(MANDATORY_DIR)/parsing/init.c \
 # 	$(MANDATORY_DIR)/raycasting/raycasting.c \
 # 	$(MANDATORY_DIR)/helpers/ft_atoi.c \
@@ -152,7 +152,7 @@ MANDATORY_SRC = \
 	$(MANDATORY_DIR)/parsing/color_utils.c \
 	$(MANDATORY_DIR)/parsing/textures.c \
 	$(MANDATORY_DIR)/parsing/detol.c \
-	$(MANDATORY_DIR)/parsing/allocation.c \
+	$(MANDATORY_DIR)/parsing/parsing_utils6.c \
 	$(MANDATORY_DIR)/parsing/init.c \
 	$(MANDATORY_DIR)/raycasting/raycasting.c \
 	$(MANDATORY_DIR)/parsing/padding.c \
