@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/12 20:57:17 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/12 22:12:30 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,6 @@ void key_hook(void *param)
     if (changed)
         redraw(data);
 }
-
-
 
 void ff()
 {
