@@ -6,21 +6,21 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/11 20:19:35 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/12 18:11:04 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# define TILE_SIZE 60
-# define COLLIDE_PAD 0.3f
+# define TILE_SIZE 64
+# define COLLIDE_PAD 0.25f
 # define RENDER_PAD  0.3f
-# define SPEED 0.23f
+# define SPEED 0.15f
 # define FOV 1
-# define BUFFER_SIZE	42
-# define MAP_WIDTH 1600
-# define MAP_HEIGHT 900
+# define BUFFER_SIZE 42
+# define MAP_WIDTH 1920
+# define MAP_HEIGHT 1080
 
 typedef struct s_algo
 {
