@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils4.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 15:31:52 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/16 15:06:39 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/12 15:04:58 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,4 @@ void	check_borders(t_data *info)
 	max_len = get_max_line_length(info);
 	check_top_and_bottom(info, max_len);
 	check_sides_and_chars(info);
-}
-
-void	map_parsing(t_data *info, int *started, char *line)
-{
-	info->map_parsed = 1;
-	*started = 1;
-	check_map_line(info, line);
 }

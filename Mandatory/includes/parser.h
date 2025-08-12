@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/12 18:11:04 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/12 19:11:44 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,5 +173,7 @@ float	get_angle_from_dir(char dir);
 void	redraw(t_data *data);
 void	init_struct(t_data *data);
 void	init_player(t_data *data);
+int		validate_token(const char *s);
+void	color_error_or_exit(char *value, t_data *info, int is_floor);
 
 #endif

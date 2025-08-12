@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 13:34:16 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/15 15:25:38 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/11 16:11:33 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,22 @@ void	check_surround(t_data *info, int i, int j, int len)
 	char	*err_msg;
 
 	map = info->map;
-	err_msg = "Error: Map is not surrounded by walls.\n";
-	if (i > 0)
+	printf("Checking surround at (%d,%d): tile=%c\n", i, j, map[i][j]);
+	err_msg = "Error: map is not surrounded by walls.\n";
+	if (i > 0) //check up
 	{
 		up_len = ft_strlen(map[i - 1]);
 		if (j >= up_len || map[i - 1][j] == ' ')
 			print_error(err_msg, info);
 	}
-	if (i < info->map_height - 1)
+	if (i < info->map_height - 1) // check down
 	{
 		down_len = ft_strlen(map[i + 1]);
 		if (j >= down_len || map[i + 1][j] == ' ')
 			print_error(err_msg, info);
 	}
-	if ((j > 0 && map[i][j - 1] == ' ')
-		|| (j < len - 1 && map[i][j + 1] == ' '))
+	if ((j > 0 && map[i][j - 1] == ' ') // check left
+		|| (j < len - 1 && map[i][j + 1] == ' ')) // check right
 		print_error(err_msg, info);
 }
 

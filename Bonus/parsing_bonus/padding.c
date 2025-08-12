@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 16:10:44 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/12 19:14:36 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/11 19:48:17 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,25 +59,26 @@ void	pad_line(t_data *info, int i, int target_len)
 	info->map[i] = new_line;
 }
 
-static void	replace_spaces_in_row(char *row, int length)
-{
-	int	j;
-
-	j = 0;
-	while (j < length)
-	{
-		if (row[j] == ' ')
-			row[j] = '1';
-		j++;
-	}
-}
-
 void	replace_edge_spaces_with_walls(t_data *info, int max_len)
 {
 	int	i;
+	int	j;
 
-	replace_spaces_in_row(info->map[0], max_len);
-	replace_spaces_in_row(info->map[info->map_height - 1], max_len);
+	i = 0;
+	j = 0;
+	while (j < max_len)
+	{
+		if (info->map[0][j] == ' ')
+			info->map[0][j] = '1';
+		j++;
+	}
+	j = 0;
+	while (j < max_len)
+	{
+		if (info->map[info->map_height - 1][j] == ' ')
+			info->map[info->map_height - 1][j] = '1';
+		j++;
+	}
 	i = 0;
 	while (i < info->map_height)
 	{

@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 14:07:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/10 16:37:41 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/11 19:41:31 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@ void	free_malloc(t_data *info, char *line, char **valid_map, int height)
 
 char	*trimming_line(char *line, t_data *info)
 {
-	int	i = 0;
+	int		i;
+	int		len;
+	char	*dup;
 
+	i = 0;
 	while (line[i])
 	{
 		if (line[i] == '\t')
@@ -42,13 +45,11 @@ char	*trimming_line(char *line, t_data *info)
 		}
 		i++;
 	}
-	char *dup = ft_strdup(line);
+	dup = ft_strdup(line);
 	if (!dup)
 		print_error("Error: Memory allocation failed.\n", info);
-
-	int len = ft_strlen(dup);
+	len = ft_strlen(dup);
 	if (len > 0 && dup[len - 1] == '\n')
 		dup[len - 1] = '\0';
-
 	return (dup);
 }

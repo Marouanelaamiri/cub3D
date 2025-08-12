@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:29:20 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/05 20:00:53 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/12 16:01:59 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,12 @@ void	copy_existing_map(t_data *info, char **valid_map)
 {
 	int	i;
 
-	i = -1;
-	while (++i < info->map_height)
+	i = 0;
+	while (i < info->map_height)
+	{
 		valid_map[i] = info->map[i];
+		i++;
+	}
 }
 
 void	print_error(char *msg, t_data *info)

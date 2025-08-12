@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:29:36 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/10 17:18:41 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/11 19:51:07 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,34 +25,35 @@ static void	color_error_or_exit(char *value, t_data *info, int is_floor)
 
 static int	validate_token(const char *s)
 {
-    if (!*s)
-        return (0);
-    while (*s)
-    {
-        if (!ft_isdigit(*s))
-            return (0);
-        s++;
-    }
-    return (1);
+	if (!*s)
+		return (0);
+	while (*s)
+	{
+		if (!ft_isdigit(*s))
+			return (0);
+		s++;
+	}
+	return (1);
 }
 
 static int	convert_tokens(char **tokens, int *r, int *g, int *b)
 {
-    int	i;
+	int	i;
 
-    i = 0;
-    while (i < 3)
-    {
-		while (tokens[i] && tokens[i][0] != '\0' && ft_whitespaces(tokens[i][0]))
+	i = 0;
+	while (i < 3)
+	{
+		while (tokens[i] && tokens[i][0] != '\0'
+				&& ft_whitespaces(tokens[i][0]))
 			tokens[i]++;
-        if (!validate_token(tokens[i]))
-            return (0);
-        i++;
-    }
-    *r = ft_atoi(tokens[0]);
-    *g = ft_atoi(tokens[1]);
-    *b = ft_atoi(tokens[2]);
-    return (1);
+		if (!validate_token(tokens[i]))
+			return (0);
+		i++;
+	}
+	*r = ft_atoi(tokens[0]);
+	*g = ft_atoi(tokens[1]);
+	*b = ft_atoi(tokens[2]);
+	return (1);
 }
 
 static char	*split_rgb_tokens(char *p, char **tokens)
