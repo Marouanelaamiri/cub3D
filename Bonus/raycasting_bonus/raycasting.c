@@ -6,11 +6,11 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/08 21:37:54 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/12 20:57:17 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 
 int is_colliding(t_data *data, float new_px, float new_py)
 {
@@ -51,28 +51,64 @@ void terminate_program(void *param)
         mlx_delete_image(data->mlx, data->img);
     if (data->mlx)
         mlx_terminate(data->mlx);
+	free_reload_frames_simple(data);
     exit(0);
 }
 
-void	key_hook(void *param)
-{
-	t_data	*data = (t_data *)param;
-	float	new_x;
-	float	new_y;
-	int		changed;
+// void	key_hook(void *param)
+// {
+// 	t_data	*data = (t_data *)param;
+// 	float	new_x;
+// 	float	new_y;
+// 	int		changed;
 
-	new_x = 0.0;
-	new_y = 0.0;
-	changed = 0;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
-		terminate_program(param);
-	changed = key_w(data, changed, new_x, new_y);
-	changed = key_s(data, changed, new_x, new_y);
-	changed = key_a(data, changed, new_x, new_y);
-	changed = key_d(data, changed, new_x, new_y);
-	changed = ft_retate(data, changed);
-	if (changed)
-		redraw(data);
+// 	new_x = 0.0;
+// 	new_y = 0.0;
+// 	changed = 0;
+// 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
+// 		terminate_program(param);
+// 	changed = key_w(data, changed, new_x, new_y);
+// 	changed = key_s(data, changed, new_x, new_y);
+// 	changed = key_a(data, changed, new_x, new_y);
+// 	changed = key_d(data, changed, new_x, new_y);
+// 	changed = ft_retate(data, changed);
+// 	if (changed)
+// 		redraw(data);
+// }
+void key_hook(void *param)
+{
+    t_data *data = (t_data *)param;
+    float   new_x;
+    float   new_y;
+    int     changed;
+
+    new_x = 0.0f;
+    new_y = 0.0f;
+    changed = 0;
+
+    /* update reload animation tick; if frame changed, request redraw */
+    if (update_reload_simple(data))
+        changed = 1;
+
+    /* handle R press (rising edge) to start reload animation */
+    static int r_prev = 0;
+    int r_now;
+    r_now = mlx_is_key_down(data->mlx, MLX_KEY_R);
+    if (r_now && !r_prev)
+        start_reload_simple(data);
+    r_prev = r_now;
+
+    if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
+        terminate_program(param);
+
+    changed = key_w(data, changed, new_x, new_y);
+    changed = key_s(data, changed, new_x, new_y);
+    changed = key_a(data, changed, new_x, new_y);
+    changed = key_d(data, changed, new_x, new_y);
+    changed = ft_retate(data, changed);
+
+    if (changed)
+        redraw(data);
 }
 
 
@@ -90,6 +126,7 @@ int	main_raycasting(t_data *data)
 		return (1);
 	if (load_textures(data)) 
 		return (1);
+	load_reload_frames_simple(data);
 	init_struct(data);
 	init_player(data);
 	redraw(data);

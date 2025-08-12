@@ -6,35 +6,11 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:29:36 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/11 19:51:07 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/12 19:10:53 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-static void	color_error_or_exit(char *value, t_data *info, int is_floor)
-{
-	if (!value || !check_color(value))
-	{
-		if (is_floor)
-			print_error("Invalid floor color.\n", info);
-		else
-			print_error("Invalid ceiling color.\n", info);
-	}
-}
-
-static int	validate_token(const char *s)
-{
-	if (!*s)
-		return (0);
-	while (*s)
-	{
-		if (!ft_isdigit(*s))
-			return (0);
-		s++;
-	}
-	return (1);
-}
 
 static int	convert_tokens(char **tokens, int *r, int *g, int *b)
 {

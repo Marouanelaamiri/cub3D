@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:16:33 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/08 18:18:04 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/12 20:49:34 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void init_texters(t_data *data)
 
 static void ft_paint(t_data *data, uint32_t *pxs, float dist, int col)
 {
-	int wall_h = (int)((TILE_SIZE * MAP_HEIGHT) / fmaxf(dist, 0.1f));
+	int wall_h = (int)((TILE_SIZE * MAP_HEIGHT) / dist); // used to be int wall_h = (int)((TILE_SIZE * MAP_HEIGHT) / fmaxf(dist, 0.1f));
     int top = (MAP_HEIGHT - wall_h) / 2;
     int bottom = top + wall_h;
 	int y = 0;
@@ -94,5 +94,6 @@ void	redraw(t_data *data)
 	mlx_delete_image(data->mlx, data->img);
 	init_struct(data);
 	render_3d(data);
+	draw_reload_overlay_simple(data); /* overlay frame */
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 }

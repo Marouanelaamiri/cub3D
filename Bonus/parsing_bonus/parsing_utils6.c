@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   allocation.c                                       :+:      :+:    :+:   */
+/*   parsing_utils6.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 14:07:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/11 19:41:31 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/12 19:12:19 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,28 @@ char	*trimming_line(char *line, t_data *info)
 	if (len > 0 && dup[len - 1] == '\n')
 		dup[len - 1] = '\0';
 	return (dup);
+}
+
+void	color_error_or_exit(char *value, t_data *info, int is_floor)
+{
+	if (!value || !check_color(value))
+	{
+		if (is_floor)
+			print_error("Invalid floor color.\n", info);
+		else
+			print_error("Invalid ceiling color.\n", info);
+	}
+}
+
+int	validate_token(const char *s)
+{
+	if (!*s)
+		return (0);
+	while (*s)
+	{
+		if (!ft_isdigit(*s))
+			return (0);
+		s++;
+	}
+	return (1);
 }

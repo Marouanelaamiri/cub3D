@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/12 18:11:04 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/12 21:56:53 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # define SPEED 0.15f
 # define FOV 1
 # define BUFFER_SIZE 42
-# define MAP_WIDTH 1920
-# define MAP_HEIGHT 1080
+# define MAP_WIDTH 1600
+# define MAP_HEIGHT 900
 
 typedef struct s_algo
 {
@@ -47,6 +47,15 @@ typedef struct s_data
 	char			*ea_texture;
 	char			hit_side;
 	float			hit_wall_x;
+	mlx_texture_t *reload_frames[30];
+	int            reload_frame_count;   /* will be 29 */
+	int            reload_current;       /* current frame index 0..28 */
+	int            reload_playing;       /* 0 = stopped, 1 = playing */
+	int            reload_tick;          /* increment each loop */
+	int            ticks_per_frame;   
+	int            reload_margin_right;   /* smaller => more to the right */
+	int            reload_margin_bottom;  /* smaller => more down */
+	float          reload_scale_frac;     /* fraction of screen to use (0.0..1.0) */ 
 	mlx_texture_t	*tex;
 	float			tex_x;
 	float			tex_y;
@@ -173,5 +182,14 @@ float	get_angle_from_dir(char dir);
 void	redraw(t_data *data);
 void	init_struct(t_data *data);
 void	init_player(t_data *data);
+int		validate_token(const char *s);
+void	color_error_or_exit(char *value, t_data *info, int is_floor);
+
+int load_reload_frames_simple(t_data *data);
+void start_reload_simple(t_data *data);
+int update_reload_simple(t_data *data);
+void free_reload_frames_simple(t_data *data);
+void draw_reload_overlay_simple(t_data *data);
+
 
 #endif
