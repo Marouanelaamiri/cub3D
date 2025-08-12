@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 15:00:33 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/11 20:25:22 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/12 15:38:22 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,13 @@ void	check_map_line(t_data *info, char *line)
 	valid_map[height + 1] = NULL;
 	update_map(info, valid_map, checked);
 	free(checked);
+}
+
+void	map_parsing(t_data *info, int *started, char *line)
+{
+	info->map_parsed = 1;
+	*started = 1;
+	check_map_line(info, line);
 }
 
 static int	handle_file_open(t_data *info, int fd)

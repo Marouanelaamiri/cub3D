@@ -121,22 +121,24 @@ CFLAGS := -Wall -Wextra -Werror -IMandatory/includes
 
 UNAME_S := $(shell uname -s)
 
-# GLFW include and lib paths after your manual install
-GLFW_INC = -I$(HOME)/.local/include
-GLFW_LIB = -L$(HOME)/.local/lib/lib64 -lglfw3 -ldl -lGL -lm -lpthread -lX11 -lXext
-
+# OS-specific settings
+ifeq ($(UNAME_S),Darwin)
+    BREW_PREFIX := $(shell brew --prefix)
+    GLFW_INC    := -I$(BREW_PREFIX)/opt/glfw/include
+    GLFW_LIB    := -L$(BREW_PREFIX)/opt/glfw/lib -lglfw
+    PLATFORM_LIBS := -framework Cocoa -framework OpenGL -framework IOKit
+else ifeq ($(UNAME_S),Linux)
+    GLFW_INC    := $(shell pkg-config --cflags glfw3)
+    GLFW_LIB    := $(shell pkg-config --libs glfw3)
+    PLATFORM_LIBS := -ldl -lm -pthread
+else
+    $(error Unsupported OS: $(UNAME_S))
+endif
 
 MANDATORY_NAME := cub3D
 
 MANDATORY_DIR := Mandatory
 MANDATORY_MLX_DIR := $(MANDATORY_DIR)/NEWMLX42
-
-# Platform-specific system libs (no duplication with GLFW_LIB)
-ifeq ($(UNAME_S),Darwin)
-    PLATFORM_LIBS := -framework Cocoa -framework OpenGL -framework IOKit
-else
-    PLATFORM_LIBS := -ldl -lGL -lm -lpthread -lX11 -lXext
-endif
 
 MANDATORY_SRC = \
 	$(MANDATORY_DIR)/main.c \
