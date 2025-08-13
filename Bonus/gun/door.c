@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 20:49:46 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/13 23:47:35 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/14 00:14:15 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 static int sgnf(float v)
 {
-    if (v > 0.5f) return 1;
-    if (v < -0.5f) return -1;
+    if (v > 0.5f)
+		return 1;
+    if (v < -0.5f)
+		return -1;
     return 0;
 }
 

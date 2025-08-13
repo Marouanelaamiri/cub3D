@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 17:48:40 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/13 23:46:52 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/14 00:12:34 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ static void send_ray(t_data *data)
         }
     }
 }
-
-
 
 static void texters_count(t_data *data, float hit_dist)
 {

@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/13 23:48:49 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/14 00:12:55 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	key_hook(void *param)
 		changed = 1;
 
 	/* Handle E press (rising edge) to toggle door */
-	e_now = mlx_is_key_down(data->mlx, MLX_KEY_E);
+	e_now = mlx_is_key_down(data->mlx, MLX_KEY_SPACE);
 	if (e_now && !e_prev)
 	{
 		toggle_door(data);

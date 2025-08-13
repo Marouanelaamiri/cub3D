@@ -1,5 +1,5 @@
 Norm
-bonus (mini map , doors , gun, mouse)
+bonus (mini map , mouse)
 ================================================================
 valgrind still reachable leaks no need to handle 
 
@@ -11,3 +11,8 @@ valgrind still reachable leaks no need to handle
 ==12471==         suppressed: 32 bytes in 1 blocks
 ==12471== 
 =================================================================
+
+shaco : 
+need to undersrand how door logic works
+need to undersrand how animation pos and frames works
+need to understand how textures are drawns on wall 

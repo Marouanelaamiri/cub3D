@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:16:33 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/13 23:49:56 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/14 00:12:45 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ static void ft_paint(t_data *data, uint32_t *pxs, float dist, int col)
 		y++;
     }
 }
-
-
 
 static void draw_column(t_data *data, int col, float dist)
 {
