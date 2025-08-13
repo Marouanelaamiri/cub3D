@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/13 22:50:58 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/13 23:01:55 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,12 @@ typedef struct s_data
 	int            reload_tick;          /* increment each loop */
 	int            ticks_per_frame;   
 	int            reload_margin_right;   /* smaller => more to the right */
-<<<<<<< HEAD
 	int            reload_margin_bottom;  /* smaller => more down */
 	int door_open;       /* 0 = no open door being tracked, 1 = a door is open */
 	int door_x;          /* tile x of currently-open door */
 	int door_y;          /* tile y of currently-open door */
 	int door_nx;         /* normal x component when opened: -1, 0 or 1 */
 	int door_ny;         /* normal y component when opened: -1, 0 or 1 */
-=======
-	int            reload_margin_bottom;  /* smaller => more down */ 
->>>>>>> f6595eb9234fb3bd53c1e9842729ba32328347b1
 	mlx_texture_t	*tex;
 	float			tex_x;
 	float			tex_y;
