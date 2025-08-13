@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/12 21:56:53 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/13 18:08:42 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # define SPEED 0.15f
 # define FOV 1
 # define BUFFER_SIZE 42
-# define MAP_WIDTH 1600
-# define MAP_HEIGHT 900
+# define MAP_WIDTH 1920
+# define MAP_HEIGHT 1080
 
 typedef struct s_algo
 {
@@ -54,8 +54,7 @@ typedef struct s_data
 	int            reload_tick;          /* increment each loop */
 	int            ticks_per_frame;   
 	int            reload_margin_right;   /* smaller => more to the right */
-	int            reload_margin_bottom;  /* smaller => more down */
-	float          reload_scale_frac;     /* fraction of screen to use (0.0..1.0) */ 
+	int            reload_margin_bottom;  /* smaller => more down */ 
 	mlx_texture_t	*tex;
 	float			tex_x;
 	float			tex_y;
