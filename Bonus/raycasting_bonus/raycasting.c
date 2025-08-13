@@ -6,9 +6,10 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/13 22:45:40 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/13 22:51:03 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "cub3d.h"
 
@@ -60,15 +61,20 @@ void terminate_program(void *param)
 {
     t_data *data = (t_data *)param;
     if (data->img)
+	{
         mlx_delete_image(data->mlx, data->img);
+	}
     if (data->mlx)
+	{
         mlx_terminate(data->mlx);
+	}
 	free_reload_frames_simple(data);
     exit(0);
 }
 
 void	key_hook(void *param)
 {
+<<<<<<< HEAD
 	t_data		*data;
 	float		new_x;
 	float		new_y;
@@ -92,6 +98,36 @@ void	key_hook(void *param)
 	/* Update reload animation tick; if frame changed, request redraw */
 	if (update_reload_simple(data))
 		changed = 1;
+=======
+    t_data		*data = (t_data *)param;
+    float   	new_x;
+    float   	new_y;
+    int     	changed;
+	int			r_now;
+	static int	r_prev = 0;
+
+    new_x = 0.0f;
+    new_y = 0.0f;
+    changed = 0;
+    /* update reload animation tick; if frame changed, request redraw */
+    if (update_reload_simple(data))
+        changed = 1;
+    /* handle R press (rising edge) to start reload animation */
+    r_now = mlx_is_key_down(data->mlx, MLX_KEY_R);
+    if (r_now && !r_prev)
+        start_reload_simple(data);
+    r_prev = r_now;
+    if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
+        terminate_program(param);
+    changed = key_w(data, changed, new_x, new_y);
+    changed = key_s(data, changed, new_x, new_y);
+    changed = key_a(data, changed, new_x, new_y);
+    changed = key_d(data, changed, new_x, new_y);
+    changed = ft_retate(data, changed);
+    if (changed)
+        redraw(data);
+}
+>>>>>>> f6595eb9234fb3bd53c1e9842729ba32328347b1
 
 	/* Handle E press (rising edge) to toggle door */
 	e_now = mlx_is_key_down(data->mlx, MLX_KEY_E);
