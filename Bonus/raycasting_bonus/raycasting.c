@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/13 23:07:24 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/13 23:48:49 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,6 @@ void	key_hook(void *param)
 	changed = key_a(data, changed, new_x, new_y);
 	changed = key_d(data, changed, new_x, new_y);
 	changed = ft_retate(data, changed);
-	if (update_auto_close_door(data))
-        changed = 1;
 	if (changed)
 		redraw(data);
 }
