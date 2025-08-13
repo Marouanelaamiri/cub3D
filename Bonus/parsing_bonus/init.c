@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:29:20 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/12 16:01:59 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/13 21:31:08 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	init_data(t_data *info)
 	info->so_texture = NULL;
 	info->we_texture = NULL;
 	info->ea_texture = NULL;
+	info->door = NULL;
 	info->f_color = UINT32_MAX;
 	info->c_color = UINT32_MAX;
 	info->map = NULL;

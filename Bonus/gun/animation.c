@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 20:27:02 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/12 22:08:42 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/13 22:37:24 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int load_reload_frames_simple(t_data *data)
 
 
 	data->reload_frame_count = 26;
-	data->ticks_per_frame = 3; /* bigger = slower. default 6 (slower than your 2) */
+	data->ticks_per_frame = 2; /* bigger = slower. default 6 (slower than your 2) */
 
     /* check simple failure (print and continue) */
     int i = 0;

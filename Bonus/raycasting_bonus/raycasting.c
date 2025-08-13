@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/12 22:12:30 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/13 22:45:40 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,47 @@
 
 int is_colliding(t_data *data, float new_px, float new_py)
 {
-
     int tile_x = (int)new_px;
     int tile_y = (int)new_py;
+
     if (tile_y >= 0 && tile_y < data->recmap_height
-     && tile_x >= 0 && tile_x < (int)ft_strlen(data->map[tile_y])
-     && data->map[tile_y][tile_x] == '1')
+        && tile_x >= 0 && tile_x < (int)ft_strlen(data->map[tile_y]))
     {
-        return 1;
+        char tile = data->map[tile_y][tile_x];
+        if (tile == '1' || tile == DOOR_CLOSED)
+            return 1; // block only walls and fully closed doors
     }
-    const float px = new_px * TILE_SIZE + (TILE_SIZE / 2.0f);
-    const float py = new_py * TILE_SIZE + (TILE_SIZE / 2.0f);
+
+    // corners for padding — ignore half-open doors
+    const float px = new_px * TILE_SIZE + TILE_SIZE / 2.0f;
+    const float py = new_py * TILE_SIZE + TILE_SIZE / 2.0f;
     const float r  = COLLIDE_PAD * TILE_SIZE;
+
     float corners[4][2] = {
         { px - r, py - r },
         { px + r, py - r },
         { px - r, py + r },
         { px + r, py + r }
     };
+
     for (int i = 0; i < 4; ++i)
     {
         int mx = (int)(corners[i][0] / TILE_SIZE);
         int my = (int)(corners[i][1] / TILE_SIZE);
+
         if (my < 0 || my >= data->recmap_height
-         || mx < 0 || mx >= (int)ft_strlen(data->map[my])
-         || data->map[my][mx] == '1')
+            || mx < 0 || mx >= (int)ft_strlen(data->map[my]))
             return 1;
+
+        char tile = data->map[my][mx];
+        if (tile == '1' || tile == DOOR_CLOSED) // still block walls and closed doors
+            return 1;
+
+        // half-open doors ignored here
     }
     return 0;
 }
+
 
 void terminate_program(void *param)
 {
@@ -55,65 +67,55 @@ void terminate_program(void *param)
     exit(0);
 }
 
-// void	key_hook(void *param)
-// {
-// 	t_data	*data = (t_data *)param;
-// 	float	new_x;
-// 	float	new_y;
-// 	int		changed;
-
-// 	new_x = 0.0;
-// 	new_y = 0.0;
-// 	changed = 0;
-// 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
-// 		terminate_program(param);
-// 	changed = key_w(data, changed, new_x, new_y);
-// 	changed = key_s(data, changed, new_x, new_y);
-// 	changed = key_a(data, changed, new_x, new_y);
-// 	changed = key_d(data, changed, new_x, new_y);
-// 	changed = ft_retate(data, changed);
-// 	if (changed)
-// 		redraw(data);
-// }
-void key_hook(void *param)
+void	key_hook(void *param)
 {
-    t_data *data = (t_data *)param;
-    float   new_x;
-    float   new_y;
-    int     changed;
+	t_data		*data;
+	float		new_x;
+	float		new_y;
+	int			changed;
+	int			r_now;
+	int			e_now;
+	static int	r_prev = 0;
+	static int	e_prev = 0;
 
-    new_x = 0.0f;
-    new_y = 0.0f;
-    changed = 0;
+	data = (t_data *)param;
+	new_x = 0.0f;
+	new_y = 0.0f;
+	changed = 0;
 
-    /* update reload animation tick; if frame changed, request redraw */
-    if (update_reload_simple(data))
+	/* Handle R press (rising edge) to start reload animation */
+	r_now = mlx_is_key_down(data->mlx, MLX_KEY_R);
+	if (r_now && !r_prev)
+		start_reload_simple(data);
+	r_prev = r_now;
+
+	/* Update reload animation tick; if frame changed, request redraw */
+	if (update_reload_simple(data))
+		changed = 1;
+
+	/* Handle E press (rising edge) to toggle door */
+	e_now = mlx_is_key_down(data->mlx, MLX_KEY_E);
+	if (e_now && !e_prev)
+	{
+		toggle_door(data);
+		changed = 1;
+	}
+	e_prev = e_now;
+
+	/* ESC to quit */
+	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
+		terminate_program(param);
+
+	/* Movement & rotation */
+	changed = key_w(data, changed, new_x, new_y);
+	changed = key_s(data, changed, new_x, new_y);
+	changed = key_a(data, changed, new_x, new_y);
+	changed = key_d(data, changed, new_x, new_y);
+	changed = ft_retate(data, changed);
+	if (update_auto_close_door(data))
         changed = 1;
-
-    /* handle R press (rising edge) to start reload animation */
-    static int r_prev = 0;
-    int r_now;
-    r_now = mlx_is_key_down(data->mlx, MLX_KEY_R);
-    if (r_now && !r_prev)
-        start_reload_simple(data);
-    r_prev = r_now;
-
-    if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
-        terminate_program(param);
-
-    changed = key_w(data, changed, new_x, new_y);
-    changed = key_s(data, changed, new_x, new_y);
-    changed = key_a(data, changed, new_x, new_y);
-    changed = key_d(data, changed, new_x, new_y);
-    changed = ft_retate(data, changed);
-
-    if (changed)
-        redraw(data);
-}
-
-void ff()
-{
-	system("leaks cub3D");
+	if (changed)
+		redraw(data);
 }
 
 int	main_raycasting(t_data *data)

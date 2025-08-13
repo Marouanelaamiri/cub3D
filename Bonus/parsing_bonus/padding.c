@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 16:10:44 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/12 19:14:36 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/12 22:56:53 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	replace_spaces_with_zero(t_data *info)
 		while (info->map[i][j])
 		{
 			if (info->map[i][j] == ' ')
-				info->map[i][j] = '0';
+				info->map[i][j] = '1';
 			j++;
 		}
 		i++;

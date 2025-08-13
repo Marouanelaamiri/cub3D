@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:16:33 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/12 20:49:34 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/13 21:22:56 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 static void init_texters(t_data *data)
 {
+	if (data->hit_is_door) 
+	{
+        data->tex = data->door;        // <— door texture when we hit a door
+        return;
+    }
 	if (data->hit_side == 'N') 
         data->tex = data->no;
     else if (data->hit_side == 'S') 

@@ -6,14 +6,19 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:13:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/12 19:17:18 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/13 21:17:17 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+// void f()
+// {
+// 	system("leaks cub3D");
+// }
 int	main(int argc, char **argv)
 {
+	// atexit(f);
 	t_data	*info;
 	t_algo	*algo;
 	int		ret;

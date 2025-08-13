@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 17:48:40 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/10 21:23:46 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/13 21:21:52 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,28 +43,41 @@ static void init_algo(t_data *data, float angle)
 
 static void send_ray(t_data *data)
 {
-	int	hit = 0;
-	
-	while (!hit)
-	{
-		if (data->algo->side_dist_x < data->algo->side_dist_y)
-		{
-			data->algo->side_dist_x += data->algo->delta_x * TILE_SIZE;
-			data->algo->map_x += data->algo->step_x;
-			data->algo->side = 0;
-		}
-		else
-		{
-			data->algo->side_dist_y += data->algo->delta_y * TILE_SIZE;
-			data->algo->map_y += data->algo->step_y;
-			data->algo->side = 1;
-		}
-		if (data->algo->map_y < 0 || data->algo->map_y >= data->recmap_height
-			|| data->algo->map_x < 0 || data->algo->map_x >= (int)ft_strlen(data->map[data->algo->map_y])
-			|| data->map[data->algo->map_y][data->algo->map_x] == '1')
-			hit = 1;
-	}
-} 
+    int hit = 0;
+
+    while (!hit)
+    {
+        if (data->algo->side_dist_x < data->algo->side_dist_y)
+        {
+            data->algo->side_dist_x += data->algo->delta_x * TILE_SIZE;
+            data->algo->map_x += data->algo->step_x;
+            data->algo->side = 0;
+        }
+        else
+        {
+            data->algo->side_dist_y += data->algo->delta_y * TILE_SIZE;
+            data->algo->map_y += data->algo->step_y;
+            data->algo->side = 1;
+        }
+
+        if (data->algo->map_y < 0 || data->algo->map_y >= data->recmap_height
+         || data->algo->map_x < 0 || data->algo->map_x >= (int)ft_strlen(data->map[data->algo->map_y]))
+        {
+            hit = 1; // out of bounds—treat like a wall
+        }
+        else
+        {
+            char cell = data->map[data->algo->map_y][data->algo->map_x];
+            if (cell == '1' || cell == DOOR_CLOSED)
+            {
+                data->hit_is_door = (cell == DOOR_CLOSED);  // <— remember if it's a door
+                hit = 1;
+            }
+        }
+    }
+}
+
+
 
 static void texters_count(t_data *data, float hit_dist)
 {
@@ -96,6 +109,7 @@ static void texters_count(t_data *data, float hit_dist)
 float	cast_ray(t_data *data, float angle)
 {
 	float hit_dist;
+	data->hit_is_door = 0;
 	ft_memset(data->algo,0,sizeof(t_algo));
 	init_algo(data, angle);
 	send_ray(data);

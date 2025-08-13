@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:03:23 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/09 19:23:22 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/13 20:52:48 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	check_map_char(t_data *info, int i, int len)
 			j++;
 			continue ;
 		}
-		if (!ft_strchr("01NSEW", c))
+		if (!ft_strchr("01NSEWDd", c))
 			print_error("Error: Invalid character in map.\n", info);
 		j++;
 	}
@@ -94,7 +94,7 @@ void	check_line_for_player(t_data *info, int i, int len)
 		c = info->map[i][j];
 		if (c != ' ')
 		{
-			if (!ft_strchr("01NSEW", c))
+			if (!ft_strchr("01NSEWDd", c))
 				print_error("Error: Invalid character in map.\n", info);
 			if (ft_strchr("NSEW", c))
 			{

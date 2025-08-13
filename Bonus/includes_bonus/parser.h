@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/12 21:56:53 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/13 22:46:43 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 # define PARSER_H
 
 # define TILE_SIZE 64
-# define COLLIDE_PAD 0.25f
+# define COLLIDE_PAD 0.1f
 # define RENDER_PAD  0.3f
 # define SPEED 0.15f
 # define FOV 1
 # define BUFFER_SIZE 42
-# define MAP_WIDTH 1600
-# define MAP_HEIGHT 900
+# define MAP_WIDTH 1920
+# define MAP_HEIGHT 1080
+# define DOOR_CLOSED 'D'
+# define DOOR_OPEN   'd'
 
 typedef struct s_algo
 {
@@ -55,7 +57,11 @@ typedef struct s_data
 	int            ticks_per_frame;   
 	int            reload_margin_right;   /* smaller => more to the right */
 	int            reload_margin_bottom;  /* smaller => more down */
-	float          reload_scale_frac;     /* fraction of screen to use (0.0..1.0) */ 
+	int door_open;       /* 0 = no open door being tracked, 1 = a door is open */
+	int door_x;          /* tile x of currently-open door */
+	int door_y;          /* tile y of currently-open door */
+	int door_nx;         /* normal x component when opened: -1, 0 or 1 */
+	int door_ny;         /* normal y component when opened: -1, 0 or 1 */
 	mlx_texture_t	*tex;
 	float			tex_x;
 	float			tex_y;
@@ -63,6 +69,8 @@ typedef struct s_data
 	mlx_texture_t	*so;
 	mlx_texture_t	*we;
 	mlx_texture_t	*ea;
+	mlx_texture_t	*door;
+	int				hit_is_door;
 	mlx_image_t		*img;
 	uint32_t		f_color;
 	uint32_t		c_color;
@@ -190,6 +198,7 @@ void start_reload_simple(t_data *data);
 int update_reload_simple(t_data *data);
 void free_reload_frames_simple(t_data *data);
 void draw_reload_overlay_simple(t_data *data);
-
+void toggle_door(t_data *data);
+int update_auto_close_door(t_data *data);
 
 #endif
