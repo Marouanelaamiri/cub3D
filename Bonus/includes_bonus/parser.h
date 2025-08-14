@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/14 22:38:04 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/14 23:13:43 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # define SPEED 8
 # define FOV 1
 # define BUFFER_SIZE 42
-# define MAP_WIDTH 1600
-# define MAP_HEIGHT 800
+# define MAP_WIDTH 1200
+# define MAP_HEIGHT 720
 # define DOOR_CLOSED 'D'
 # define DOOR_OPEN   'd'
 
