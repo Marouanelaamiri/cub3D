@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/12 20:21:52 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:10:59 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 int is_colliding(t_data *data, float new_px, float new_py)
 {
 
-    int tile_x = (int)new_px;
-    int tile_y = (int)new_py;
+    int tile_x = (int)(new_px / TILE_SIZE);
+    int tile_y = (int)(new_py / TILE_SIZE);
     if (tile_y >= 0 && tile_y < data->recmap_height
      && tile_x >= 0 && tile_x < (int)ft_strlen(data->map[tile_y])
      && data->map[tile_y][tile_x] == '1')
     {
         return 1;
     }
-    const float px = new_px * TILE_SIZE + (TILE_SIZE / 2.0f);
-    const float py = new_py * TILE_SIZE + (TILE_SIZE / 2.0f);
+    const float px = new_px;
+    const float py = new_py ;
     const float r  = COLLIDE_PAD * TILE_SIZE;
     float corners[4][2] = {
         { px - r, py - r },
@@ -51,6 +51,11 @@ void terminate_program(void *param)
         mlx_delete_image(data->mlx, data->img);
     if (data->mlx)
         mlx_terminate(data->mlx);
+    clean_map(data);
+    if (data && data->algo)
+        free(data->algo);
+    if (data)
+	    free(data);
     exit(0);
 }
 

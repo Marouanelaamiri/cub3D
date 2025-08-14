@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helpres.c                                          :+:      :+:    :+:   */
+/*   helpers_00.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:12:00 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/08 18:13:48 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/14 16:15:36 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 float get_angle_from_dir(char dir) 
 {
-	if (dir == 'N') 
-		return (M_PI / 2);
 	if (dir == 'S') 
-		return (3 * M_PI / 2);
+		return (M_PI / 2);
+	if (dir == 'N') 
+		return (- M_PI / 2);
 	if (dir == 'E') 
 		return (0);
 	if (dir == 'W') 
@@ -30,10 +30,10 @@ void set_char(t_data *data, char c)
 	data->player_char = c;
 }
 
-void set_fov(t_data *data, float fov) 
-{
-	data->fov = fov;
-}
+// void set_fov(t_data *data, float fov) 
+// {
+// 	data->fov = fov;
+// }
 
 void set_wh_map(t_data *data) 
 {

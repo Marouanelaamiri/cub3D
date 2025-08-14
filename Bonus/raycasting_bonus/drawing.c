@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:16:33 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/14 00:12:45 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:16:14 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,16 +81,11 @@ static void render_3d(t_data *data)
     while (col < w)
     {
         float raw_dist = cast_ray(data, angle);
-        const float min_px = RENDER_PAD * TILE_SIZE;
-        if (raw_dist < min_px)
-            raw_dist = min_px;
         float diff = angle - data->ray_angle;
         float corrected = raw_dist * cosf(diff);
-        if (corrected < min_px)
-            corrected = min_px;
         draw_column(data, col, corrected);
         angle += step;
-        ++col;
+        col++;
     }
 }
 

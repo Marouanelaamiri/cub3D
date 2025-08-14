@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/12 19:22:04 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:00:57 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define TILE_SIZE 64
 # define COLLIDE_PAD 0.25f
 # define RENDER_PAD  0.3f
-# define SPEED 0.15f
+# define SPEED 5.0f
 # define FOV 1
 # define BUFFER_SIZE 42
 # define MAP_WIDTH 1920
@@ -167,7 +167,7 @@ float	cast_ray(t_data *data, float angle);
 int		main_raycasting(t_data *data);
 void	put_pixel(t_data *d, int x, int y, uint32_t color);
 void	set_wh_map(t_data *data);
-void	set_fov(t_data *data, float fov);
+// void	set_fov(t_data *data, float fov);
 void	set_char(t_data *data, char c);
 float	get_angle_from_dir(char dir);
 void	redraw(t_data *data);

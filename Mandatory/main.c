@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:13:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/12 19:17:18 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:09:14 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	main(int argc, char **argv)
 	int		ret;
 
 	algo = malloc(sizeof(t_algo));
+	if (!algo)
+		return (0);
 	if (argc != 2)
 	{
 		printf("Usage: %s <map_file.cub>\n", argv[0]);

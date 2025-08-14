@@ -2,8 +2,8 @@
 # Compiler & Flags
 # ─────────────────────────────────────────────
 CC     = cc
-CFLAGS = -Wall -Werror -Wextra
-USER   = malaamir
+CFLAGS = -Wall -Werror -Wextra 
+USER   = aromani
 
 # ─────────────────────────────────────────────
 # GLFW & MLX

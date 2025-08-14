@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda_algo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 17:48:40 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/14 00:12:34 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:19:44 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void init_algo(t_data *data, float angle)
 {
-	data->algo->px = data->player_x * TILE_SIZE + TILE_SIZE / 2;
-	data->algo->py = data->player_y * TILE_SIZE + TILE_SIZE / 2;
+	data->algo->px = data->player_x;
+	data->algo->py = data->player_y;
 	data->algo->dir_x = cosf(angle);
 	data->algo->dir_y = sinf(angle);
 	data->algo->map_x = (int)(data->algo->px / TILE_SIZE);
