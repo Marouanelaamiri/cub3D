@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/14 17:47:32 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/14 22:15:09 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void terminate_program(void *param)
 	{
         mlx_terminate(data->mlx);
 	}
-	free_reload_frames_simple(data);
+	free_frames(data);
     exit(0);
 }
 
@@ -89,17 +89,12 @@ void	key_hook(void *param)
 	new_y = 0.0f;
 	changed = 0;
 
-	/* Handle R press (rising edge) to start reload animation */
 	r_now = mlx_is_key_down(data->mlx, MLX_KEY_R);
 	if (r_now && !r_prev)
-		start_reload_simple(data);
+		start_reload(data);
 	r_prev = r_now;
-
-	/* Update reload animation tick; if frame changed, request redraw */
-	if (update_reload_simple(data))
+	if (update_reload(data))
 		changed = 1;
-
-	/* Handle E press (rising edge) to toggle door */
 	e_now = mlx_is_key_down(data->mlx, MLX_KEY_SPACE);
 	if (e_now && !e_prev)
 	{
@@ -132,7 +127,7 @@ int	main_raycasting(t_data *data)
 	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
 	if (load_textures(data)) 
 		return (1);
-	load_reload_frames_simple(data);
+	load_check_frames(data);
 	init_struct(data);
 	init_player(data);
 	redraw(data);

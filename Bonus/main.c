@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:13:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/13 21:17:17 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/14 21:39:54 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	main(int argc, char **argv)
 	info->algo = algo;
 	pad_map_edges_with_walls(info);
 	replace_spaces_with_zero(info);
-	debug_print_map(info);// need to be removed
 	ret = main_raycasting(info);
 	clean_map(info);
 	free(info);

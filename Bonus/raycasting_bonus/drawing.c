@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:16:33 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/14 16:16:14 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/14 22:13:10 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,6 @@ void	redraw(t_data *data)
 	mlx_delete_image(data->mlx, data->img);
 	init_struct(data);
 	render_3d(data);
-	draw_reload_overlay_simple(data); /* overlay frame */
+	draw_reload_overlay(data);
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 }

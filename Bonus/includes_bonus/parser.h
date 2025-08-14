@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/14 17:02:33 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/14 22:38:04 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 # define TILE_SIZE 64
 # define COLLIDE_PAD 0.3f
 # define RENDER_PAD  0.3f
-# define SPEED 5.0f
+# define SPEED 8
 # define FOV 1
 # define BUFFER_SIZE 42
-# define MAP_WIDTH 1920
-# define MAP_HEIGHT 1080
+# define MAP_WIDTH 1600
+# define MAP_HEIGHT 800
 # define DOOR_CLOSED 'D'
 # define DOOR_OPEN   'd'
 
@@ -59,10 +59,6 @@ typedef struct s_data
 	int            reload_margin_right;   /* smaller => more to the right */
 	int            reload_margin_bottom;  /* smaller => more down */
 	int door_open;       /* 0 = no open door being tracked, 1 = a door is open */
-	int door_x;          /* tile x of currently-open door */
-	int door_y;          /* tile y of currently-open door */
-	int door_nx;         /* normal x component when opened: -1, 0 or 1 */
-	int door_ny;         /* normal y component when opened: -1, 0 or 1 */
 	mlx_texture_t	*tex;
 	float			tex_x;
 	float			tex_y;
@@ -144,7 +140,6 @@ void	ft_free_array(char **arr);
 int		load_textures(t_data *data);
 void	replace_spaces_with_zero(t_data *data);
 void	pad_map_edges_with_walls(t_data *info);
-void	debug_print_map(t_data *info); // need to be removed
 int		ft_getmax(int a, int b);
 int		ft_whitespaces(int c);
 int		ft_atoi(const char *str);
@@ -187,7 +182,6 @@ float	cast_ray(t_data *data, float angle);
 int		main_raycasting(t_data *data);
 void	put_pixel(t_data *d, int x, int y, uint32_t color);
 void	set_wh_map(t_data *data);
-// void	set_fov(t_data *data, float fov);
 void	set_char(t_data *data, char c);
 float	get_angle_from_dir(char dir);
 void	redraw(t_data *data);
@@ -195,13 +189,13 @@ void	init_struct(t_data *data);
 void	init_player(t_data *data);
 int		validate_token(const char *s);
 void	color_error_or_exit(char *value, t_data *info, int is_floor);
-int mouse_handel(t_data *data, int flag);
-int load_reload_frames_simple(t_data *data);
-void start_reload_simple(t_data *data);
-int update_reload_simple(t_data *data);
-void free_reload_frames_simple(t_data *data);
-void draw_reload_overlay_simple(t_data *data);
-void toggle_door(t_data *data);
-int update_auto_close_door(t_data *data);
+int		mouse_handel(t_data *data, int flag);
+int		load_check_frames(t_data *data);
+void	start_reload(t_data *data);
+int		update_reload(t_data *data);
+void	free_frames(t_data *data);
+void	draw_reload_overlay(t_data *data);
+void	toggle_door(t_data *data);
+
 
 #endif

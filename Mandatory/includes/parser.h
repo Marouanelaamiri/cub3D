@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/14 16:00:57 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/14 21:35:58 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PARSER_H
 
 # define TILE_SIZE 64
-# define COLLIDE_PAD 0.25f
+# define COLLIDE_PAD 0.3f
 # define RENDER_PAD  0.3f
 # define SPEED 5.0f
 # define FOV 1
@@ -124,7 +124,6 @@ void	ft_free_array(char **arr);
 int		load_textures(t_data *data);
 void	replace_spaces_with_zero(t_data *data);
 void	pad_map_edges_with_walls(t_data *info);
-void	debug_print_map(t_data *info); // need to be removed
 int		ft_getmax(int a, int b);
 int		ft_whitespaces(int c);
 int		ft_atoi(const char *str);
@@ -167,7 +166,6 @@ float	cast_ray(t_data *data, float angle);
 int		main_raycasting(t_data *data);
 void	put_pixel(t_data *d, int x, int y, uint32_t color);
 void	set_wh_map(t_data *data);
-// void	set_fov(t_data *data, float fov);
 void	set_char(t_data *data, char c);
 float	get_angle_from_dir(char dir);
 void	redraw(t_data *data);

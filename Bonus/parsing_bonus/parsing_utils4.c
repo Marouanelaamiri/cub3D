@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 15:31:52 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/13 20:53:53 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/14 21:41:38 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static void	check_sides_and_chars(t_data *info)
 	while (i < info->map_height)
 	{
 		len = ft_strlen(info->map[i]);
-		/* allow '1', ' ' or closed door on left edge */
 		ch = info->map[i][0];
 		if (ch != '1' && ch != ' ' && ch != DOOR_CLOSED)
 			print_error(err, info);

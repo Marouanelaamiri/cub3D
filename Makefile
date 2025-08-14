@@ -2,30 +2,24 @@
 # Compiler & Flags
 # ─────────────────────────────────────────────
 CC     = cc
-CFLAGS = -Wall -Werror -Wextra 
-USER   = aromani
+CFLAGS = -Wall -Werror -Wextra
+USER   = malaamir
 
 # ─────────────────────────────────────────────
 # GLFW & MLX
 # ─────────────────────────────────────────────
-# Detect OS
-UNAME_S := $(shell uname -s)
 
 # GLFW & MLX
 GLFW_DIR  = /mnt/homes/$(USER)/.brew/opt/glfw
 GLFW_INC  = -I$(GLFW_DIR)/include
 GLFW_LIB  = -L$(GLFW_DIR)/lib -lglfw
 
-ifeq ($(UNAME_S), Darwin)  # macOS
+# ifeq ($(UNAME_S), Darwin)  # macOS
 	MLX_FLAGS = -L$(MLX_DIR)/build -lmlx42 \
 				-framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo
-else  # Linux
-	MLX_FLAGS = -L$(MLX_DIR)/build -lmlx42 -lGL -ldl -lm -lpthread
-endif
 
 # Build MLX42 if missing
 $(MLX_DIR)/build/libmlx42.a:
-	@echo "\033[1;33m[MLX] Building MLX42...\033[0m"
 	cd $(MLX_DIR) && cmake -B build && cmake --build build -j4
 
 
@@ -140,8 +134,9 @@ BONUS_SRC = \
 	$(BONUS_DIR)/raycasting_bonus/helpers_01.c \
 	$(BONUS_DIR)/raycasting_bonus/drawing.c \
 	$(BONUS_DIR)/parsing_bonus/padding.c \
-	$(BONUS_DIR)/gun/animation.c \
-	$(BONUS_DIR)/gun/door.c \
+	$(BONUS_DIR)/gun_doors/animation.c \
+	$(BONUS_DIR)/gun_doors/animation_utils.c \
+	$(BONUS_DIR)/gun_doors/door.c \
 	$(BONUS_DIR)/raycasting_bonus/mouse_handler.c \
 
 BONUS_OBJ = $(BONUS_SRC:.c=.o)

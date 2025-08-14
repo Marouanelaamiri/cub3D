@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 15:00:33 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/12 15:38:22 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/14 21:40:45 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,6 @@ void	check_map_line(t_data *info, char *line)
 	free(checked);
 }
 
-void	map_parsing(t_data *info, int *started, char *line)
-{
-	info->map_parsed = 1;
-	*started = 1;
-	check_map_line(info, line);
-}
-
 static int	handle_file_open(t_data *info, int fd)
 {
 	if (fd < 0)
@@ -94,23 +87,6 @@ static int	read_lines(int fd, t_data *info)
 		line = get_next_line(fd);
 	}
 	return (1);
-}
-
-void debug_print_map(t_data *info)// need to be removed
-{
-    int i;
-
-    write(1, "=== Map after padding/and patching holes ===\n", 46);
-    for (i = 0; i < info->map_height; i++)
-    {
-		write(1, "\n", 1);
-        write(1, "Row ", 4);
-        char num[12];
-        int len = snprintf(num, sizeof(num), "%d: ", i);
-        write(1, num, len);
-        write(1, info->map[i], ft_strlen(info->map[i]));
-		write(1, "\n", 1);
-    }
 }
 
 int	validate_map_file(char *path, t_data *info)
