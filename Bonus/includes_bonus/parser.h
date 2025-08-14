@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/14 23:13:43 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/14 23:19:44 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ int		update_reload(t_data *data);
 void	free_frames(t_data *data);
 void	draw_reload_overlay(t_data *data);
 void	toggle_door(t_data *data);
+void draw_minimap(t_data *data);
 
 
 #endif
