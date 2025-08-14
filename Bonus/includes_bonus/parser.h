@@ -6,7 +6,7 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/14 16:20:58 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/14 17:02:33 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ typedef struct s_data
 	uint32_t		f_color;
 	uint32_t		c_color;
 	void			*mlx;
+	int32_t			mouse_x;
+	int32_t			mouse_y;
 	void			*win;
 	float			fov;
 	float			ray_angle;
@@ -193,7 +195,7 @@ void	init_struct(t_data *data);
 void	init_player(t_data *data);
 int		validate_token(const char *s);
 void	color_error_or_exit(char *value, t_data *info, int is_floor);
-
+int mouse_handel(t_data *data, int flag);
 int load_reload_frames_simple(t_data *data);
 void start_reload_simple(t_data *data);
 int update_reload_simple(t_data *data);

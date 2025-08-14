@@ -141,7 +141,8 @@ BONUS_SRC = \
 	$(BONUS_DIR)/raycasting_bonus/drawing.c \
 	$(BONUS_DIR)/parsing_bonus/padding.c \
 	$(BONUS_DIR)/gun/animation.c \
-	$(BONUS_DIR)/gun/door.c 
+	$(BONUS_DIR)/gun/door.c \
+	$(BONUS_DIR)/raycasting_bonus/mouse_handler.c \
 
 BONUS_OBJ = $(BONUS_SRC:.c=.o)
 

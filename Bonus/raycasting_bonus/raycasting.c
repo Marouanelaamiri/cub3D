@@ -6,7 +6,7 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/14 16:17:07 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/14 17:47:32 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void terminate_program(void *param)
     exit(0);
 }
 
+
+
 void	key_hook(void *param)
 {
 	t_data		*data;
@@ -105,17 +107,17 @@ void	key_hook(void *param)
 		changed = 1;
 	}
 	e_prev = e_now;
-
-	/* ESC to quit */
+	changed = mouse_handel(data, changed);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 		terminate_program(param);
-
-	/* Movement & rotation */
 	changed = key_w(data, changed, new_x, new_y);
 	changed = key_s(data, changed, new_x, new_y);
 	changed = key_a(data, changed, new_x, new_y);
 	changed = key_d(data, changed, new_x, new_y);
 	changed = ft_retate(data, changed);
+	mlx_set_mouse_pos(data->mlx, MAP_WIDTH / 2, MAP_HEIGHT / 2);
+    data->mouse_x = MAP_WIDTH / 2;
+   	data->mouse_y = MAP_HEIGHT / 2;
 	if (changed)
 		redraw(data);
 }
@@ -126,6 +128,8 @@ int	main_raycasting(t_data *data)
 	data->mlx = mlx_init(MAP_WIDTH, MAP_HEIGHT, "Cub3D", false);
 	if (!data->mlx) 
 		return (1);
+	mlx_get_mouse_pos(data->mlx, &data->mouse_x, &data->mouse_y);
+	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
 	if (load_textures(data)) 
 		return (1);
 	load_reload_frames_simple(data);
@@ -133,6 +137,7 @@ int	main_raycasting(t_data *data)
 	init_player(data);
 	redraw(data);
 	mlx_loop_hook(data->mlx, key_hook, data);
+	//mlx_mouse_hook(data->mlx, mouse_handler, data);
 	mlx_close_hook(data->mlx, terminate_program, data);
 	mlx_loop(data->mlx);
 	return (0);

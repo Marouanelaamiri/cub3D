@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:29:20 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/13 21:31:08 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:48:09 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	init_data(t_data *info)
 	info->has_error = 0;
 	info->player_x = 0.0f;
 	info->player_y = 0.0f;
+	info->mouse_x = 0.0f;
+	info->mouse_y = 0.0f;
 	info->player_direction = '\0';
 	info->player_char = 0;
 }
