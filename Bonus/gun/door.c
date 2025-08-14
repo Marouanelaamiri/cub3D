@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   door.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 20:49:46 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/14 00:14:15 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/14 19:52:21 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static int sgnf(float v)
 
 void toggle_door(t_data *data)
 {
-    int px = (int)data->player_x;
-    int py = (int)data->player_y;
+    int px = (int)(data->player_x / TILE_SIZE);
+    int py = (int)(data->player_y / TILE_SIZE);
     int tx = px + sgnf(cosf(data->ray_angle));
     int ty = py + sgnf(sinf(data->ray_angle));
 
