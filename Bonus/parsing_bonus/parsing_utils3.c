@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 14:35:44 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/10 16:53:32 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/14 22:39:29 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	check_empty_line(char *line, t_data *info, int *start)
 	char	*alloc_msg;
 	char	*empty_msg;
 
-	alloc_msg = "Memory allocation failed during empty‑line check.\n";
+	alloc_msg = "Memory allocation failed during empty line check.\n";
 	empty_msg = "Empty line found in map.\n";
 	trimmed = ft_strtrim(line, " \t\n\r");
 	if (!trimmed)
