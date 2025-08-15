@@ -6,7 +6,7 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 17:48:40 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/14 16:19:44 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/15 18:23:34 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,20 @@ static void init_algo(t_data *data, float angle)
 		data->algo->side_dist_y = (data->algo->py - data->algo->map_y * TILE_SIZE) * data->algo->delta_y;
 	else
 		data->algo->side_dist_y = ((data->algo->map_y + 1) * TILE_SIZE - data->algo->py) * data->algo->delta_y;
+}
 
+int	door_check(t_data *data)
+{
+	int hit;
+
+	hit = 0;
+	char cell = data->map[data->algo->map_y][data->algo->map_x];
+	if (cell == '1' || cell == DOOR_CLOSED)
+	{
+		data->hit_is_door = (cell == DOOR_CLOSED);  // <— remember if it's a door
+		hit = 1;
+	}
+	return (hit);
 }
 
 static void send_ray(t_data *data)
@@ -62,18 +75,9 @@ static void send_ray(t_data *data)
 
         if (data->algo->map_y < 0 || data->algo->map_y >= data->recmap_height
          || data->algo->map_x < 0 || data->algo->map_x >= (int)ft_strlen(data->map[data->algo->map_y]))
-        {
-            hit = 1; // out of bounds—treat like a wall
-        }
+            hit = 1;
         else
-        {
-            char cell = data->map[data->algo->map_y][data->algo->map_x];
-            if (cell == '1' || cell == DOOR_CLOSED)
-            {
-                data->hit_is_door = (cell == DOOR_CLOSED);  // <— remember if it's a door
-                hit = 1;
-            }
-        }
+			hit = door_check(data);
     }
 }
 

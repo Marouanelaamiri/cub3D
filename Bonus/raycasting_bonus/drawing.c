@@ -6,7 +6,7 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:16:33 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/14 23:19:57 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/15 18:33:16 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,32 @@ static void init_texters(t_data *data)
         data->tex = data->ea;
 }
 
-static void ft_paint(t_data *data, uint32_t *pxs, float dist, int col)
+void draw_wall(t_data *data, int wall_h, int top, int y_col[2])
+{
+    int col;
+    int y;
+    uint32_t *pxs;
+    float ratio;
+    int tex_y;
+    uint32_t color;
+    
+    y = y_col[0];
+    col = y_col[1];
+    pxs = (uint32_t *)data->tex->pixels;
+    ratio = (float)(y - top) / wall_h;
+    tex_y = (int)(ratio * (data->tex->height - 1));
+    tex_y = fmax(0, fmin(data->tex->height - 1, tex_y));
+    color =  pxs[(int)(tex_y * data->tex->width + data->tex_x)];
+    put_pixel(data, col, y, color);
+}
+
+static void ft_paint(t_data *data, float dist, int col)
 {
 	int wall_h = (int)((TILE_SIZE * MAP_HEIGHT) / dist); // used to be int wall_h = (int)((TILE_SIZE * MAP_HEIGHT) / fmaxf(dist, 0.1f));
     int top = (MAP_HEIGHT - wall_h) / 2;
     int bottom = top + wall_h;
 	int y = 0;
+    int array[2];
 
 	while (y < MAP_HEIGHT)
     {
@@ -42,12 +62,9 @@ static void ft_paint(t_data *data, uint32_t *pxs, float dist, int col)
             mlx_put_pixel(data->img, col, y, data->c_color);
         else if (y > top && y < bottom)
         {
-            float ratio = (float)(y - top) / wall_h;
-            int tex_y = (int)(ratio * (data->tex->height - 1));
-            tex_y = fmax(0, fmin(data->tex->height - 1, tex_y));
-            //int tex_index = tex_y * data->tex->width + data->tex_x;
-            uint32_t color =  pxs[(int)(tex_y * data->tex->width + data->tex_x)];
-            put_pixel(data, col, y, color);
+            array[0] = y;
+            array[1] = col;
+            draw_wall(data, wall_h, top, array);
         }
         else if (y > bottom)
             mlx_put_pixel(data->img, col, y, data->f_color);
@@ -58,8 +75,6 @@ static void ft_paint(t_data *data, uint32_t *pxs, float dist, int col)
 static void draw_column(t_data *data, int col, float dist)
 {
 	init_texters(data);
-    uint32_t *pxs = (uint32_t *)data->tex->pixels;
-	
     float wall_x = fmodf(data->hit_wall_x, TILE_SIZE);
     if (wall_x < 0)
 		wall_x += TILE_SIZE;
@@ -68,7 +83,7 @@ static void draw_column(t_data *data, int col, float dist)
     if (data->hit_side == 'S' || data->hit_side == 'E')
         data->tex_x = data->tex->width - data->tex_x - 1;
     data->tex_x = fmax(0, fmin(data->tex->width - 1, data->tex_x));
-    ft_paint(data, pxs, dist, col);
+    ft_paint(data, dist, col);
 }
 
 static void render_3d(t_data *data)
