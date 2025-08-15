@@ -1,11 +1,11 @@
-NO  Bonus/textures/wall7.png
-SO  Bonus/textures/wall7.png
-WE  Bonus/textures/wall7.png
-EA  Bonus/textures/wall7.png
+NO  Bonus/textures/eclipse.png
+SO  Bonus/textures/eclipse.png
+WE  Bonus/textures/redfaces.png
+EA  Bonus/textures/redfaces.png        
 
    
-F 0,0,0
-C 136,8,8
+F 100,0,0  
+C 35,0,0   	
 
 
 
