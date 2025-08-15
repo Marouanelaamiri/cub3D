@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/15 18:02:04 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/15 19:10:50 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef PARSER_H
 # define PARSER_H
@@ -17,7 +16,7 @@
 # define TILE_SIZE 64
 # define COLLIDE_PAD 0.3f
 # define RENDER_PAD  0.3f
-# define SPEED 8
+# define SPEED 7
 # define FOV 1
 # define BUFFER_SIZE 42
 # define MAP_WIDTH 1200
@@ -50,15 +49,15 @@ typedef struct s_data
 	char			*ea_texture;
 	char			hit_side;
 	float			hit_wall_x;
-	mlx_texture_t *reload_frames[30];
-	int            reload_frame_count;   /* will be 29 */
-	int            reload_current;       /* current frame index 0..28 */
-	int            reload_playing;       /* 0 = stopped, 1 = playing */
-	int            reload_tick;          /* increment each loop */
-	int            ticks_per_frame;   
-	int            reload_margin_right;   /* smaller => more to the right */
-	int            reload_margin_bottom;  /* smaller => more down */
-	int door_open;       /* 0 = no open door being tracked, 1 = a door is open */
+	mlx_texture_t	*reload_frames[30];
+	int				reload_frame_count;
+	int				reload_current;
+	int				reload_playing;
+	int				reload_tick;
+	int				ticks_per_frame;
+	int				reload_margin_right;
+	int				reload_margin_bottom;
+	int				door_open;
 	mlx_texture_t	*tex;
 	float			tex_x;
 	float			tex_y;
@@ -196,8 +195,7 @@ int		update_reload(t_data *data);
 void	free_frames(t_data *data);
 void	draw_reload_overlay(t_data *data);
 void	toggle_door(t_data *data);
-void draw_minimap(t_data *data);
-int doors_animatin_hooks(t_data *data);
-
+void	draw_minimap(t_data *data);
+int		doors_animatin_hooks(t_data *data);
 
 #endif

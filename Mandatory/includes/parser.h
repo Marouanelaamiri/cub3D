@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/14 23:11:36 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/15 18:56:30 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 # define TILE_SIZE 64
 # define COLLIDE_PAD 0.3f
 # define RENDER_PAD  0.3f
-# define SPEED 8.5f
+# define SPEED 7
 # define FOV 1
 # define BUFFER_SIZE 42
-# define MAP_WIDTH 1920
-# define MAP_HEIGHT 1080
+# define MAP_WIDTH 1200
+# define MAP_HEIGHT 720
 
 typedef struct s_algo
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 21:35:29 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/15 17:50:22 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/15 19:07:17 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ uint32_t get_color(t_data *data, float tx, float ty, float half_visible)
         char cell = data->map[map_y][map_x];
         if (cell == '1') color = 0x80555555;
         else if (cell == 'D')
-            color = 0x80BEBEBE;
+            color = 0x000000FF; // closed door
         else color = data->f_color;
     }
     return (color);
@@ -68,7 +68,7 @@ void draw_player(t_data *data, float visible_tiles)
             mlx_put_pixel(data->img,
                 center_x - PLAYER_SIZE / 2 + px,
                 center_y - PLAYER_SIZE / 2 + py,
-                0xFF0000FF);
+                0x00000FF); 
             px++;
         }
         py++;
