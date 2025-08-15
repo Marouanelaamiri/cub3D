@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:16:33 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/15 18:33:16 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/15 19:19:36 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@ static void init_texters(t_data *data)
 {
 	if (data->hit_is_door) 
 	{
-        data->tex = data->door;        // <— door texture when we hit a door
-        return;
-    }
+		data->tex = data->door;
+		return ;
+	}
 	if (data->hit_side == 'N') 
-        data->tex = data->no;
-    else if (data->hit_side == 'S') 
-        data->tex = data->so;
-    else if (data->hit_side == 'W') 
-        data->tex = data->we;
-    else                            
-        data->tex = data->ea;
+		data->tex = data->no;
+	else if (data->hit_side == 'S') 
+		data->tex = data->so;
+	else if (data->hit_side == 'W') 
+		data->tex = data->we;
+	else                            
+		data->tex = data->ea;
 }
 
 void draw_wall(t_data *data, int wall_h, int top, int y_col[2])
@@ -50,26 +50,30 @@ void draw_wall(t_data *data, int wall_h, int top, int y_col[2])
 
 static void ft_paint(t_data *data, float dist, int col)
 {
-	int wall_h = (int)((TILE_SIZE * MAP_HEIGHT) / dist); // used to be int wall_h = (int)((TILE_SIZE * MAP_HEIGHT) / fmaxf(dist, 0.1f));
-    int top = (MAP_HEIGHT - wall_h) / 2;
-    int bottom = top + wall_h;
-	int y = 0;
-    int array[2];
-
+	int wall_h; 
+	int top;
+	int bottom;
+	int y;
+	int array[2];
+	
+	wall_h = (int)((TILE_SIZE * MAP_HEIGHT) / dist); // used to be int wall_h = (int)((TILE_SIZE * MAP_HEIGHT) / fmaxf(dist, 0.1f));
+	top = (MAP_HEIGHT - wall_h) / 2;
+	bottom = top + wall_h;
+	y = 0;
 	while (y < MAP_HEIGHT)
-    {
-        if (y < top)
-            mlx_put_pixel(data->img, col, y, data->c_color);
-        else if (y > top && y < bottom)
-        {
-            array[0] = y;
-            array[1] = col;
-            draw_wall(data, wall_h, top, array);
-        }
-        else if (y > bottom)
-            mlx_put_pixel(data->img, col, y, data->f_color);
-		y++;
-    }
+	{
+	if (y < top)
+		mlx_put_pixel(data->img, col, y, data->c_color);
+	else if (y > top && y < bottom)
+	{
+		array[0] = y;
+		array[1] = col;
+		draw_wall(data, wall_h, top, array);
+	}
+	else if (y > bottom)
+	 	mlx_put_pixel(data->img, col, y, data->f_color);
+	y++;
+	}
 }
 
 static void draw_column(t_data *data, int col, float dist)

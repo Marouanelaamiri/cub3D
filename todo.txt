@@ -1,5 +1,4 @@
-Norm
-bonus (mini map , mouse)
+Norm , makefile
 ================================================================
 valgrind still reachable leaks no need to handle 
 
@@ -15,4 +14,4 @@ valgrind still reachable leaks no need to handle
 shaco : 
 need to undersrand how door logic works
 need to undersrand how animation pos and frames works
-need to understand how textures are drawns on wall 
+need to understand how textures are drawns on wall (drawing.c)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda_algo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 17:48:40 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/15 18:23:34 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/15 19:14:20 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,14 @@ static void init_algo(t_data *data, float angle)
 
 int	door_check(t_data *data)
 {
-	int hit;
-
+	int		hit;
+	char	cell;
+		
 	hit = 0;
-	char cell = data->map[data->algo->map_y][data->algo->map_x];
+	cell = data->map[data->algo->map_y][data->algo->map_x];
 	if (cell == '1' || cell == DOOR_CLOSED)
 	{
-		data->hit_is_door = (cell == DOOR_CLOSED);  // <— remember if it's a door
+		data->hit_is_door = (cell == DOOR_CLOSED);
 		hit = 1;
 	}
 	return (hit);

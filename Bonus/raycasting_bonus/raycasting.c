@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/15 18:04:47 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/15 19:26:41 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,43 +15,44 @@
 
 int is_colliding(t_data *data, float new_px, float new_py)
 {
-    int tile_x = (int)(new_px / TILE_SIZE);
-    int tile_y = (int)(new_py / TILE_SIZE);
-
-    if (tile_y >= 0 && tile_y < data->recmap_height
-        && tile_x >= 0 && tile_x < (int)ft_strlen(data->map[tile_y]))
-    {
-        char tile = data->map[tile_y][tile_x];
-        if (tile == '1' || tile == DOOR_CLOSED)
-            return 1; // block only walls and fully closed doors
-    }
-
-    // corners for padding — ignore half-open doors
-    const float px = new_px ;
-    const float py = new_py ;
-    const float r  = COLLIDE_PAD * TILE_SIZE;
-
-    float corners[4][2] = {
-        { px - r, py - r },
-        { px + r, py - r },
-        { px - r, py + r },
-        { px + r, py + r }
-    };
-
-    for (int i = 0; i < 4; ++i)
-    {
-        int mx = (int)(corners[i][0] / TILE_SIZE);
-        int my = (int)(corners[i][1] / TILE_SIZE);
-
-        if (my < 0 || my >= data->recmap_height
-            || mx < 0 || mx >= (int)ft_strlen(data->map[my]))
-            return 1;
-
-        char tile = data->map[my][mx];
-        if (tile == '1' || tile == DOOR_CLOSED)
-            return 1;
-    }
-    return 0;
+	int			tile_x;
+	int			tile_y;
+	char		tile;
+	float	px;
+	float	py;
+	float	r;
+	
+	tile_x = (int)(new_px / TILE_SIZE);
+	tile_y = (int)(new_py / TILE_SIZE);
+	if (tile_y >= 0 && tile_y < data->recmap_height
+		&& tile_x >= 0 && tile_x < (int)ft_strlen(data->map[tile_y]))
+	{
+		tile = data->map[tile_y][tile_x];
+		if (tile == '1' || tile == DOOR_CLOSED)
+			return (1);
+	}	
+	px = new_px ;
+	py = new_py ;
+	r = COLLIDE_PAD * TILE_SIZE;	
+	float corners[4][2] =
+	{
+		{ px - r, py - r },
+		{ px + r, py - r },
+		{ px - r, py + r },
+		{ px + r, py + r },
+	};
+	for (int i = 0; i < 4; ++i)
+	{
+		int mx = (int)(corners[i][0] / TILE_SIZE);
+		int my = (int)(corners[i][1] / TILE_SIZE);	
+		if (my < 0 || my >= data->recmap_height
+			|| mx < 0 || mx >= (int)ft_strlen(data->map[my]))
+			return (1);	
+		tile = data->map[my][mx];
+		if (tile == '1' || tile == DOOR_CLOSED)
+			return (1);
+	}
+	return (0);
 }
 
 void terminate_program(void *param)
