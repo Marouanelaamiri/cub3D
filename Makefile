@@ -267,6 +267,7 @@ BONUS_SRC = \
     $(BONUS_DIR)/gun_doors/door.c \
     $(BONUS_DIR)/raycasting_bonus/mouse_handler.c \
     $(BONUS_DIR)/raycasting_bonus/minimap.c \
+    $(BONUS_DIR)/raycasting_bonus/doors.c
 
 BONUS_OBJ = $(BONUS_SRC:.c=.o)
 

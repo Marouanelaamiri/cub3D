@@ -6,68 +6,57 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 21:35:29 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/14 23:18:10 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/15 17:50:22 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-#define MINIMAP_TILE_SIZE 12   // wall/floor pixel size
-#define PLAYER_SIZE 6         // player square size
+#define MINIMAP_TILE_SIZE 11
+#define PLAYER_SIZE 5.5        
 
-void draw_minimap(t_data *data)
+uint32_t get_color(t_data *data, float tx, float ty, float half_visible)
 {
-    int visible_tiles = 15;
-    int half_visible = visible_tiles / 2;
+    // World tile coordinates relative to player
+    int map_x = (data->player_x / TILE_SIZE) - half_visible + tx;
+    int map_y = (data->player_y / TILE_SIZE) - half_visible + ty;
 
-    // Player position in world
-    float player_world_x = data->player_x;
-    float player_world_y = data->player_y;
+    uint32_t color = 0x00000000;
+    if (map_y >= 0 && map_y < data->recmap_height &&
+        map_x >= 0 && map_x < (int)ft_strlen(data->map[map_y]))
+    {
+        char cell = data->map[map_y][map_x];
+        if (cell == '1') color = 0x80555555;
+        else if (cell == 'D')
+            color = 0x80BEBEBE;
+        else color = data->f_color;
+    }
+    return (color);
+}
 
-    // Center of minimap in pixels
+void draw_minimap_tiles(t_data *data, float tx, float ty, uint32_t color)
+{
+    int draw_x = tx * MINIMAP_TILE_SIZE;
+    int draw_y = ty * MINIMAP_TILE_SIZE;
+
+    int dy = 0;
+    while (dy < MINIMAP_TILE_SIZE)
+    {
+        int dx = 0;
+        while (dx < MINIMAP_TILE_SIZE)
+        {
+            mlx_put_pixel(data->img, draw_x + dx, draw_y + dy, color);
+            dx++;
+        }
+        dy++;
+    }
+
+}
+
+void draw_player(t_data *data, float visible_tiles)
+{
     int center_x = (visible_tiles * MINIMAP_TILE_SIZE) / 2;
     int center_y = (visible_tiles * MINIMAP_TILE_SIZE) / 2;
-
-    // Loop over visible tiles
-    int ty = 0;
-    while (ty < visible_tiles)
-    {
-        int tx = 0;
-        while (tx < visible_tiles)
-        {
-            // World tile coordinates relative to player
-            int map_x = (player_world_x / TILE_SIZE) - half_visible + tx;
-            int map_y = (player_world_y / TILE_SIZE) - half_visible + ty;
-
-            uint32_t color = 0x000000FF;
-            if (map_y >= 0 && map_y < data->recmap_height &&
-                map_x >= 0 && map_x < (int)ft_strlen(data->map[map_y]))
-            {
-                char cell = data->map[map_y][map_x];
-                if (cell == '1') color = 0xFFFFFFFF;
-                else color = 0x777777FF;
-            }
-
-            // Draw tile
-            int draw_x = tx * MINIMAP_TILE_SIZE;
-            int draw_y = ty * MINIMAP_TILE_SIZE;
-
-            int dy = 0;
-            while (dy < MINIMAP_TILE_SIZE)
-            {
-                int dx = 0;
-                while (dx < MINIMAP_TILE_SIZE)
-                {
-                    mlx_put_pixel(data->img, draw_x + dx, draw_y + dy, color);
-                    dx++;
-                }
-                dy++;
-            }
-
-            tx++;
-        }
-        ty++;
-    }
 
     // Draw player (always in center)
     int py = 0;
@@ -84,6 +73,29 @@ void draw_minimap(t_data *data)
         }
         py++;
     }
+}
+void draw_minimap(t_data *data)
+{
+    int visible_tiles = 15;
+    int half_visible = visible_tiles / 2;
+    uint32_t color;
+    // Center of minimap in pixels
+   
+
+    // Loop over visible tiles
+    int ty = 0;
+    while (ty < visible_tiles)
+    {
+        int tx = 0;
+        while (tx < visible_tiles)
+        {
+            color = get_color(data, tx, ty, half_visible);
+            draw_minimap_tiles(data, tx, ty, color);
+            tx++;
+        }
+        ty++;
+    }
+    draw_player(data, visible_tiles);
 }
 
 

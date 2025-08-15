@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/14 22:15:09 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/15 18:04:47 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,8 @@ int is_colliding(t_data *data, float new_px, float new_py)
             return 1;
 
         char tile = data->map[my][mx];
-        if (tile == '1' || tile == DOOR_CLOSED) // still block walls and closed doors
+        if (tile == '1' || tile == DOOR_CLOSED)
             return 1;
-
-        // half-open doors ignored here
     }
     return 0;
 }
@@ -60,18 +58,17 @@ void terminate_program(void *param)
 {
     t_data *data = (t_data *)param;
     if (data->img)
-	{
         mlx_delete_image(data->mlx, data->img);
-	}
     if (data->mlx)
-	{
         mlx_terminate(data->mlx);
-	}
 	free_frames(data);
+	clean_map(data);
+    if (data && data->algo)
+        free(data->algo);
+    if (data)
+	    free(data);
     exit(0);
 }
-
-
 
 void	key_hook(void *param)
 {
@@ -79,29 +76,11 @@ void	key_hook(void *param)
 	float		new_x;
 	float		new_y;
 	int			changed;
-	int			r_now;
-	int			e_now;
-	static int	r_prev = 0;
-	static int	e_prev = 0;
 
 	data = (t_data *)param;
 	new_x = 0.0f;
 	new_y = 0.0f;
-	changed = 0;
-
-	r_now = mlx_is_key_down(data->mlx, MLX_KEY_R);
-	if (r_now && !r_prev)
-		start_reload(data);
-	r_prev = r_now;
-	if (update_reload(data))
-		changed = 1;
-	e_now = mlx_is_key_down(data->mlx, MLX_KEY_SPACE);
-	if (e_now && !e_prev)
-	{
-		toggle_door(data);
-		changed = 1;
-	}
-	e_prev = e_now;
+	changed = doors_animatin_hooks(data);
 	changed = mouse_handel(data, changed);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 		terminate_program(param);
@@ -132,7 +111,6 @@ int	main_raycasting(t_data *data)
 	init_player(data);
 	redraw(data);
 	mlx_loop_hook(data->mlx, key_hook, data);
-	//mlx_mouse_hook(data->mlx, mouse_handler, data);
 	mlx_close_hook(data->mlx, terminate_program, data);
 	mlx_loop(data->mlx);
 	return (0);
