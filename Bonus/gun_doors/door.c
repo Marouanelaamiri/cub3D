@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 20:49:46 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/15 19:53:04 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/16 20:38:17 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ void	toggle_door(t_data *data)
 	px = (int)(data->player_x / TILE_SIZE);
 	tx = px + sgnf(cosf(data->ray_angle));
 	ty = py + sgnf(sinf(data->ray_angle));
-	if (ty < 0 || ty >= data->recmap_height || tx < 0
-		|| tx >= (int)ft_strlen(data->map[ty]))
-		return ;
 	if (data->map[ty][tx] == DOOR_CLOSED)
 		data->map[ty][tx] = DOOR_OPEN;
 	else if (data->map[ty][tx] == DOOR_OPEN)
