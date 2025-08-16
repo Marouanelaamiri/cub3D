@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/15 18:56:30 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/16 18:50:01 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define TILE_SIZE 64
 # define COLLIDE_PAD 0.3f
 # define RENDER_PAD  0.3f
-# define SPEED 7
+# define SPEED 5.5f
 # define FOV 1
 # define BUFFER_SIZE 42
 # define MAP_WIDTH 1200

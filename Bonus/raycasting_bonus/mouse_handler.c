@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 16:45:52 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/14 18:04:01 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/16 18:49:30 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ static int retate(t_data *data, int32_t m_x, int changed)
 {
     if (m_x < data->mouse_x)
     {
-        data->ray_angle -= 0.05f;
+        data->ray_angle -= 0.03f;
         if (data->ray_angle < 0)
             data->ray_angle += 2 * M_PI;
         changed = 1;
     }
     else if (m_x > data->mouse_x)
     {
-        data->ray_angle += 0.05f;
+        data->ray_angle += 0.03f;
         if (data->ray_angle >= 2 * M_PI)
             data->ray_angle -= 2 * M_PI;
         changed = 1;
