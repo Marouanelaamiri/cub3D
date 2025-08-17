@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/15 16:56:51 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/17 18:58:26 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,13 @@ void terminate_program(void *param)
     t_data *data = (t_data *)param;
     if (data->img)
         mlx_delete_image(data->mlx, data->img);
+	free_graphics_and_textures(data);
     if (data->mlx)
         mlx_terminate(data->mlx);
-    clean_map(data);
-    if (data && data->algo)
-        free(data->algo);
-    if (data)
-	    free(data);
-    exit(0);
+	clean_map(data);
+	free(data->algo);
+	free(data);
+	exit(EXIT_SUCCESS);
 }
 
 void	key_hook(void *param)
@@ -80,21 +79,20 @@ void	key_hook(void *param)
 		redraw(data);
 }
 
-
-
-void ff()
-{
-	system("leaks cub3D");
-}
-
 int	main_raycasting(t_data *data)
 {
 	set_wh_map(data);
 	data->mlx = mlx_init(MAP_WIDTH, MAP_HEIGHT, "Cub3D", false);
 	if (!data->mlx) 
 		return (1);
-	if (load_textures(data)) 
-		return (1);
+
+    if (load_textures(data))
+    {
+        free_graphics_and_textures(data);
+        if (data->mlx)
+            mlx_terminate(data->mlx);
+        return (1);
+    }
 	init_struct(data);
 	init_player(data);
 	redraw(data);

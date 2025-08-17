@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/17 17:35:21 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/17 18:49:50 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,5 +197,6 @@ void	draw_reload_overlay(t_data *data);
 void	toggle_door(t_data *data);
 void	draw_minimap(t_data *data);
 int		doors_animatin_hooks(t_data *data);
+void	free_graphics_and_textures(t_data *data);
 
 #endif

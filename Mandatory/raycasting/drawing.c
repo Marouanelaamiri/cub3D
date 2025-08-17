@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:16:33 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/14 16:06:41 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/17 18:43:56 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static void ft_paint(t_data *data, uint32_t *pxs, float dist, int col)
             float ratio = (float)(y - top) / wall_h;
             int tex_y = (int)(ratio * (data->tex->height - 1));
             tex_y = fmax(0, fmin(data->tex->height - 1, tex_y));
-            //int tex_index = tex_y * data->tex->width + data->tex_x;
             uint32_t color =  pxs[(int)(tex_y * data->tex->width + data->tex_x)];
             put_pixel(data, col, y, color);
         }

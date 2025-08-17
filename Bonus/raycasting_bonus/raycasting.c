@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/15 19:26:41 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/17 19:06:28 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ int is_colliding(t_data *data, float new_px, float new_py)
 void terminate_program(void *param)
 {
     t_data *data = (t_data *)param;
-    if (data->img)
-        mlx_delete_image(data->mlx, data->img);
+	if (!data)
+		return;
+	free_graphics_and_textures(data);
     if (data->mlx)
         mlx_terminate(data->mlx);
 	free_frames(data);
@@ -68,7 +69,7 @@ void terminate_program(void *param)
         free(data->algo);
     if (data)
 	    free(data);
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
 void	key_hook(void *param)
@@ -105,8 +106,13 @@ int	main_raycasting(t_data *data)
 		return (1);
 	mlx_get_mouse_pos(data->mlx, &data->mouse_x, &data->mouse_y);
 	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_HIDDEN);
-	if (load_textures(data)) 
-		return (1);
+	if (load_textures(data))
+    {
+        free_graphics_and_textures(data);
+        if (data->mlx)
+            mlx_terminate(data->mlx);
+        return (1);
+    }
 	load_check_frames(data);
 	init_struct(data);
 	init_player(data);

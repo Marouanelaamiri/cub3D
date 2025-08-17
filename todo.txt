@@ -1,17 +1,85 @@
-Norm , makefile
-================================================================
-valgrind still reachable leaks no need to handle 
+Norm , makefile(romani)
+=================================================================================
+Bonus leaks :
+➜  cub3D git:(master) ✗ ./cub3D_bonus Bonus/maps/map.cub.cub
+Found process 97094 (cub3D_bonus) from partial name cub3D
+Process:         cub3D_bonus [97094]
+Path:            /Volumes/VOLUME/*/cub3D_bonus
+Load Address:    0x1032e8000
+Identifier:      cub3D_bonus
+Version:         ???
+Code Type:       X86-64
+Parent Process:  zsh [57326]
 
-==12471== LEAK SUMMARY:
-==12471==    definitely lost: 0 bytes in 0 blocks
-==12471==    indirectly lost: 0 bytes in 0 blocks
-==12471==      possibly lost: 0 bytes in 0 blocks
-==12471==    still reachable: 67,415,093 bytes in 2,733 blocks
-==12471==         suppressed: 32 bytes in 1 blocks
-==12471== 
-=================================================================
+Date/Time:       2025-08-17 18:14:04.331 +0100
+Launch Time:     2025-08-17 18:13:24.528 +0100
+OS Version:      Mac OS X 10.15.7 (19H2026)
+Report Version:  7
+Analysis Tool:   /Applications/Xcode.app/Contents/Developer/usr/bin/leaks
+Analysis Tool Version:  Xcode 12.4 (12D4e)
 
+Physical footprint:         41.2M
+Physical footprint (peak):  69.6M
+----
+
+leaks Report Version: 4.0
+Process 97094: 21273 nodes malloced for 29143 KB
+Process 97094: 9 leaks for 22757504 total leaked bytes.
+
+    9 (21.7M) << TOTAL >>
+      1 (6.00M) ROOT LEAK: 0x7fc2cdc90000 [6291456]
+
+      2 (3.95M) ROOT LEAK: 0x7fc2c7805360 [32]
+         1 (3.95M) 0x7fc2cd5fb000 [4141056]
+
+      2 (3.95M) ROOT LEAK: 0x7fc2c7c0ff30 [32]
+         1 (3.95M) 0x7fc2cd208000 [4141056]
+
+      2 (3.90M) ROOT LEAK: 0x7fc2c6432190 [32]
+         1 (3.90M) 0x7fc2cca3a000 [4091904]
+
+      2 (3.90M) ROOT LEAK: 0x7fc2c793c430 [32]
+         1 (3.90M) 0x7fc2cce21000 [4091904]
+=======================================================================
+Mandatory leak : 
+ ./cub3D Mandatory/maps/map.cub.cub  
+Process:         cub3D [98243]
+Path:            /Volumes/VOLUME/*/cub3D
+Load Address:    0x10569f000
+Identifier:      cub3D
+Version:         ???
+Code Type:       X86-64
+Parent Process:  zsh [57326]
+
+Date/Time:       2025-08-17 18:15:55.997 +0100
+Launch Time:     2025-08-17 18:15:36.724 +0100
+OS Version:      Mac OS X 10.15.7 (19H2026)
+Report Version:  7
+Analysis Tool:   /Applications/Xcode.app/Contents/Developer/usr/bin/leaks
+Analysis Tool Version:  Xcode 12.4 (12D4e)
+
+Physical footprint:         30.5M
+Physical footprint (peak):  45.3M
+----
+
+leaks Report Version: 4.0
+Process 98243: 21061 nodes malloced for 22930 KB
+Process 98243: 8 leaks for 16466048 total leaked bytes.
+
+    8 (15.7M) << TOTAL >>
+
+      2 (3.95M) ROOT LEAK: 0x7fa41ce34e40 [32]
+         1 (3.95M) 0x7fa423208000 [4141056]
+
+      2 (3.95M) ROOT LEAK: 0x7fa41e00ef90 [32]
+         1 (3.95M) 0x7fa4235fb000 [4141056]
+
+      2 (3.90M) ROOT LEAK: 0x7fa41ce09b30 [32]
+         1 (3.90M) 0x7fa422e21000 [4091904]
+
+      2 (3.90M) ROOT LEAK: 0x7fa41ce36530 [32]
+         1 (3.90M) 0x7fa422a3a000 [4091904]
+====================================================================
 shaco : 
-need to undersrand how door logic works
 need to undersrand how animation pos and frames works
 need to understand how textures are drawns on wall (drawing.c)

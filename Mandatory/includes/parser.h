@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/17 17:37:41 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/17 18:47:32 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,5 +173,6 @@ void	init_struct(t_data *data);
 void	init_player(t_data *data);
 int		validate_token(const char *s);
 void	color_error_or_exit(char *value, t_data *info, int is_floor);
+void	free_graphics_and_textures(t_data *data);
 
 #endif

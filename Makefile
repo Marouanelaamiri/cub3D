@@ -2,7 +2,7 @@
 # Compiler & Flags
 # ─────────────────────────────────────────────
 CC     = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra 
 USER   = malaamir
 
 # ─────────────────────────────────────────────

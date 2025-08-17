@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:13:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/17 18:12:42 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/17 19:07:35 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(int argc, char **argv)
 	pad_map_edges_with_walls(info);
 	patch_holes(info);
 	ret = main_raycasting(info);
+	free_graphics_and_textures(info);
 	clean_map(info);
 	free(info);
 	return (ret);
