@@ -1,38 +1,24 @@
-# ─────────────────────────────────────────────
-# Compiler & Flags
-# ─────────────────────────────────────────────
-CC     = cc
-CFLAGS = -Wall -Werror -Wextra 
-USER   = malaamir
+CC      = cc
+CFLAGS  = -Wall -Wextra -Werror -fsanitize=address -g3
 
-# ─────────────────────────────────────────────
-# GLFW & MLX
-# ─────────────────────────────────────────────
 
-# GLFW & MLX
-GLFW_DIR  = /mnt/homes/$(USER)/.brew/opt/glfw
-GLFW_INC  = -I$(GLFW_DIR)/include
-GLFW_LIB  = -L$(GLFW_DIR)/lib -lglfw
+USER     = aromani
+GLFW_DIR = /mnt/homes/$(USER)/.brew/opt/glfw
+GLFW_INC = -I$(GLFW_DIR)/include
+GLFW_LIB = -L$(GLFW_DIR)/lib -lglfw
 
+
+MLX_DIR   = MLX42
+MLX_LIB   = $(MLX_DIR)/build/libmlx42.a
 MLX_FLAGS = -L$(MLX_DIR)/build -lmlx42 \
-	-framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo
-
-# Build MLX42 if missing
-$(MLX_DIR)/build/libmlx42.a:
-	@echo "\033[1;33m[MLX] Building MLX42...\033[0m"
-	cd $(MLX_DIR) && cmake -B build && cmake --build build -j4
+            -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo
 
 
-# ─────────────────────────────────────────────
-# Mandatory
-# ─────────────────────────────────────────────
-MANDATORY_NAME = cub3D
-MANDATORY_DIR  = Mandatory
-MLX_MANDATORY_DIR = $(MANDATORY_DIR)/NEWMLX42
-MANDATORY_INCL = -I$(MANDATORY_DIR)/includes -I$(MLX_MANDATORY_DIR)/include
+MANDATORY_NAME   = cub3D
+MANDATORY_DIR    = Mandatory
+MLX_MANDATORY_INC = -I$(MANDATORY_DIR)/includes -I$(MANDATORY_DIR)/NEWMLX42/include
 
-MANDATORY_SRC = \
-	$(MANDATORY_DIR)/main.c \
+MANDATORY_SRC = $(MANDATORY_DIR)/main.c \
 	$(MANDATORY_DIR)/parsing/parsing.c \
 	$(MANDATORY_DIR)/parsing/parsing_utils.c \
 	$(MANDATORY_DIR)/parsing/parsing_utils2.c \
@@ -80,16 +66,12 @@ MANDATORY_SRC = \
 
 MANDATORY_OBJ = $(MANDATORY_SRC:.c=.o)
 
-# ─────────────────────────────────────────────
-# Bonus
-# ─────────────────────────────────────────────
-BONUS_NAME = cub3D_bonus
-BONUS_DIR  = Bonus
-MLX_BONUS_DIR = $(BONUS_DIR)/NEWMLX42
-BONUS_INCL = -I$(BONUS_DIR)/includes_bonus -I$(MLX_BONUS_DIR)/include
 
-BONUS_SRC = \
-    $(BONUS_DIR)/main.c \
+BONUS_NAME   = cub3D_bonus
+BONUS_DIR    = Bonus
+MLX_BONUS_INC = -I$(BONUS_DIR)/includes_bonus -I$(BONUS_DIR)/NEWMLX42/include
+
+BONUS_SRC = $(BONUS_DIR)/main.c \
     $(BONUS_DIR)/parsing_bonus/parsing.c \
     $(BONUS_DIR)/parsing_bonus/parsing_utils.c \
     $(BONUS_DIR)/parsing_bonus/parsing_utils2.c \
@@ -143,44 +125,37 @@ BONUS_SRC = \
 
 BONUS_OBJ = $(BONUS_SRC:.c=.o)
 
-# ─────────────────────────────────────────────
-# Build Targets
-# ─────────────────────────────────────────────
-all: $(MANDATORY_NAME)
 
-bonus: $(BONUS_NAME)
+all: first $(MANDATORY_NAME)
 
-# ─────────────────────────────────────────────
-# Linking
-# ─────────────────────────────────────────────
+bonus: first $(BONUS_NAME)
 
-$(MANDATORY_NAME): MLX_DIR = $(MLX_MANDATORY_DIR)
-$(MANDATORY_NAME): $(MLX_DIR)/build/libmlx42.a $(MANDATORY_OBJ)
+
+$(MANDATORY_NAME): $(MANDATORY_OBJ) $(MLX_LIB)
 	$(CC) $(CFLAGS) $(MANDATORY_OBJ) $(MLX_FLAGS) $(GLFW_LIB) -o $@
-	@echo "\033[1;32m[OK] Mandatory ready!\033[0m"
 
-$(BONUS_NAME): MLX_DIR = $(MLX_BONUS_DIR)
-$(BONUS_NAME): $(MLX_DIR)/build/libmlx42.a $(BONUS_OBJ)
-	$(CC) $(CFLAGS) $(BONUS_OBJ) $(MLX_FLAGS) $(GLFW_LIB) -o $@
-	@echo "\033[1;32m[OK] Bonus ready!\033[0m"
-
-
-# ─────────────────────────────────────────────
-# Compilation rules (different includes)
-# ─────────────────────────────────────────────
 Mandatory/%.o: Mandatory/%.c
-	$(CC) $(CFLAGS) $(MANDATORY_INCL) $(GLFW_INC) -c $< -o $@
+	$(CC) $(CFLAGS)  $(MLX_MANDATORY_INC) $(GLFW_INC) -c $< -o $@
+
+
+$(BONUS_NAME): $(BONUS_OBJ) $(MLX_LIB)
+	$(CC) $(CFLAGS) $(BONUS_OBJ) $(MLX_FLAGS) $(GLFW_LIB) -o $@
 
 Bonus/%.o: Bonus/%.c
-	$(CC) $(CFLAGS) $(BONUS_INCL) $(GLFW_INC) -c $< -o $@
+	$(CC) $(CFLAGS) $(MLX_BONUS_INC) $(GLFW_INC) -c $< -o $@
 
-# ─────────────────────────────────────────────
-# Cleaning
-# ─────────────────────────────────────────────
+
+first: $(MLX_LIB)
+
+$(MLX_LIB):
+	cd $(MLX_DIR) && rm -rf build && cmake -B build && cmake --build build
+
+
 clean:
-	rm -f $(MANDATORY_OBJ) $(BONUS_OBJ) 
+	rm -f $(MANDATORY_OBJ) $(BONUS_OBJ)
 
 fclean: clean
 	rm -f $(MANDATORY_NAME) $(BONUS_NAME)
+	cd $(MLX_DIR) && rm -rf build
 
 re: fclean all
