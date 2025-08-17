@@ -1,8 +1,7 @@
 CC      = cc
-CFLAGS  = -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS  = -Wall -Wextra -Werror
 
-
-USER     = aromani
+USER     = malaamir
 GLFW_DIR = /mnt/homes/$(USER)/.brew/opt/glfw
 GLFW_INC = -I$(GLFW_DIR)/include
 GLFW_LIB = -L$(GLFW_DIR)/lib -lglfw

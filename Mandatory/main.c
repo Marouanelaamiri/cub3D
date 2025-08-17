@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:13:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/17 19:12:27 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/17 21:18:27 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv)
 		return (0);
 	if (argc != 2)
 	{
-		printf("Usage: %s <map_file.cub>\n", argv[0]);
+		printf("What the fuck are you doing?\n");
 		return (EXIT_FAILURE);
 	}
 	info = parser_map(argc, argv);
