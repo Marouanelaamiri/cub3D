@@ -6,13 +6,13 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 16:10:44 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/12 22:56:53 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/17 17:33:44 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	replace_spaces_with_zero(t_data *info)
+void	patch_holes(t_data *info)
 {
 	int	i;
 	int	j;

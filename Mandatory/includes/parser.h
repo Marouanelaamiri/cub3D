@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/16 18:50:01 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/17 17:37:41 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int		validate_map_file(char *path, t_data *info);
 void	check_borders(t_data *info);
 void	ft_free_array(char **arr);
 int		load_textures(t_data *data);
-void	replace_spaces_with_zero(t_data *data);
+void	patch_holes(t_data *info);
 void	pad_map_edges_with_walls(t_data *info);
 int		ft_getmax(int a, int b);
 int		ft_whitespaces(int c);
