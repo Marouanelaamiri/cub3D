@@ -1,7 +1,7 @@
 CC      = cc
 CFLAGS  = -Wall -Wextra -Werror
 
-USER     = malaamir
+USER     = aromani
 GLFW_DIR = /mnt/homes/$(USER)/.brew/opt/glfw
 GLFW_INC = -I$(GLFW_DIR)/include
 GLFW_LIB = -L$(GLFW_DIR)/lib -lglfw
