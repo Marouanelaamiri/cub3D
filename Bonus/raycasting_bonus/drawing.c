@@ -3,69 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:16:33 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/18 23:44:31 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/19 00:40:02 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "cub3d_bonus.h"
 
-static void init_texters(t_data *data)
+static void	ft_paint(t_data *data, float distance, int screen_x)
 {
-	if (data->hit_is_door) 
-	{
-		data->tex = data->door;
-		return ;
-	}
-	if (data->hit_side == 'N') 
-		data->tex = data->no;
-	else if (data->hit_side == 'S') 
-		data->tex = data->so;
-	else if (data->hit_side == 'W') 
-		data->tex = data->we;
-	else                            
-		data->tex = data->ea;
-}
+	int	wall_height;
+	int	wall_top;
+	int	wall_bottom;
+	int	screen_y;
+	int	screen_info[2];
 
-static uint32_t get_wall_pixel(t_data *data, int wall_height, int wall_top, int screen_y)
-{
-    uint32_t	*texture_pixels;
-    float		tex_ratio;
-    int			tex_y;
-	int			tex_x;
-	
-	texture_pixels = (uint32_t *)data->tex->pixels;
-	tex_ratio = (float)(screen_y - wall_top) / wall_height;
-    tex_y = (int)(tex_ratio * (data->tex->height - 1));
-	tex_x = (int)data->tex_x;
-    return (texture_pixels[tex_y * data->tex->width + tex_x]);
-}
-
-
-void draw_wall(t_data *data, int wall_height, int wall_top, int screen_pos[2])
-{
-    int			screen_x;
-    int			screen_y;
-    uint32_t	pixel_color;
-	
-	screen_x = screen_pos[1];
-    screen_y = screen_pos[0];
-    pixel_color = get_wall_pixel(data, wall_height, wall_top, screen_y);
-    put_pixel(data, screen_x, screen_y, pixel_color);
-}
-
-
-static void ft_paint(t_data *data, float distance, int screen_x)
-{
-	int wall_height;
-	int wall_top;
-	int wall_bottom;
-	int screen_y;
-	int screen_info[2];
-	
 	wall_height = (int)((TILE_SIZE * MAP_HEIGHT) / distance);
 	wall_top = (MAP_HEIGHT - wall_height) / 2;
 	wall_bottom = wall_top + wall_height;
@@ -86,9 +40,9 @@ static void ft_paint(t_data *data, float distance, int screen_x)
 	}
 }
 
-static void draw_column(t_data *data, int screen_x, float distance)
+static void	draw_column(t_data *data, int screen_x, float distance)
 {
-	float wall_hit_pos;
+	float	wall_hit_pos;
 
 	init_texters(data);
 	wall_hit_pos = fmodf(data->hit_wall_x, TILE_SIZE);
@@ -101,21 +55,21 @@ static void draw_column(t_data *data, int screen_x, float distance)
 	ft_paint(data, distance, screen_x);
 }
 
-static void render_3d(t_data *data)
+static void	render_3d(t_data *data)
 {
 	float	step;
 	float	angle;
 	int		col;
-	float raw_dist;
-	float corrected;
+	float	raw_dist;
+	float	corrected;
 
-	step  = data->fov / (float)MAP_WIDTH;
+	step = data->fov / (float)MAP_WIDTH;
 	angle = data->ray_angle - (data->fov / 2);
-	col   = 0;
+	col = 0;
 	while (col < MAP_WIDTH)
 	{
 		raw_dist = cast_ray(data, angle);
-		corrected = raw_dist * cosf( angle - data->ray_angle);
+		corrected = raw_dist * cosf(angle - data->ray_angle);
 		draw_column(data, col, corrected);
 		angle += step;
 		col++;
@@ -127,7 +81,7 @@ void	redraw(t_data *data)
 	mlx_delete_image(data->mlx, data->img);
 	init_struct(data);
 	render_3d(data);
-    draw_minimap(data);
+	draw_minimap(data);
 	draw_reload_overlay(data);
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 }

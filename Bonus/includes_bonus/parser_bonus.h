@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/18 23:49:42 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/19 00:38:33 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,5 +200,9 @@ void	toggle_door(t_data *data);
 void	draw_minimap(t_data *data);
 int		doors_animatin_hooks(t_data *data);
 void	free_graphics_and_textures(t_data *data);
+void	horizental_calcul(t_data *data);
+void	vertecal_clacule(t_data *data);
+void	draw_wall(t_data *data, int wall_height, int wall_top, int screen_pos[2]);
+void	init_texters(t_data *data);
 
 #endif

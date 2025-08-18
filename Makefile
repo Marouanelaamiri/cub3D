@@ -1,7 +1,7 @@
 CC      = cc
 CFLAGS  = -Wall -Wextra -Werror
 
-USER     = malaamir
+USER     = aromani
 GLFW_DIR = /mnt/homes/$(USER)/.brew/opt/glfw
 GLFW_INC = -I$(GLFW_DIR)/include
 GLFW_LIB = -L$(GLFW_DIR)/lib -lglfw
@@ -122,6 +122,7 @@ BONUS_SRC = $(BONUS_DIR)/main.c \
 	$(BONUS_DIR)/gun_doors/animation_utils.c \
     $(BONUS_DIR)/gun_doors/door.c \
     $(BONUS_DIR)/raycasting_bonus/mouse_handler.c \
+    $(BONUS_DIR)/raycasting_bonus/textures.c \
 	$(BONUS_DIR)/raycasting_bonus/minimap.c 
 
 BONUS_OBJ = $(BONUS_SRC:.c=.o)
