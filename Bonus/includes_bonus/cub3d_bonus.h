@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 # include "../../MLX42/include/MLX42/MLX42.h"
-# include "parser.h"
+# include "parser_bonus.h"
 # include <fcntl.h>
 # include <math.h>
 # include <unistd.h>

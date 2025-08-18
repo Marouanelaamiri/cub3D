@@ -1,7 +1,7 @@
 CC      = cc
 CFLAGS  = -Wall -Wextra -Werror
 
-USER     = malaamir
+USER     = aromani
 GLFW_DIR = /mnt/homes/$(USER)/.brew/opt/glfw
 GLFW_INC = -I$(GLFW_DIR)/include
 GLFW_LIB = -L$(GLFW_DIR)/lib -lglfw
@@ -126,7 +126,7 @@ BONUS_OBJ = $(BONUS_SRC:.c=.o)
 
 HF_MANDA = Mandatory/includes/cub3d.h Mandatory/includes/parser.h
 
-HF_BONUS = Bonus/includes_bonus/cub3d.h Bonus/includes_bonus/parser.h
+HF_BONUS = Bonus/includes_bonus/cub3d_bonus.h Bonus/includes_bonus/parser_bonus.h
 
 
 all: first $(MANDATORY_NAME)

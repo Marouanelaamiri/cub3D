@@ -6,11 +6,11 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:12:00 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/14 16:15:36 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/18 20:13:44 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 float get_angle_from_dir(char dir) 
 {

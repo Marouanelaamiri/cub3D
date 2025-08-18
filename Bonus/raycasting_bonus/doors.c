@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   doors.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:54:56 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/15 19:15:23 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/18 20:13:28 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	doors_animatin_hooks(t_data *data)
 {

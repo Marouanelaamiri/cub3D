@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 16:45:52 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/16 18:49:30 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/18 20:13:52 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 static int retate(t_data *data, int32_t m_x, int changed)
 {

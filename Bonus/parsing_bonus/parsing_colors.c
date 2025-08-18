@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_colors.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:29:36 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/12 19:10:53 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/18 20:12:53 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 static int	convert_tokens(char **tokens, int *r, int *g, int *b)
 {

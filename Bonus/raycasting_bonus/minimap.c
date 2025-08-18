@@ -3,33 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 21:35:29 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/15 19:07:17 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/18 20:13:49 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 #define MINIMAP_TILE_SIZE 11
 #define PLAYER_SIZE 5.5        
 
 uint32_t get_color(t_data *data, float tx, float ty, float half_visible)
 {
-    // World tile coordinates relative to player
-    int map_x = (data->player_x / TILE_SIZE) - half_visible + tx;
-    int map_y = (data->player_y / TILE_SIZE) - half_visible + ty;
+    int map_x;
+    int map_y;
+    uint32_t color;
 
-    uint32_t color = 0x00000000;
+    // World tile coordinates relative to player
+    map_x = (data->player_x / TILE_SIZE) - half_visible + tx;
+    map_y = (data->player_y / TILE_SIZE) - half_visible + ty;
+    color = 0x00000000;
     if (map_y >= 0 && map_y < data->recmap_height &&
         map_x >= 0 && map_x < (int)ft_strlen(data->map[map_y]))
     {
-        char cell = data->map[map_y][map_x];
-        if (cell == '1') color = 0x80555555;
-        else if (cell == 'D')
-            color = 0x000000FF; // closed door
-        else color = data->f_color;
+        if (data->map[map_y][map_x] == '1') 
+            color = 0x80555555;
+        else if (data->map[map_y][map_x] == 'D')
+            color = 0x000000FF;
+        else 
+            color = data->f_color;
     }
     return (color);
 }
@@ -79,10 +83,7 @@ void draw_minimap(t_data *data)
     int visible_tiles = 15;
     int half_visible = visible_tiles / 2;
     uint32_t color;
-    // Center of minimap in pixels
-   
 
-    // Loop over visible tiles
     int ty = 0;
     while (ty < visible_tiles)
     {

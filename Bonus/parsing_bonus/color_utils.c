@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   color_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:25:22 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/10 17:54:22 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/18 20:12:35 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	assign_floor_color(t_data *info, int r, int g, int b)
 {

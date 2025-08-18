@@ -3,14 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   dda_algo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 17:48:40 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/15 22:14:23 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/18 20:13:24 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
+
+void vertecal_clacule(t_data *data)
+{
+	float adjacent;
+	
+	adjacent = 0.0;
+	if (data->algo->step_x < 0)
+	{
+		adjacent = (data->algo->px - data->algo->map_x * TILE_SIZE);
+		data->algo->side_dist_x = adjacent * data->algo->delta_x;
+	}
+	else
+	{
+		adjacent = ((data->algo->map_x + 1) * TILE_SIZE - data->algo->px);
+		data->algo->side_dist_x = adjacent * data->algo->delta_x;
+	}
+}
+
+void horizental_calcul(t_data *data)
+{
+	float adjacent;
+	
+	adjacent = 0.0;
+	if (data->algo->step_y < 0)
+	{	
+		adjacent = (data->algo->py - data->algo->map_y * TILE_SIZE);
+		data->algo->side_dist_y = adjacent * data->algo->delta_y;
+	}
+	else
+	{	
+		adjacent = ((data->algo->map_y + 1) * TILE_SIZE - data->algo->py);
+		data->algo->side_dist_y = adjacent * data->algo->delta_y;
+	}
+
+}
 
 static void init_algo(t_data *data, float angle)
 {
@@ -30,14 +65,8 @@ static void init_algo(t_data *data, float angle)
 		data->algo->step_y = -1;
 	else
 		data->algo->step_y = 1;
-	if (data->algo->step_x < 0)
-		data->algo->side_dist_x = (data->algo->px - data->algo->map_x * TILE_SIZE) * data->algo->delta_x;
-	else
-		data->algo->side_dist_x = ((data->algo->map_x + 1) * TILE_SIZE - data->algo->px) * data->algo->delta_x;
-	if (data->algo->step_y < 0)
-		data->algo->side_dist_y = (data->algo->py - data->algo->map_y * TILE_SIZE) * data->algo->delta_y;
-	else
-		data->algo->side_dist_y = ((data->algo->map_y + 1) * TILE_SIZE - data->algo->py) * data->algo->delta_y;
+	vertecal_clacule(data);
+	horizental_calcul(data);
 }
 
 int	door_check(t_data *data)

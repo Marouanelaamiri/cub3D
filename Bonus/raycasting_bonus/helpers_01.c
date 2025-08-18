@@ -6,11 +6,11 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:20:52 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/18 18:33:50 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/18 20:13:47 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void init_struct(t_data *data)
 {
