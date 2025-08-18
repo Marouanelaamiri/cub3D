@@ -6,15 +6,15 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 17:40:14 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/08 17:40:50 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/18 21:45:44 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int ft_retate(t_data *data, int flag)
+int	ft_retate(t_data *data, int flag)
 {
-	int changed;
+	int	changed;
 
 	changed = 0;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
@@ -36,9 +36,9 @@ int ft_retate(t_data *data, int flag)
 	return (changed);
 }
 
-int key_w(t_data *data, int flag, float new_x, float new_y)
+int	key_w(t_data *data, int flag, float new_x, float new_y)
 {
-	int changed;
+	int	changed;
 
 	changed = 0;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
@@ -61,9 +61,9 @@ int key_w(t_data *data, int flag, float new_x, float new_y)
 	return (changed);
 }
 
-int key_s(t_data *data, int flag, float new_x, float new_y)
+int	key_s(t_data *data, int flag, float new_x, float new_y)
 {
-	int changed;
+	int	changed;
 
 	changed = 0;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
@@ -86,9 +86,9 @@ int key_s(t_data *data, int flag, float new_x, float new_y)
 	return (changed);
 }
 
-int key_a(t_data *data, int flag, float new_x, float new_y)
+int	key_a(t_data *data, int flag, float new_x, float new_y)
 {
-	int changed;
+	int	changed;
 
 	changed = 0;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_A))
@@ -111,9 +111,9 @@ int key_a(t_data *data, int flag, float new_x, float new_y)
 	return (changed);
 }
 
-int key_d(t_data *data, int flag, float new_x, float new_y)
+int	key_d(t_data *data, int flag, float new_x, float new_y)
 {
-	int changed;
+	int	changed;
 
 	changed = 0;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_D))

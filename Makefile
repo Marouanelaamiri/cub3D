@@ -61,7 +61,9 @@ MANDATORY_SRC = $(MANDATORY_DIR)/main.c \
 	$(MANDATORY_DIR)/raycasting/helpers_00.c \
 	$(MANDATORY_DIR)/raycasting/helpers_01.c \
 	$(MANDATORY_DIR)/raycasting/drawing.c \
-	$(MANDATORY_DIR)/parsing/padding.c
+	$(MANDATORY_DIR)/parsing/padding.c \
+	$(MANDATORY_DIR)/raycasting/textures.c\
+	$(MANDATORY_DIR)/raycasting/sliding.c\
 
 MANDATORY_OBJ = $(MANDATORY_SRC:.c=.o)
 

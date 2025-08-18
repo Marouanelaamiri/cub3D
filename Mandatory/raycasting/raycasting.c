@@ -6,74 +6,22 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 20:57:09 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/18 20:56:10 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/18 21:54:36 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int slide_check(t_data *data, float corners[4][2], int i)
+void	terminate_program(void *param)
 {
-    int mx;
-    int my;
+	t_data	*data;
 
-    mx = (int)(corners[i][0] / TILE_SIZE);
-    my = (int)(corners[i][1] / TILE_SIZE);
-    if (my < 0 || my >= data->recmap_height
-        || mx < 0 || mx >= (int)ft_strlen(data->map[my])
-        || data->map[my][mx] == '1')
-        return (1);
-    return (0);
-}
-
-int slide_handel(t_data *data, float new_px, float new_py)
-{
-    float px;
-    float py;
-    float r;
-    int i;
-
-    px = new_px;
-    py = new_py ;
-    r  = COLLIDE_PAD * TILE_SIZE;
-    i = 0;
-    float corners[4][2] = {
-        { px - r, py - r },
-        { px + r, py - r },
-        { px - r, py + r },
-        { px + r, py + r }
-    };
-    while (i < 4)
-    {
-        if (slide_check(data, corners, i))
-            return (1);
-        i++;
-    }
-    return (0);
-}
-
-int is_colliding(t_data *data, float new_px, float new_py)
-{
-
-    int tile_x = (int)(new_px / TILE_SIZE);
-    int tile_y = (int)(new_py / TILE_SIZE);
-    if (tile_y >= 0 && tile_y < data->recmap_height
-     && tile_x >= 0 && tile_x < (int)ft_strlen(data->map[tile_y])
-     && data->map[tile_y][tile_x] == '1')
-        return (1);
-    if (slide_handel(data, new_px, new_py))
-        return (1);
-    return 0;
-}
-
-void terminate_program(void *param)
-{
-    t_data *data = (t_data *)param;
-    if (data->img)
-        mlx_delete_image(data->mlx, data->img);
+	data = (t_data *)param;
+	if (data->img)
+		mlx_delete_image(data->mlx, data->img);
 	free_graphics_and_textures(data);
-    if (data->mlx)
-        mlx_terminate(data->mlx);
+	if (data->mlx)
+		mlx_terminate(data->mlx);
 	clean_map(data);
 	free(data->algo);
 	free(data);
@@ -82,7 +30,7 @@ void terminate_program(void *param)
 
 void	key_hook(void *param)
 {
-	t_data	*data = (t_data *)param;
+	t_data	*data;
 	float	new_x;
 	float	new_y;
 	int		changed;
@@ -90,6 +38,7 @@ void	key_hook(void *param)
 	new_x = 0.0;
 	new_y = 0.0;
 	changed = 0;
+	data = (t_data *)param;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 		terminate_program(param);
 	changed = key_w(data, changed, new_x, new_y);
@@ -105,16 +54,15 @@ int	main_raycasting(t_data *data)
 {
 	set_wh_map(data);
 	data->mlx = mlx_init(MAP_WIDTH, MAP_HEIGHT, "Cub3D", false);
-	if (!data->mlx) 
+	if (!data->mlx)
 		return (1);
-
-    if (load_textures(data))
-    {
-        free_graphics_and_textures(data);
-        if (data->mlx)
-            mlx_terminate(data->mlx);
-        return (1);
-    }
+	if (load_textures(data))
+	{
+		free_graphics_and_textures(data);
+		if (data->mlx)
+			mlx_terminate(data->mlx);
+		return (1);
+	}
 	init_struct(data);
 	init_player(data);
 	redraw(data);

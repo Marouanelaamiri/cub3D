@@ -6,39 +6,44 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:12:00 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/18 18:33:34 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/18 21:42:29 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-float get_angle_from_dir(char dir) 
+float	get_angle_from_dir(char dir)
 {
-	if (dir == 'S') 
+	if (dir == 'S')
 		return (M_PI / 2);
-	if (dir == 'N') 
-		return (- M_PI / 2);
-	if (dir == 'E') 
+	if (dir == 'N')
+		return (-M_PI / 2);
+	if (dir == 'E')
 		return (0);
-	if (dir == 'W') 
+	if (dir == 'W')
 		return (M_PI);
 	return (0);
 }
 
-void set_char(t_data *data, char c) 
+void	set_char(t_data *data, char c)
 {
 	data->player_char = c;
 }
 
-void set_wh_map(t_data *data) 
+void	set_wh_map(t_data *data)
 {
-	int y = 0;
-	int max_width = 0;
-	while (data->map[y]) 
+	int	y;
+	int	max_width;
+	int	x;
+	int	width;
+
+	max_width = 0;
+	y = 0;
+	while (data->map[y])
 	{
-		int x = 0;
-		int width = 0;
-		while (data->map[y][x]) 
+		x = 0;
+		width = 0;
+		while (data->map[y][x])
 		{
 			if (data->map[y][x] != ' ' && data->map[y][x] != '\t')
 				width++;
@@ -54,8 +59,8 @@ void set_wh_map(t_data *data)
 
 void	put_pixel(t_data *d, int x, int y, uint32_t color)
 {
-	int	offset;
-	char *data;
+	int		offset;
+	char	*data;
 
 	data = (char *)d->addr;
 	if (x < 0 || y < 0 || x >= MAP_WIDTH || y >= MAP_HEIGHT)
@@ -66,40 +71,3 @@ void	put_pixel(t_data *d, int x, int y, uint32_t color)
 	data[offset + 2] = (color >> 16) & 0xFF;
 	data[offset + 3] = (color >> 24) & 0xFF;
 }
-
-void free_textures(t_data *data)
-{
-	if (data->no)
-	{
-		mlx_delete_texture(data->no);
-		data->no = NULL;
-	}
-    if (data->so)
-	{
-		mlx_delete_texture(data->so);
-		data->so = NULL;
-	}
-    if (data->we)
-	{
-		mlx_delete_texture(data->we);
-		data->we = NULL;
-	}
-    if (data->ea)
-	{
-		mlx_delete_texture(data->ea);
-		data->ea = NULL;
-	}
-    if (data->img)
-	{
-		mlx_delete_image(data->mlx, data->img);
-		data->img = NULL;
-	}
-}
-
-void	free_graphics_and_textures(t_data *data)
-{
-    if (!data)
-        return;
-    free_textures(data);
-}
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/18 20:35:19 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/18 21:33:51 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,5 +175,11 @@ void	init_player(t_data *data);
 int		validate_token(const char *s);
 void	color_error_or_exit(char *value, t_data *info, int is_floor);
 void	free_graphics_and_textures(t_data *data);
+void	vertecal_clacule(t_data *data);
+void	horizental_calcul(t_data *data);
+uint32_t	get_wall_pixel(t_data *data, int wall_height, int wall_top, int screen_y);
+void	init_texters(t_data *data);
+void	draw_wall(t_data *data, int wall_height, \
+	int wall_top, int screen_pos[2]);
 
 #endif
