@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:16:33 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/18 20:25:55 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/18 20:31:56 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,20 +96,23 @@ static void draw_column(t_data *data, int screen_x, float distance)
 
 static void render_3d(t_data *data)
 {
-    int   w     = MAP_WIDTH;
-    float step  = data->fov / (float)w;
-    float angle = data->ray_angle - (data->fov / 2);
-	int         col   = 0;
+	float	step;
+	float	angle;
+	int		col;
+	float raw_dist;
+	float corrected;
 
-    while (col < w)
-    {
-        float raw_dist = cast_ray(data, angle);
-        float diff = angle - data->ray_angle;
-        float corrected = raw_dist * cosf(diff);
-        draw_column(data, col, corrected);
-        angle += step;
-        col++;
-    }
+	step  = data->fov / (float)MAP_WIDTH;
+	angle = data->ray_angle - (data->fov / 2);
+	col   = 0;
+	while (col < MAP_WIDTH)
+	{
+		raw_dist = cast_ray(data, angle);
+		corrected = raw_dist * cosf( angle - data->ray_angle);
+		draw_column(data, col, corrected);
+		angle += step;
+		col++;
+	}
 }
 
 void	redraw(t_data *data)
