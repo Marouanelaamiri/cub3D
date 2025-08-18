@@ -6,7 +6,11 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:16:33 by aromani           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/08/18 20:31:56 by aromani          ###   ########.fr       */
+=======
+/*   Updated: 2025/08/18 20:34:19 by malaamir         ###   ########.fr       */
+>>>>>>> 67e5c294eea6455a572110ef79fc8ac9b2d44de2
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +36,29 @@ static void init_texters(t_data *data)
 
 static uint32_t get_wall_pixel(t_data *data, int wall_height, int wall_top, int screen_y)
 {
-    uint32_t *texture_pixels = (uint32_t *)data->tex->pixels;
-    float tex_ratio = (float)(screen_y - wall_top) / wall_height;
-    int tex_y = (int)(tex_ratio * (data->tex->height - 1));
+    uint32_t	*texture_pixels;
+    float		tex_ratio;
+    int			tex_y;
+	int			tex_x;
+	
+	texture_pixels = (uint32_t *)data->tex->pixels;
+	tex_ratio = (float)(screen_y - wall_top) / wall_height;
+    tex_y = (int)(tex_ratio * (data->tex->height - 1));
     tex_y = fmax(0, fmin(data->tex->height - 1, tex_y));
-
-    int tex_x = (int)data->tex_x;
-    return texture_pixels[tex_y * data->tex->width + tex_x];
+	tex_x = (int)data->tex_x;
+    return (texture_pixels[tex_y * data->tex->width + tex_x]);
 }
 
 
 void draw_wall(t_data *data, int wall_height, int wall_top, int screen_pos[2])
 {
-    int screen_x = screen_pos[1];
-    int screen_y = screen_pos[0];
-    uint32_t pixel_color = get_wall_pixel(data, wall_height, wall_top, screen_y);
+    int			screen_x;
+    int			screen_y;
+    uint32_t	pixel_color;
+	
+	screen_x = screen_pos[1];
+    screen_y = screen_pos[0];
+    pixel_color = get_wall_pixel(data, wall_height, wall_top, screen_y);
     put_pixel(data, screen_x, screen_y, pixel_color);
 }
 
