@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/18 18:10:42 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/18 20:35:19 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ void	ft_free_array(char **arr);
 int		load_textures(t_data *data);
 void	patch_holes(t_data *info);
 void	pad_map_edges_with_walls(t_data *info);
+void	draw_wall(t_data *data, int wall_height, int wall_top, int screen_pos[2]);
 int		ft_getmax(int a, int b);
 int		ft_whitespaces(int c);
 int		ft_atoi(const char *str);

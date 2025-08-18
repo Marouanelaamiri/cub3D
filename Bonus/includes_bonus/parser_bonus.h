@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   parser_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/17 18:49:50 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/18 20:35:01 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ void	map_parsing(t_data *info, int *started, char *line);
 int		handle_fc(char *trim, t_data *info);
 void	check_map_line(t_data *info, char *line);
 int		validate_map_file(char *path, t_data *info);
+void	draw_wall(t_data *data, int wall_height, int wall_top, int screen_pos[2]);
 void	check_borders(t_data *info);
 void	ft_free_array(char **arr);
 int		load_textures(t_data *data);
