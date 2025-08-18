@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:16:33 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/18 20:34:11 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/18 20:45:45 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void ft_paint(t_data *data, float distance, int screen_x)
 	}
 }
 
-static void draw_column(t_data *data, int screen_x, float distance)
+static void	draw_column(t_data *data, int screen_x, float distance)
 {
 	float wall_hit_pos;
 
