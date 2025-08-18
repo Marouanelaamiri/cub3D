@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_01.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:20:52 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/17 19:08:14 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/18 18:33:50 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,10 @@ void init_player(t_data *data)
 		iy++;
 	}
 }
-void	free_graphics_and_textures(t_data *data)
+
+void free_textures(t_data *data)
 {
-    if (!data)
-        return;
-    if (data->no)
+	if (data->no)
 	{
 		mlx_delete_texture(data->no);
 		data->no = NULL;
@@ -68,14 +67,16 @@ void	free_graphics_and_textures(t_data *data)
 		mlx_delete_texture(data->ea);
 		data->ea = NULL;
 	}
-	if (data->door)
-	{
-		mlx_delete_texture(data->door);
-		data->door = NULL;
-	}
     if (data->img)
 	{
 		mlx_delete_image(data->mlx, data->img);
 		data->img = NULL;
 	}
+}
+
+void	free_graphics_and_textures(t_data *data)
+{
+    if (!data)
+        return;
+    free_textures(data);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_00.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:12:00 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/17 19:08:30 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/18 18:33:34 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,6 @@ void set_char(t_data *data, char c)
 {
 	data->player_char = c;
 }
-
-// void set_fov(t_data *data, float fov) 
-// {
-// 	data->fov = fov;
-// }
 
 void set_wh_map(t_data *data) 
 {
@@ -72,11 +67,9 @@ void	put_pixel(t_data *d, int x, int y, uint32_t color)
 	data[offset + 3] = (color >> 24) & 0xFF;
 }
 
-void	free_graphics_and_textures(t_data *data)
+void free_textures(t_data *data)
 {
-    if (!data)
-        return;
-    if (data->no)
+	if (data->no)
 	{
 		mlx_delete_texture(data->no);
 		data->no = NULL;
@@ -101,5 +94,12 @@ void	free_graphics_and_textures(t_data *data)
 		mlx_delete_image(data->mlx, data->img);
 		data->img = NULL;
 	}
+}
+
+void	free_graphics_and_textures(t_data *data)
+{
+    if (!data)
+        return;
+    free_textures(data);
 }
 
