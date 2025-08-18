@@ -1,3 +1,0 @@
-Norm , makefile(romani)
-
-need to understand how textures are drawns on wall (drawing.c)

@@ -6,9 +6,10 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:16:33 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/18 20:13:32 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/18 20:25:02 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "cub3d_bonus.h"
 
@@ -29,65 +30,67 @@ static void init_texters(t_data *data)
 		data->tex = data->ea;
 }
 
-void draw_wall(t_data *data, int wall_h, int top, int y_col[2])
+void draw_wall(t_data *data, int wall_height, int wall_top, int screen_pos[2])
 {
-    int col;
-    int y;
-    uint32_t *pxs;
-    float ratio;
-    int tex_y;
-    uint32_t color;
-    
-    y = y_col[0];
-    col = y_col[1];
-    pxs = (uint32_t *)data->tex->pixels;
-    ratio = (float)(y - top) / wall_h;
-    tex_y = (int)(ratio * (data->tex->height - 1));
-    tex_y = fmax(0, fmin(data->tex->height - 1, tex_y));
-    color =  pxs[(int)(tex_y * data->tex->width + data->tex_x)];
-    put_pixel(data, col, y, color);
-}
-
-static void ft_paint(t_data *data, float dist, int col)
-{
-	int wall_h; 
-	int top;
-	int bottom;
-	int y;
-	int array[2];
+	int screen_x;
+	int screen_y;
+	uint32_t *texture_pixels;
+	float tex_ratio;
+	int tex_y;
+	uint32_t pixel_color;
 	
-	wall_h = (int)((TILE_SIZE * MAP_HEIGHT) / dist); // used to be int wall_h = (int)((TILE_SIZE * MAP_HEIGHT) / fmaxf(dist, 0.1f));
-	top = (MAP_HEIGHT - wall_h) / 2;
-	bottom = top + wall_h;
-	y = 0;
-	while (y < MAP_HEIGHT)
+	screen_y = screen_pos[0];
+	screen_x = screen_pos[1];
+	texture_pixels = (uint32_t *)data->tex->pixels;
+	tex_ratio = (float)(screen_y - wall_top) / wall_height;
+	tex_y = (int)(tex_ratio * (data->tex->height - 1));
+	tex_y = fmax(0, fmin(data->tex->height - 1, tex_y));
+	pixel_color = texture_pixels[(int)(tex_y * data->tex->width + data->tex_x)];
+	put_pixel(data, screen_x, screen_y, pixel_color);
+}
+
+
+static void ft_paint(t_data *data, float distance, int screen_x)
+{
+	int wall_height;
+	int wall_top;
+	int wall_bottom;
+	int screen_y;
+	int screen_info[2];
+	
+	wall_height = (int)((TILE_SIZE * MAP_HEIGHT) / distance);
+	wall_top = (MAP_HEIGHT - wall_height) / 2;
+	wall_bottom = wall_top + wall_height;
+	screen_y = 0;
+	while (screen_y < MAP_HEIGHT)
 	{
-	if (y < top)
-		mlx_put_pixel(data->img, col, y, data->c_color);
-	else if (y > top && y < bottom)
-	{
-		array[0] = y;
-		array[1] = col;
-		draw_wall(data, wall_h, top, array);
-	}
-	else if (y > bottom)
-	 	mlx_put_pixel(data->img, col, y, data->f_color);
-	y++;
+		if (screen_y < wall_top)
+			mlx_put_pixel(data->img, screen_x, screen_y, data->c_color);
+		else if (screen_y > wall_top && screen_y < wall_bottom)
+		{
+			screen_info[0] = screen_y;
+			screen_info[1] = screen_x;
+			draw_wall(data, wall_height, wall_top, screen_info);
+		}
+		else if (screen_y > wall_bottom)
+			mlx_put_pixel(data->img, screen_x, screen_y, data->f_color);
+		screen_y++;
 	}
 }
 
-static void draw_column(t_data *data, int col, float dist)
+static void draw_column(t_data *data, int screen_x, float distance)
 {
+	float wall_hit_pos;
+
 	init_texters(data);
-    float wall_x = fmodf(data->hit_wall_x, TILE_SIZE);
-    if (wall_x < 0)
-		wall_x += TILE_SIZE;
-    data->tex_x = (int)(wall_x * data->tex->width);
-    
-    if (data->hit_side == 'S' || data->hit_side == 'E')
-        data->tex_x = data->tex->width - data->tex_x - 1;
-    data->tex_x = fmax(0, fmin(data->tex->width - 1, data->tex_x));
-    ft_paint(data, dist, col);
+	wall_hit_pos = fmodf(data->hit_wall_x, TILE_SIZE);
+	if (wall_hit_pos < 0)
+		wall_hit_pos += TILE_SIZE;
+	data->tex_x = (int)(wall_hit_pos * data->tex->width);
+	if (data->hit_side == 'S' || data->hit_side == 'E')
+		data->tex_x = data->tex->width - data->tex_x - 1;
+	data->tex_x = fmax(0, fmin(data->tex->width - 1, data->tex_x));
+	ft_paint(data, distance, screen_x);
 }
 
 static void render_3d(t_data *data)
