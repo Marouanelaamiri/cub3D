@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 10:32:30 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/06 21:17:44 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/18 20:14:25 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	ft_bzero(void *s, size_t n)
 {

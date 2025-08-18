@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 11:05:18 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/14 18:13:23 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/18 20:15:33 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 char	**ft_realloc(char **lines, int line_count, char *new_line)
 {

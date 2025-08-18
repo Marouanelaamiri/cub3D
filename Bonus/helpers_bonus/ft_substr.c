@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 09:44:49 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/14 18:13:09 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/18 20:16:10 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 char	*ft_substr(const char *s, int start, int len)
 {

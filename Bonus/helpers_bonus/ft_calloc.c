@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 09:52:40 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/06 21:17:46 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/18 20:14:28 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	*ft_calloc(size_t count, size_t size)
 {

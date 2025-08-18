@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   animation.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 20:27:02 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/16 18:46:02 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/18 20:14:09 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 static void	load_frames(t_data *data)
 {

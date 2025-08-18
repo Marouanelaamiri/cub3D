@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   detol.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 13:53:16 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/13 21:33:54 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/18 20:12:41 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	clean_map_arr(t_data *info)
 {

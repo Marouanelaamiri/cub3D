@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_getmax.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 21:56:04 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/06 21:56:12 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/18 20:14:31 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	ft_getmax(int a, int b)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 18:34:13 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/14 22:30:48 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/18 20:13:19 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	load_textures(t_data *data)
 {

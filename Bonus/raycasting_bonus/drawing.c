@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:16:33 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/15 19:19:36 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/18 20:13:32 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 static void init_texters(t_data *data)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 08:55:49 by malaamir          #+#    #+#             */
-/*   Updated: 2025/07/06 21:17:49 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/18 20:14:39 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	ft_isalpha(int c)
 {

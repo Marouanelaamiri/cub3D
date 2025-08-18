@@ -126,7 +126,7 @@ BONUS_OBJ = $(BONUS_SRC:.c=.o)
 
 HF_MANDA = Mandatory/includes/cub3d.h Mandatory/includes/parser.h
 
-HF_BONUS = Bonus/includes_bonus/cub3d.h Bonus/includes_bonus/parser.h
+HF_BONUS = Bonus/includes_bonus/cub3d_bonus.h Bonus/includes_bonus/parser_bonus.h
 
 
 all: first $(MANDATORY_NAME)
