@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 21:31:28 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/18 21:56:22 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/18 23:44:52 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ uint32_t	get_wall_pixel(t_data *data, \
 	texture_pixels = (uint32_t *)data->tex->pixels;
 	tex_ratio = (float)(screen_y - wall_top) / wall_height;
 	tex_y = (int)(tex_ratio * (data->tex->height - 1));
-	tex_y = fmax(0, fmin(data->tex->height - 1, tex_y));
 	tex_x = (int)data->tex_x;
 	return (texture_pixels[tex_y * data->tex->width + tex_x]);
 }
