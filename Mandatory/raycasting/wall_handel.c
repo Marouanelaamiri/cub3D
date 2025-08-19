@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sliding.c                                          :+:      :+:    :+:   */
+/*   wall_handel.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 21:54:12 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/18 21:54:41 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/19 21:33:56 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	slide_check(t_data *data, float corners[4][2], int i)
+int	corners_check(t_data *data, float corners[4][2], int i)
 {
 	int	mx;
 	int	my;
@@ -26,27 +26,35 @@ int	slide_check(t_data *data, float corners[4][2], int i)
 	return (0);
 }
 
+void	init_corners(float corners[4][2], float px, float py)
+{
+	float	r;
 
-int	slide_handel(t_data *data, float new_px, float new_py)
+	r = COLLIDE_PAD * TILE_SIZE;
+	corners[0][0] = px - r;
+	corners[0][1] = py - r;
+	corners[1][0] = px + r;
+	corners[1][1] = py - r;
+	corners[2][0] = px - r;
+	corners[2][1] = py + r;
+	corners[3][0] = px + r;
+	corners[3][1] = py + r;
+}
+
+int	corners_handel(t_data *data, float new_px, float new_py)
 {
 	float	px;
 	float	py;
-	float	r;
 	int		i;
+	float	corners[4][2];
 
 	px = new_px;
 	py = new_py ;
-	r = COLLIDE_PAD * TILE_SIZE;
+	init_corners(corners, px, py);
 	i = 0;
-	float corners[4][2] = {
-		{ px - r, py - r },
-		{ px + r, py - r },
-		{ px - r, py + r },
-		{ px + r, py + r }
-	};
 	while (i < 4)
 	{
-		if (slide_check(data, corners, i))
+		if (corners_check(data, corners, i))
 			return (1);
 		i++;
 	}
@@ -64,7 +72,7 @@ int	is_colliding(t_data *data, float new_px, float new_py)
 		&& tile_x >= 0 && tile_x < (int)ft_strlen(data->map[tile_y])
 		&& data->map[tile_y][tile_x] == '1')
 		return (1);
-	if (slide_handel(data, new_px, new_py))
+	if (corners_handel(data, new_px, new_py))
 		return (1);
 	return (0);
 }

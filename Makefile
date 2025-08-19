@@ -1,7 +1,7 @@
 CC      = cc
 CFLAGS  = -Wall -Wextra -Werror
 
-USER     = malaamir
+USER     = aromani
 GLFW_DIR = /mnt/homes/$(USER)/.brew/opt/glfw
 GLFW_INC = -I$(GLFW_DIR)/include
 GLFW_LIB = -L$(GLFW_DIR)/lib -lglfw
@@ -63,7 +63,7 @@ MANDATORY_SRC = $(MANDATORY_DIR)/main.c \
 	$(MANDATORY_DIR)/raycasting/drawing.c \
 	$(MANDATORY_DIR)/parsing/padding.c \
 	$(MANDATORY_DIR)/raycasting/textures.c\
-	$(MANDATORY_DIR)/raycasting/sliding.c\
+	$(MANDATORY_DIR)/raycasting/wall_handel.c\
 
 MANDATORY_OBJ = $(MANDATORY_SRC:.c=.o)
 
@@ -123,7 +123,8 @@ BONUS_SRC = $(BONUS_DIR)/main.c \
     $(BONUS_DIR)/gun_doors/door.c \
     $(BONUS_DIR)/raycasting_bonus/mouse_handler.c \
     $(BONUS_DIR)/raycasting_bonus/textures.c \
-	$(BONUS_DIR)/raycasting_bonus/minimap.c 
+	$(BONUS_DIR)/raycasting_bonus/minimap.c \
+	$(BONUS_DIR)/raycasting_bonus/wall_handel.c
 
 BONUS_OBJ = $(BONUS_SRC:.c=.o)
 

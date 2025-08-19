@@ -6,7 +6,7 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:12:00 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/19 00:42:32 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/19 21:37:56 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,6 @@ float	get_angle_from_dir(char dir)
 	if (dir == 'W')
 		return (M_PI);
 	return (0);
-}
-
-void	set_char(t_data *data, char c)
-{
-	data->player_char = c;
 }
 
 void	set_wh_map(t_data *data)

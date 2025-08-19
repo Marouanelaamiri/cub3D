@@ -6,7 +6,7 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 00:30:56 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/19 00:38:00 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/19 21:08:22 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,29 +57,29 @@ void	draw_wall(t_data *data, int wall_height, \
 	put_pixel(data, screen_x, screen_y, pixel_color);
 }
 
-void free_textures(t_data *data)
+void	free_textures(t_data *data)
 {
 	if (data->no)
 	{
 		mlx_delete_texture(data->no);
 		data->no = NULL;
 	}
-    if (data->so)
+	if (data->so)
 	{
 		mlx_delete_texture(data->so);
 		data->so = NULL;
 	}
-    if (data->we)
+	if (data->we)
 	{
 		mlx_delete_texture(data->we);
 		data->we = NULL;
 	}
-    if (data->ea)
+	if (data->ea)
 	{
 		mlx_delete_texture(data->ea);
 		data->ea = NULL;
 	}
-    if (data->img)
+	if (data->img)
 	{
 		mlx_delete_image(data->mlx, data->img);
 		data->img = NULL;
@@ -88,7 +88,7 @@ void free_textures(t_data *data)
 
 void	free_graphics_and_textures(t_data *data)
 {
-    if (!data)
-        return;
-    free_textures(data);
+	if (!data)
+		return ;
+	free_textures(data);
 }

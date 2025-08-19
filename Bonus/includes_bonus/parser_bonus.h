@@ -6,7 +6,7 @@
 /*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/19 00:38:33 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/19 21:38:17 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # define MAP_HEIGHT 720
 # define DOOR_CLOSED 'D'
 # define DOOR_OPEN   'd'
+# define MINIMAP_TILE_SIZE 11
+# define PLAYER_SIZE 5.5  
 
 typedef struct s_algo
 {
@@ -73,7 +75,6 @@ typedef struct s_data
 	void			*mlx;
 	int32_t			mouse_x;
 	int32_t			mouse_y;
-	void			*win;
 	float			fov;
 	float			ray_angle;
 	char			*addr;
@@ -81,8 +82,6 @@ typedef struct s_data
 	int				line_len;
 	int				endian;
 	char			**map;
-	char			player_char;
-	float			player_angle;
 	int				map_width;
 	int				recmap_with;
 	int				map_height;
@@ -183,7 +182,6 @@ float	cast_ray(t_data *data, float angle);
 int		main_raycasting(t_data *data);
 void	put_pixel(t_data *d, int x, int y, uint32_t color);
 void	set_wh_map(t_data *data);
-void	set_char(t_data *data, char c);
 float	get_angle_from_dir(char dir);
 void	redraw(t_data *data);
 void	init_struct(t_data *data);
@@ -202,7 +200,8 @@ int		doors_animatin_hooks(t_data *data);
 void	free_graphics_and_textures(t_data *data);
 void	horizental_calcul(t_data *data);
 void	vertecal_clacule(t_data *data);
-void	draw_wall(t_data *data, int wall_height, int wall_top, int screen_pos[2]);
+void	draw_wall(t_data *data, int wall_height, \
+		int wall_top, int screen_pos[2]);
 void	init_texters(t_data *data);
 
 #endif

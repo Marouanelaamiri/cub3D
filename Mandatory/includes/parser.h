@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/18 23:48:46 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/19 21:38:28 by aromani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ typedef struct s_data
 	uint32_t		f_color;
 	uint32_t		c_color;
 	void			*mlx;
-	void			*win;
 	float			fov;
 	float			ray_angle;
 	char			*addr;
@@ -66,8 +65,6 @@ typedef struct s_data
 	int				line_len;
 	int				endian;
 	char			**map;
-	char			player_char;
-	float			player_angle;
 	int				map_width;
 	int				recmap_with;
 	int				map_height;
@@ -170,7 +167,6 @@ float		cast_ray(t_data *data, float angle);
 int			main_raycasting(t_data *data);
 void		put_pixel(t_data *d, int x, int y, uint32_t color);
 void		set_wh_map(t_data *data);
-void		set_char(t_data *data, char c);
 float		get_angle_from_dir(char dir);
 void		redraw(t_data *data);
 void		init_struct(t_data *data);
