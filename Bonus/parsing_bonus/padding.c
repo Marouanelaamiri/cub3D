@@ -3,33 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   padding.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 16:10:44 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/18 20:12:50 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/21 20:05:38 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
-
-void	patch_holes(t_data *info)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < info->map_height)
-	{
-		j = 0;
-		while (info->map[i][j])
-		{
-			if (info->map[i][j] == ' ')
-				info->map[i][j] = '1';
-			j++;
-		}
-		i++;
-	}
-}
 
 void	pad_line(t_data *info, int i, int target_len)
 {

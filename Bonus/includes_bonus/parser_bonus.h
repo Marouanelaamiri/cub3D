@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:23:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/19 21:38:17 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/20 19:15:18 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define DOOR_CLOSED 'D'
 # define DOOR_OPEN   'd'
 # define MINIMAP_TILE_SIZE 11
-# define PLAYER_SIZE 5.5  
+# define PLAYER_SIZE 5.5
 
 typedef struct s_algo
 {

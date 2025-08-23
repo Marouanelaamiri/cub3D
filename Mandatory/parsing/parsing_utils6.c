@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 14:07:50 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/14 21:36:45 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/21 20:42:22 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,9 @@ int	validate_token(const char *s)
 
 void	map_parsing(t_data *info, int *started, char *line)
 {
+	check_map_line(info, line);
+	if (info->has_error)
+		return ;
 	info->map_parsed = 1;
 	*started = 1;
-	check_map_line(info, line);
 }

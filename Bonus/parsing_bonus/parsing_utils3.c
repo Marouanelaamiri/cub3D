@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 14:35:44 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/18 20:13:02 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/23 18:01:10 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ int	check_line(char *line, t_data *info, int *started)
 		return (free(trimmed), 1);
 	if (!info->map_parsed && info->config_count < 6)
 	{
-		if (!check_id(line, info) && *trimmed)
-			map_parsing(info, started, line);
-		return (free(trimmed), 1);
+		if (check_id(line, info))
+			return (free(trimmed), 1);
+		info->map_parsed = 1;
 	}
 	if (info->map_parsed)
 	{
@@ -83,8 +83,8 @@ int	check_line(char *line, t_data *info, int *started)
 			free(trimmed);
 			print_error("Empty line found in map.\n", info);
 		}
-		free(trimmed);
 		map_parsing(info, started, line);
+		free(trimmed);
 		return (1);
 	}
 	return (free(trimmed), 1);

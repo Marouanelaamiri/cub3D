@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 14:35:44 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/10 16:53:32 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/23 17:59:42 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ int	check_line(char *line, t_data *info, int *started)
 
 	trimmed = ft_strtrim(line, " \t\n\r");
 	if (!trimmed)
-		print_error("Memory allocation failed during line check.\n", info);
+		print_error ("Memory allocation failed during line check.\n", info);
 	if (!*started && !*trimmed)
 		return (free(trimmed), 1);
 	if (!info->map_parsed && info->config_count < 6)
 	{
-		if (!check_id(line, info) && *trimmed)
-			map_parsing(info, started, line);
-		return (free(trimmed), 1);
+		if (check_id(line, info))
+			return (free(trimmed), 1);
+		info->map_parsed = 1;
 	}
 	if (info->map_parsed)
 	{
@@ -83,8 +83,8 @@ int	check_line(char *line, t_data *info, int *started)
 			free(trimmed);
 			print_error("Empty line found in map.\n", info);
 		}
-		free(trimmed);
 		map_parsing(info, started, line);
+		free(trimmed);
 		return (1);
 	}
 	return (free(trimmed), 1);

@@ -6,30 +6,11 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 16:10:44 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/17 17:54:45 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/21 20:05:03 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	patch_holes(t_data *info)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < info->map_height)
-	{
-		j = 0;
-		while (info->map[i][j])
-		{
-			if (info->map[i][j] == ' ')
-				info->map[i][j] = '0';
-			j++;
-		}
-		i++;
-	}
-}
 
 void	pad_line(t_data *info, int i, int target_len)
 {
