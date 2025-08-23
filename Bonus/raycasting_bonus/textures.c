@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 00:30:56 by aromani           #+#    #+#             */
-/*   Updated: 2025/08/19 21:08:22 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/23 18:11:08 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,10 @@ void	free_graphics_and_textures(t_data *data)
 {
 	if (!data)
 		return ;
+	if (data->door)
+	{
+		mlx_delete_texture(data->door);
+		data->door = NULL;
+	}
 	free_textures(data);
 }
