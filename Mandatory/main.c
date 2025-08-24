@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 19:13:53 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/23 17:58:04 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/24 17:54:32 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	ft_memset(algo, 0, sizeof(t_algo));
 	info->algo = algo;
-	pad_map_edges_with_walls(info);
+	pad_map(info);
 	ret = main_raycasting(info);
 	free_graphics_and_textures(info);
 	clean_map(info);

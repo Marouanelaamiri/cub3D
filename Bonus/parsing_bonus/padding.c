@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 16:10:44 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/21 20:05:38 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/08/24 17:56:35 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	replace_edge_spaces_with_walls(t_data *info, int max_len)
 	}
 }
 
-void	pad_map_edges_with_walls(t_data *info)
+void	pad_map(t_data *info)
 {
 	int	max_len;
 	int	i;
