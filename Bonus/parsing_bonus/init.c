@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:29:20 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/19 21:38:21 by aromani          ###   ########.fr       */
+/*   Updated: 2025/08/25 18:59:11 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,12 @@ void	print_error(char *msg, t_data *info)
 	const char	*prefix;
 	int			prefix_len;
 	int			msg_len;
+	int			i;
 
 	prefix = "Error: ";
 	prefix_len = ft_strlen(prefix);
 	msg_len = ft_strlen(msg);
+	i = 3;
 	write(2, prefix, prefix_len);
 	write(2, msg, msg_len);
 	if (info)
@@ -71,5 +73,7 @@ void	print_error(char *msg, t_data *info)
 		clean_map(info);
 		free(info);
 	}
+	while (i <= OPEN_MAX)
+		close(i++);
 	exit(EXIT_FAILURE);
 }
