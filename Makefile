@@ -2,15 +2,19 @@ CC      = cc
 CFLAGS  = -Wall -Wextra -Werror
 
 USER     = malaamir
-GLFW_DIR = /mnt/homes/$(USER)/.brew/opt/glfw
-GLFW_INC = -I$(GLFW_DIR)/include
-GLFW_LIB = -L$(GLFW_DIR)/lib -lglfw
+# GLFW_DIR = /mnt/homes/$(USER)/.brew/opt/glfw
+# GLFW_INC = -I$(GLFW_DIR)/include
+# GLFW_LIB = -L$(GLFW_DIR)/lib -lglfw
+
+GLFW_INC = -I$(MLX_DIR)/build/_deps/glfw-src/include
+GLFW_LIB = -L$(MLX_DIR)/build/_deps/glfw-build/src -lglfw3
 
 
 MLX_DIR   = MLX42
 MLX_LIB   = $(MLX_DIR)/build/libmlx42.a
-MLX_FLAGS = -L$(MLX_DIR)/build -lmlx42 \
-            -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo
+# MLX_FLAGS = -L$(MLX_DIR)/build -lmlx42 \
+#             -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo
+MLX_FLAGS = -L$(MLX_DIR)/build -lmlx42 -ldl -pthread -lm -lX11 -lXext -lXrandr -lXi -lXcursor -lXinerama
 
 
 MANDATORY_NAME   = cub3D

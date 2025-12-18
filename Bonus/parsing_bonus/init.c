@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 21:29:20 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/25 18:59:11 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/12/18 15:19:20 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	print_error(char *msg, t_data *info)
 		clean_map(info);
 		free(info);
 	}
-	while (i <= OPEN_MAX)
+	while (i <= FOPEN_MAX)
 		close(i++);
 	exit(EXIT_FAILURE);
 }

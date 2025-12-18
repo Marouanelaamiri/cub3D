@@ -6,7 +6,7 @@
 /*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 20:27:02 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/20 20:08:24 by malaamir         ###   ########.fr       */
+/*   Updated: 2025/12/18 15:21:31 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	load_check_frames(t_data *data)
 
 	load_frames(data);
 	data->reload_frame_count = 25;
-	data->ticks_per_frame = 3;
+	data->ticks_per_frame = 2;
 	i = 0;
 	while (i < data->reload_frame_count)
 	{

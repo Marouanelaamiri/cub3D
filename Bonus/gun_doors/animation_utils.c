@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   animation_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromani <aromani@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malaamir <malaamir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 22:20:54 by malaamir          #+#    #+#             */
-/*   Updated: 2025/08/18 20:14:06 by aromani          ###   ########.fr       */
+/*   Updated: 2025/12/18 15:21:06 by malaamir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	start_reload(t_data *data)
 {
 	if (data->reload_frame_count <= 0)
 		return ;
-	data->reload_playing = 1;
+	data->reload_playing = 1; 
 	data->reload_current = 0;
 	data->reload_tick = 0;
 }
